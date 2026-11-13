@@ -1,0 +1,62 @@
+ERROR - 2026-11-13 16:17:30 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'kantin_merah_db' in C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'kantin_merah_db', 3306, '', 0)
+#1 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\BaseConnection.php(1776): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\laragon\www\kantin-merah-pos\app\Models\PesananModel.php(58): CodeIgniter\Database\BaseConnection->getFieldNames('pesanan')
+#4 C:\laragon\www\kantin-merah-pos\app\Models\PesananModel.php(44): App\Models\PesananModel->ensureColumns()
+#5 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\BaseModel.php(381): App\Models\PesananModel->initialize()
+#6 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Model.php(156): CodeIgniter\BaseModel->__construct(NULL)
+#7 C:\laragon\www\kantin-merah-pos\app\Controllers\BaseController.php(49): CodeIgniter\Model->__construct()
+#8 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\CodeIgniter.php(945): App\Controllers\BaseController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+#9 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\CodeIgniter.php(511): CodeIgniter\CodeIgniter->createController()
+#10 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\CodeIgniter.php(363): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Boot.php(417): CodeIgniter\CodeIgniter->run()
+#12 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\laragon\www\kantin-merah-pos\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'kantin_merah_db' in C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\BaseConnection.php(1776): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\laragon\www\kantin-merah-pos\app\Models\PesananModel.php(58): CodeIgniter\Database\BaseConnection->getFieldNames('pesanan')
+#3 C:\laragon\www\kantin-merah-pos\app\Models\PesananModel.php(44): App\Models\PesananModel->ensureColumns()
+#4 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\BaseModel.php(381): App\Models\PesananModel->initialize()
+#5 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Model.php(156): CodeIgniter\BaseModel->__construct(NULL)
+#6 C:\laragon\www\kantin-merah-pos\app\Controllers\BaseController.php(49): CodeIgniter\Model->__construct()
+#7 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\CodeIgniter.php(945): App\Controllers\BaseController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+#8 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\CodeIgniter.php(511): CodeIgniter\CodeIgniter->createController()
+#9 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\CodeIgniter.php(363): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Boot.php(417): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\laragon\www\kantin-merah-pos\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+ERROR - 2026-11-13 16:17:30 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'kantin_merah_db' in C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'kantin_merah_db', 3306, '', 0)
+#1 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\laragon\www\kantin-merah-pos\app\Models\PesananModel.php(140): CodeIgniter\Database\BaseConnection->query('SELECT p.id_pes...', Array)
+#4 C:\laragon\www\kantin-merah-pos\app\Controllers\BaseController.php(49): App\Models\PesananModel->expireUnpaidOrders()
+#5 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\CodeIgniter.php(945): App\Controllers\BaseController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+#6 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\CodeIgniter.php(511): CodeIgniter\CodeIgniter->createController()
+#7 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\CodeIgniter.php(363): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Boot.php(417): CodeIgniter\CodeIgniter->run()
+#9 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\laragon\www\kantin-merah-pos\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'kantin_merah_db' in C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\laragon\www\kantin-merah-pos\app\Models\PesananModel.php(140): CodeIgniter\Database\BaseConnection->query('SELECT p.id_pes...', Array)
+#3 C:\laragon\www\kantin-merah-pos\app\Controllers\BaseController.php(49): App\Models\PesananModel->expireUnpaidOrders()
+#4 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\CodeIgniter.php(945): App\Controllers\BaseController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+#5 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\CodeIgniter.php(511): CodeIgniter\CodeIgniter->createController()
+#6 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\CodeIgniter.php(363): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Boot.php(417): CodeIgniter\CodeIgniter->run()
+#8 C:\laragon\www\kantin-merah-pos\vendor\codeigniter4\framework\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#9 C:\laragon\www\kantin-merah-pos\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#10 {main}
