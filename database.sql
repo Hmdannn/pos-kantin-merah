@@ -64,7 +64,7 @@ INSERT INTO `menu` (`id_menu`, `nama_menu`, `harga`, `jumlah_stok`, `status_stok
 (2, 'Ayam Geprek Sambal Bawang + Nasi', 16000.00, 25, 'Tersedia', '', 1, NOW(), NOW()),
 (3, 'Mie Goreng Telur Sayur', 12000.00, 40, 'Tersedia', '', 1, NOW(), NOW()),
 (4, 'Es Teh Manis Jumbo', 4000.00, 50, 'Tersedia', '', 2, NOW(), NOW()),
-(5, 'Kopi Susu Kampus', 8000.00, 20, 'Tersedia', '', 2, NOW(), NOW()),
+(5, 'Kopi Susu Gula Aren Kampus', 8000.00, 20, 'Tersedia', '', 2, NOW(), NOW()),
 (6, 'Kentang Goreng Crispy', 10000.00, 15, 'Tersedia', '', 3, NOW(), NOW());
 
 -- 4. Table pesanan
