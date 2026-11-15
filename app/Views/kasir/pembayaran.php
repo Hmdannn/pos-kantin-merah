@@ -197,12 +197,17 @@ $idPesanan = $idPesanan ?? ($_GET['id_pesanan'] ?? '');
         @media (max-width: 600px) {
             body { padding: 14px; }
             .card { padding: 18px; }
-            .topbar { align-items: flex-start; }
+            .topbar { align-items: flex-start; flex-wrap: wrap; }
             h1 { font-size: 22px; }
             .method-options { grid-template-columns: 1fr; }
             .total { font-size: 23px; }
+            .method-option { min-height: 56px; }
+            .button { min-height: 44px; }
+            .summary { align-items: flex-start; }
+            .summary > * { min-width: 0; overflow-wrap: anywhere; }
         }
     </style>
+    <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
 </head>
 
 <body>
@@ -210,7 +215,6 @@ $idPesanan = $idPesanan ?? ($_GET['id_pesanan'] ?? '');
     <div class="topbar">
         <div>
             <h1>Pembayaran</h1>
-            <div class="muted">Kantin Merah POS</div>
         </div>
         <a class="back-link" href="<?= site_url('kasir') ?>">Kembali ke Kasir</a>
     </div>

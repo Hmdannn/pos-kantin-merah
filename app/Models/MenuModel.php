@@ -14,6 +14,8 @@ class MenuModel extends Model
 
     protected $allowedFields = [
         'nama_menu',
+        'deskripsi',
+        'harga_modal',
         'harga',
         'jumlah_stok',
         'status_stok',

@@ -299,6 +299,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
 </head>
 
 <body>

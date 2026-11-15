@@ -54,14 +54,56 @@
         td { padding: 10px; border-bottom: 1px solid #f1f5f9; }
         tr:last-child td { border-bottom: none; }
         .rank-badge { display: inline-flex; width: 22px; height: 22px; background: #ffe4e6; color: #9f1239; border-radius: 50%; font-weight: 700; align-items: center; justify-content: center; font-size: 11px; }
+
+        .card-panel { min-width: 0; }
+        .table-wrap { width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
+        .table-wrap table { min-width: 520px; }
+        .table-wrap:focus-visible { outline: 2px solid #9f1239; outline-offset: 2px; }
+
+        @media (max-width: 900px) {
+            .layout { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                padding: 14px;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 4px;
+            }
+            .brand, .brand-subtitle, .nav-label, .sidebar-bottom { grid-column: 1 / -1; }
+            .brand-subtitle { margin-bottom: 8px; }
+            .nav-label { margin: 8px 4px 4px; }
+            .nav-link { min-width: 0; min-height: 44px; margin: 0; }
+            .sidebar-bottom { margin-top: 8px; padding-top: 10px; }
+            .topbar { padding: 14px 16px; gap: 10px; flex-wrap: wrap; }
+            .topbar > div { min-width: 0; }
+            .content { padding: 18px 16px; }
+        }
+
+        @media (max-width: 520px) {
+            .topbar { align-items: flex-start; }
+            .topbar h1 { font-size: 18px; }
+            .topbar .user-pill { white-space: normal; }
+            .content { padding: 14px 12px 28px; }
+            .period-bar { align-items: flex-start; }
+            .period-buttons { width: 100%; flex-wrap: wrap; }
+            .btn-period { min-height: 44px; flex: 1 1 100px; padding: 8px 10px; }
+            .kpi-card { min-width: 0; padding: 16px; }
+            .kpi-val { overflow-wrap: anywhere; font-size: 21px; }
+            .card-panel { padding: 15px; }
+            .panel-header { align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+        }
     </style>
+    <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
+    <script src="<?= base_url('assets/js/managerial-drawer.js') ?>" defer></script>
 </head>
 <body>
-<div class="layout">
+<div class="layout managerial-layout">
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar managerial-sidebar" id="managerialSidebar" role="navigation" aria-label="Navigasi manajerial" aria-hidden="false">
+        <button type="button" class="managerial-menu-close" aria-label="Tutup menu navigasi">
+            <span aria-hidden="true">&times;</span>
+        </button>
         <div class="brand">KANTIN MERAH</div>
-        <div class="brand-subtitle">Executive Panel &bull; UNP Kampus 1</div>
 
         <div class="nav-label">Menu Manajerial</div>
         <a class="nav-link active" href="<?= site_url('manajerial') ?>">📊 Laporan Penjualan</a>
@@ -71,14 +113,26 @@
             <div style="font-size: 12px; color: #fecdd3; margin-bottom: 8px;">
                 Login: <strong><?= esc(session()->get('nama') ?? 'Manajerial') ?></strong>
             </div>
-            <a class="nav-link" href="<?= site_url('logout') ?>" style="background: rgba(0,0,0,0.2);">🚪 Keluar / Logout</a>
+            <a class="nav-link" href="<?= site_url('logout') ?>" style="background: rgba(0,0,0,0.2);">🚪 Keluar</a>
         </div>
     </aside>
+    <button type="button" class="managerial-nav-backdrop" aria-hidden="true" tabindex="-1"></button>
 
     <!-- Main -->
     <main class="main">
         <header class="topbar">
-            <h1>Laporan Penjualan</h1>
+            <div class="managerial-heading">
+                <button
+                    type="button"
+                    class="managerial-menu-toggle"
+                    aria-label="Buka menu navigasi"
+                    aria-controls="managerialSidebar"
+                    aria-expanded="false"
+                >
+                    <span aria-hidden="true">☰</span>
+                </button>
+                <h1>Laporan Penjualan</h1>
+            </div>
             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                 <a href="<?= site_url('menu') ?>" style="background: #9f1239; color: white; text-decoration: none; padding: 7px 13px; border-radius: 8px; font-size: 13px; font-weight: 600;">🍲 Kelola Menu</a>
                 <div class="user-pill">Role: Manajerial / Owner</div>
@@ -89,7 +143,6 @@
             <!-- Period Selector (Sesuai PDF: Harian, Mingguan, Bulanan) -->
             <div class="period-bar">
                 <div>
-                    <h2 style="font-size: 16px; font-weight: 700;">Analisis Kinerja Bisnis</h2>
                     <span id="range-label" style="font-size: 13px; color: #64748b;">Memuat data...</span>
                 </div>
                 <div class="period-buttons">
@@ -131,6 +184,7 @@
                         <span>🔥 Menu Paling Laris</span>
                         <small style="color: #64748b; font-weight: normal;">Berdasarkan kuantitas terjual</small>
                     </div>
+                    <div class="table-wrap" role="region" aria-label="Menu paling laris" tabindex="0">
                     <table>
                         <thead>
                             <tr>
@@ -144,14 +198,16 @@
                             <tr><td colspan="4" style="text-align: center; color: #94a3b8;">Memuat data menu...</td></tr>
                         </tbody>
                     </table>
+                    </div>
                 </div>
 
                 <!-- Jam Paling Ramai -->
                 <div class="card-panel">
                     <div class="panel-header">
-                        <span>⏰ Jam Paling Ramai (Peak Hours)</span>
+                        <span>⏰ Jam Paling Ramai</span>
                         <small style="color: #64748b; font-weight: normal;">Untuk penjadwalan staf</small>
                     </div>
+                    <div class="table-wrap" role="region" aria-label="Jam paling ramai" tabindex="0">
                     <table>
                         <thead>
                             <tr>
@@ -164,6 +220,7 @@
                             <tr><td colspan="3" style="text-align: center; color: #94a3b8;">Memuat data jam ramai...</td></tr>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
 
@@ -229,7 +286,7 @@
                 tbodyHours.innerHTML = data.jam_ramai.map(h => `
                     <tr>
                         <td><strong>${String(h.jam).padStart(2, '0')}:00 - ${String(h.jam).padStart(2, '0')}:59</strong></td>
-                        <td style="text-align: center;"><span style="font-weight: 700; color: #2563eb;">${h.jumlah_transaksi}</span> order</td>
+                        <td style="text-align: center;"><span style="font-weight: 700; color: #2563eb;">${h.jumlah_transaksi}</span> transaksi</td>
                         <td style="text-align: right; font-weight: 600;">Rp ${Number(h.total_penjualan).toLocaleString('id-ID')}</td>
                     </tr>
                 `).join('');

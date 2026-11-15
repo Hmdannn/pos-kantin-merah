@@ -41,15 +41,17 @@ CREATE TABLE `kategori` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `kategori` (`id_kategori`, `nama_kategori`, `created_at`) VALUES
-(1, 'Makanan Berat', NOW()),
-(2, 'Minuman Segar', NOW()),
-(3, 'Snack & Camilan', NOW());
+(1, 'Makanan', NOW()),
+(2, 'Minuman', NOW()),
+(3, 'Snack', NOW());
 
 -- 3. Table menu
 CREATE TABLE `menu` (
   `id_menu` INT AUTO_INCREMENT PRIMARY KEY,
   `nama_menu` VARCHAR(150) NOT NULL,
+  `deskripsi` TEXT NULL,
   `harga` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  `harga_modal` DECIMAL(10,2) NULL DEFAULT 0.00,
   `jumlah_stok` INT NOT NULL DEFAULT 0,
   `status_stok` ENUM('Tersedia', 'Habis') NOT NULL DEFAULT 'Tersedia',
   `foto` VARCHAR(255) NULL,
@@ -59,13 +61,37 @@ CREATE TABLE `menu` (
   FOREIGN KEY (`id_kategori`) REFERENCES `kategori`(`id_kategori`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `menu` (`id_menu`, `nama_menu`, `harga`, `jumlah_stok`, `status_stok`, `foto`, `id_kategori`, `created_at`, `updated_at`) VALUES
-(1, 'Nasi Goreng Kantin Merah Spesial', 15000.00, 30, 'Tersedia', '', 1, NOW(), NOW()),
-(2, 'Ayam Geprek Sambal Bawang + Nasi', 16000.00, 25, 'Tersedia', '', 1, NOW(), NOW()),
-(3, 'Mie Goreng Telur Sayur', 12000.00, 40, 'Tersedia', '', 1, NOW(), NOW()),
-(4, 'Es Teh Manis Jumbo', 4000.00, 50, 'Tersedia', '', 2, NOW(), NOW()),
-(5, 'Kopi Susu Gula Aren Kampus', 8000.00, 20, 'Tersedia', '', 2, NOW(), NOW()),
-(6, 'Kentang Goreng Crispy', 10000.00, 15, 'Tersedia', '', 3, NOW(), NOW());
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `deskripsi`, `harga`, `harga_modal`, `jumlah_stok`, `status_stok`, `foto`, `id_kategori`, `created_at`, `updated_at`) VALUES
+(1, 'Nasi Goreng', 'Nasi goreng gurih dengan telur, ayam, dan sayuran, disajikan hangat.', 15000.00, 10000.00, 59, 'Tersedia', 'uploads/menu/ecf3c30eb6e1f68b8518fabea9f16ef4.jpg', 1, NOW(), NOW()),
+(2, 'Mie Goreng', 'Mie goreng kuning dengan telur, sayuran, dan bumbu gurih.', 12000.00, 8000.00, 40, 'Tersedia', 'uploads/menu/katalog/mie-goreng.jpg', 1, NOW(), NOW()),
+(3, 'Mie Rebus', 'Mie rebus berkuah kaldu hangat dengan telur dan sayuran.', 11000.00, 7500.00, 35, 'Tersedia', 'uploads/menu/katalog/mie-rebus.jpg', 1, NOW(), NOW()),
+(4, 'Nasi Ayam Geprek', 'Nasi putih dengan ayam geprek sambal bawang pedas dan lalapan.', 16000.00, 12000.00, 30, 'Tersedia', 'uploads/menu/katalog/nasi-ayam-geprek.jpg', 1, NOW(), NOW()),
+(5, 'Nasi Telur', 'Nasi hangat dengan telur ceplok, kecap manis, dan sayuran.', 10000.00, 7000.00, 35, 'Tersedia', 'uploads/menu/katalog/nasi-telur.jpg', 1, NOW(), NOW()),
+(6, 'Nasi Pecel', 'Nasi dengan sayuran rebus, siraman bumbu kacang, dan lauk pelengkap.', 12000.00, 8000.00, 25, 'Tersedia', 'uploads/menu/katalog/nasi-pecel.jpg', 1, NOW(), NOW()),
+(7, 'Nasi Rames', 'Nasi campur dengan aneka lauk rumahan dan sayur.', 13000.00, 9000.00, 25, 'Tersedia', 'uploads/menu/katalog/nasi-rames.jpg', 1, NOW(), NOW()),
+(8, 'Bakso', 'Bakso sapi kenyal dalam kuah kaldu gurih, dengan mie dan tahu.', 13000.00, 9000.00, 30, 'Tersedia', 'uploads/menu/katalog/bakso.jpg', 1, NOW(), NOW()),
+(9, 'Soto Ayam', 'Soto ayam berkuah kuning dengan suwiran ayam, telur, dan koya.', 12000.00, 8500.00, 30, 'Tersedia', 'uploads/menu/katalog/soto-ayam.jpg', 1, NOW(), NOW()),
+(10, 'Nasi Kuning', 'Nasi kuning gurih dengan ayam, telur, tempe, dan sambal.', 12000.00, 8000.00, 25, 'Tersedia', 'uploads/menu/katalog/nasi-kuning.jpg', 1, NOW(), NOW()),
+(11, 'Es Teh', 'Teh manis dingin dengan es batu, segar untuk menemani makan.', 4000.00, 1800.00, 60, 'Tersedia', 'uploads/menu/katalog/es-teh.jpg', 2, NOW(), NOW()),
+(12, 'Teh Hangat', 'Teh melati hangat dengan gula, cocok dinikmati santai.', 3000.00, 1500.00, 50, 'Tersedia', 'uploads/menu/katalog/teh-hangat.jpg', 2, NOW(), NOW()),
+(13, 'Es Jeruk', 'Perasan jeruk segar dengan es batu dan gula.', 6000.00, 3000.00, 45, 'Tersedia', 'uploads/menu/katalog/es-jeruk.jpg', 2, NOW(), NOW()),
+(14, 'Jeruk Hangat', 'Minuman jeruk hangat yang segar dan menyehatkan.', 5500.00, 2800.00, 40, 'Tersedia', 'uploads/menu/katalog/jeruk-hangat.jpg', 2, NOW(), NOW()),
+(15, 'Es Milo', 'Minuman cokelat Milo dingin dengan susu dan es.', 7000.00, 3500.00, 40, 'Tersedia', 'uploads/menu/katalog/es-milo.jpg', 2, NOW(), NOW()),
+(16, 'Es Good Day', 'Kopi susu Good Day dingin dengan rasa manis dan creamy.', 6000.00, 3000.00, 40, 'Tersedia', 'uploads/menu/katalog/es-good-day.jpg', 2, NOW(), NOW()),
+(17, 'Kopi Hitam', 'Kopi hitam pekat seduh panas, tanpa gula tambahan.', 5000.00, 2000.00, 40, 'Tersedia', 'uploads/menu/katalog/kopi-hitam.jpg', 2, NOW(), NOW()),
+(18, 'Kopi Susu', 'Kopi susu creamy dengan gula aren, disajikan dingin.', 8000.00, 3500.00, 35, 'Tersedia', 'uploads/menu/katalog/kopi-susu.jpg', 2, NOW(), NOW()),
+(19, 'Air Mineral', 'Air mineral botol dingin, praktis dan menyegarkan.', 3000.00, 2000.00, 100, 'Tersedia', 'uploads/menu/katalog/air-mineral.jpg', 2, NOW(), NOW()),
+(20, 'Susu Cokelat', 'Susu cokelat dingin yang manis dan creamy.', 7000.00, 4000.00, 40, 'Tersedia', 'uploads/menu/katalog/susu-cokelat.jpg', 2, NOW(), NOW()),
+(21, 'Kentang Goreng', 'Kentang goreng crispy dengan saus tomat.', 10000.00, 6000.00, 30, 'Tersedia', 'uploads/menu/katalog/kentang-goreng.jpg', 3, NOW(), NOW()),
+(22, 'Sosis Goreng', 'Sosis goreng gurih, cocok untuk camilan.', 8000.00, 5000.00, 35, 'Tersedia', 'uploads/menu/katalog/sosis-goreng.jpg', 3, NOW(), NOW()),
+(23, 'Nugget', 'Nugget ayam goreng crispy, disajikan dengan saus.', 10000.00, 6000.00, 30, 'Tersedia', 'uploads/menu/katalog/nugget.jpg', 3, NOW(), NOW()),
+(24, 'Cireng', 'Cireng goreng kenyal dengan isian dan bumbu rujak.', 6000.00, 3500.00, 40, 'Tersedia', 'uploads/menu/katalog/cireng.jpg', 3, NOW(), NOW()),
+(25, 'Risoles', 'Risoles goreng renyah dengan isian sayur dan ayam.', 5000.00, 3000.00, 40, 'Tersedia', 'uploads/menu/katalog/risoles.jpg', 3, NOW(), NOW()),
+(26, 'Tahu Isi', 'Tahu goreng berisi sayuran, renyah dan gurih.', 5000.00, 2500.00, 40, 'Tersedia', 'uploads/menu/katalog/tahu-isi.jpg', 3, NOW(), NOW()),
+(27, 'Bakwan', 'Bakwan sayur goreng crispy, camilan favorit.', 4000.00, 2000.00, 45, 'Tersedia', 'uploads/menu/katalog/bakwan.jpg', 3, NOW(), NOW()),
+(28, 'Tempe Goreng', 'Tempe goreng gurih dan renyah, cocok dengan sambal.', 3000.00, 1500.00, 50, 'Tersedia', 'uploads/menu/katalog/tempe-goreng.jpg', 3, NOW(), NOW()),
+(29, 'Roti Bakar', 'Roti bakar isi cokelat manis, hangat dan lembut.', 8000.00, 5000.00, 30, 'Tersedia', 'uploads/menu/katalog/roti-bakar.jpg', 3, NOW(), NOW()),
+(30, 'Pisang Goreng', 'Pisang goreng manis dan renyah, camilan klasik.', 6000.00, 3000.00, 35, 'Tersedia', 'uploads/menu/katalog/pisang-goreng.jpg', 3, NOW(), NOW());
 
 -- 4. Table pesanan
 CREATE TABLE `pesanan` (
@@ -144,11 +170,11 @@ VALUES
 
 INSERT INTO `detail_pesanan` (`id_pesanan`, `id_menu`, `jumlah`, `catatan_khusus`, `subtotal`, `created_at`) VALUES
 (1, 1, 1, 'Pedas level 3, banyakin bawang goreng', 15000.00, NOW()),
-(1, 4, 1, 'Gula sedikit', 4000.00, NOW()),
-(2, 2, 1, 'Cabe 5 aja', 16000.00, NOW()),
-(2, 4, 1, 'Es batu dipisah', 4000.00, NOW()),
+(1, 11, 1, 'Gula sedikit', 4000.00, NOW()),
+(2, 4, 1, 'Cabe 5 aja', 16000.00, NOW()),
+(2, 11, 1, 'Es batu dipisah', 4000.00, NOW()),
 (3, 1, 1, 'Tidak pedas, tidak pakai kecap', 15000.00, NOW()),
-(4, 5, 1, 'Dingin less sugar', 8000.00, NOW());
+(4, 18, 1, 'Dingin less sugar', 8000.00, NOW());
 
 INSERT INTO `pembayaran` (`id_pesanan`, `id_kasir`, `metode`, `status_bayar`, `batas_waktu`, `jumlah_diterima`, `kembalian`, `waktu_bayar`, `created_at`) VALUES
 (2, 1, 'QRIS', 'Berhasil', NOW() + INTERVAL 15 MINUTE, 20000.00, 0.00, NOW() - INTERVAL 14 MINUTE, NOW()),

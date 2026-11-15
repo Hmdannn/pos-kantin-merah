@@ -120,18 +120,53 @@
 
         @media (max-width: 860px) {
             .layout { flex-direction: column; }
-            .sidebar { width: 100%; padding: 18px; }
-            .sidebar-bottom { margin-top: 14px; }
+            .sidebar {
+                width: 100%;
+                padding: 14px;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 4px;
+            }
+            .brand, .brand-subtitle, .nav-label, .sidebar-bottom { grid-column: 1 / -1; }
+            .brand-subtitle { margin-bottom: 8px; }
+            .nav-label { margin: 8px 4px 4px; }
+            .nav-link { min-width: 0; min-height: 44px; margin: 0; }
+            .sidebar-bottom { margin-top: 8px; padding-top: 10px; }
             .content { padding: 18px 16px 50px; }
             .topbar { padding: 16px; }
         }
+
+        @media (max-width: 560px) {
+            .topbar { align-items: flex-start; }
+            .topbar > div { min-width: 0; }
+            .topbar-actions { width: 100%; align-items: stretch; }
+            .topbar-actions .btn { flex: 1 1 100%; min-height: 44px; }
+            .topbar-actions .user-pill { width: fit-content; }
+            .content { padding: 14px 12px 34px; }
+            .panel { padding: 15px; }
+            .panel-head { align-items: flex-start; }
+            .panel-head .btn { min-height: 44px; }
+            .toolbar { align-items: stretch; }
+            .toolbar input, .toolbar select { min-width: 0; width: 100%; min-height: 44px; }
+            .table-wrap { overscroll-behavior-x: contain; }
+            .modal { padding: 8px; }
+            .modal-card { max-height: calc(100vh - 16px); max-height: calc(100dvh - 16px); margin: 0 auto; overflow-y: auto; }
+            .modal-head { position: sticky; top: 0; z-index: 1; background: #fff; }
+            .modal-actions { flex-wrap: wrap; }
+            .modal-actions .btn { min-height: 44px; flex: 1 1 120px; }
+            .toast { right: 12px; bottom: 12px; left: 12px; max-width: none; }
+        }
     </style>
+    <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
+    <script src="<?= base_url('assets/js/managerial-drawer.js') ?>" defer></script>
 </head>
 <body>
-<div class="layout">
-    <aside class="sidebar">
+<div class="layout managerial-layout">
+    <aside class="sidebar managerial-sidebar" id="managerialSidebar" role="navigation" aria-label="Navigasi manajerial" aria-hidden="false">
+        <button type="button" class="managerial-menu-close" aria-label="Tutup menu navigasi">
+            <span aria-hidden="true">&times;</span>
+        </button>
         <div class="brand">KANTIN MERAH</div>
-        <div class="brand-subtitle">Executive Panel &bull; UNP Kampus 1</div>
 
         <div class="nav-label">Menu Manajerial</div>
         <a class="nav-link" href="<?= site_url('manajerial') ?>">📊 Laporan Penjualan</a>
@@ -141,15 +176,27 @@
             <div style="font-size: 12px; color: #fecdd3; margin-bottom: 8px;">
                 Login: <strong><?= esc(session()->get('nama') ?? 'Manajerial') ?></strong>
             </div>
-            <a class="nav-link" href="<?= site_url('logout') ?>" style="background: rgba(0,0,0,0.2);">🚪 Keluar / Logout</a>
+            <a class="nav-link" href="<?= site_url('logout') ?>" style="background: rgba(0,0,0,0.2);">🚪 Keluar</a>
         </div>
     </aside>
+    <button type="button" class="managerial-nav-backdrop" aria-hidden="true" tabindex="-1"></button>
 
     <main class="main">
         <header class="topbar">
-            <div>
-                <h1>Kelola Menu & Kategori</h1>
-                <p class="topbar-sub">Tambah, ubah, atur harga, stok, foto, dan ketersediaan menu.</p>
+            <div class="managerial-heading">
+                <button
+                    type="button"
+                    class="managerial-menu-toggle"
+                    aria-label="Buka menu navigasi"
+                    aria-controls="managerialSidebar"
+                    aria-expanded="false"
+                >
+                    <span aria-hidden="true">☰</span>
+                </button>
+                <div class="managerial-heading-copy">
+                    <h1>Kelola Menu & Kategori</h1>
+                    <p class="topbar-sub">Tambah, ubah, atur harga, stok, foto, dan ketersediaan menu.</p>
+                </div>
             </div>
             <div class="topbar-actions">
                 <a href="<?= site_url('customer') ?>" target="_blank" rel="noopener" class="btn btn-light">🛒 Lihat Halaman Customer</a>
@@ -181,7 +228,6 @@
                 <div class="panel-head">
                     <div>
                         <h2>Kategori Menu</h2>
-                        <p>Kategori dipakai untuk mengelompokkan menu di halaman customer.</p>
                     </div>
                     <button type="button" class="btn btn-primary" id="btnTambahKategori">+ Tambah Kategori</button>
                 </div>

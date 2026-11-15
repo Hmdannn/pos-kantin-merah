@@ -2,11 +2,10 @@
     <div class="footer-container">
         <div class="footer-brand">
             <strong>Kantin Merah POS</strong>
-            <span>Point of Sale System</span>
         </div>
 
         <div class="footer-copy">
-            &copy; <?= date('Y') ?> Kantin Merah. All rights reserved.
+            &copy; <?= date('Y') ?> Kantin Merah.
         </div>
     </div>
 </footer>

@@ -160,8 +160,12 @@
             .card { padding: 18px; }
             .info-grid { grid-template-columns: 1fr; }
             h1 { font-size: 23px; }
+            .status-row { align-items: flex-start; flex-wrap: wrap; }
+            .status-row h2 { min-width: 0; }
+            .actions .btn { min-height: 44px; }
         }
     </style>
+    <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
 </head>
 
 <body>

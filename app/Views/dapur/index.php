@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kitchen Display System (Dapur) - Kantin Merah POS</title>
+    <title>Dapur - Kantin Merah POS</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #111827; color: #f9fafb; min-height: 100vh; }
@@ -76,20 +76,101 @@
         .stok-habis { background: #991b1b; color: #fecaca; }
 
         .empty-tickets { text-align: center; color: #64748b; padding: 40px 10px; font-size: 13px; }
+
+        @media (max-width: 700px) {
+            .topbar {
+                padding: 12px 14px;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .logo-group {
+                min-width: 0;
+                align-items: flex-start;
+            }
+
+            .page-title {
+                min-width: 0;
+                font-size: 16px;
+                overflow-wrap: anywhere;
+            }
+
+            .actions-right {
+                width: 100%;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .actions-right > span {
+                width: 100%;
+                overflow-wrap: anywhere;
+            }
+
+            .btn-header,
+            .btn-action,
+            .badge-stok {
+                min-height: 44px;
+            }
+
+            .container {
+                padding: 14px 12px;
+                gap: 14px;
+            }
+
+            .column,
+            .stock-sidebar {
+                min-width: 0;
+                padding: 13px;
+            }
+
+            .column {
+                min-height: 0;
+            }
+
+            .column-header {
+                align-items: flex-start;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .column-title {
+                min-width: 0;
+                overflow-wrap: anywhere;
+            }
+
+            .ticket {
+                padding: 13px;
+            }
+
+            .ticket-identity-badge {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 5px;
+                overflow-wrap: anywhere;
+            }
+
+            .ticket-items,
+            .ticket-item {
+                overflow-wrap: anywhere;
+            }
+        }
     </style>
+    <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
 </head>
 <body>
 
     <header class="topbar">
         <div class="logo-group">
             <div class="brand-badge">KM DAPUR</div>
-            <div class="page-title">Kitchen Display System (Antrean FIFO)</div>
+            <div class="page-title">Dapur · Antrean FIFO</div>
         </div>
 
         <div class="actions-right">
             <span style="font-size: 13px; color: #94a3b8;">Koki: <strong><?= esc(session()->get('nama') ?? 'Dapur') ?></strong></span>
-            <button class="btn-header" onclick="location.reload()">🔄 Refresh Tiket</button>
-            <a class="btn-header btn-logout" href="<?= site_url('logout') ?>">🚪 Logout</a>
+            <button class="btn-header" onclick="location.reload()">🔄 Muat Ulang Tiket</button>
+            <a class="btn-header btn-logout" href="<?= site_url('logout') ?>">🚪 Keluar</a>
         </div>
     </header>
 
@@ -136,7 +217,7 @@
                                             <span class="item-qty"><?= esc($item['jumlah']) ?>x</span>
                                             <span style="font-weight: 600;"><?= esc($item['nama_menu']) ?></span>
                                             <?php if (!empty($item['catatan_khusus'])): ?>
-                                                <span class="item-special-note">⚠️ Note: <?= esc($item['catatan_khusus']) ?></span>
+                                                <span class="item-special-note">⚠️ Catatan: <?= esc($item['catatan_khusus']) ?></span>
                                             <?php endif; ?>
                                         </li>
                                     <?php endforeach; ?>
@@ -190,7 +271,7 @@
                                             <span class="item-qty"><?= esc($item['jumlah']) ?>x</span>
                                             <span style="font-weight: 600;"><?= esc($item['nama_menu']) ?></span>
                                             <?php if (!empty($item['catatan_khusus'])): ?>
-                                                <span class="item-special-note">⚠️ Note: <?= esc($item['catatan_khusus']) ?></span>
+                                                <span class="item-special-note">⚠️ Catatan: <?= esc($item['catatan_khusus']) ?></span>
                                             <?php endif; ?>
                                         </li>
                                     <?php endforeach; ?>

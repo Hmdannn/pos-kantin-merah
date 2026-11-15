@@ -189,8 +189,24 @@
             h1 {
                 font-size: 22px;
             }
+
+            .page-header .btn,
+            .search-input,
+            .filter-select {
+                min-height: 44px;
+            }
+
+            .table-wrapper {
+                max-width: 100%;
+                overscroll-behavior-x: contain;
+            }
+
+            table {
+                min-width: 680px;
+            }
         }
     </style>
+    <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
 </head>
 
 <body>

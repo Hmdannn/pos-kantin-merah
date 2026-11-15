@@ -56,7 +56,42 @@
         .go-btn { background: #8f1726; border-color: #8f1726; color: white; }
         .go-btn:hover:not(:disabled) { background: #6f111d; }
         .refresh-note { font-size: 11px; color: #9ca3af; }
+
+        @media (max-width: 860px) {
+            .layout { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                padding: 14px;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 4px;
+            }
+            .brand, .brand-subtitle, .nav-label, .sidebar-bottom { grid-column: 1 / -1; }
+            .brand-subtitle { margin-bottom: 8px; }
+            .nav-label { margin: 8px 4px 4px; }
+            .nav-link { min-width: 0; min-height: 44px; margin: 0; }
+            .sidebar-bottom { margin-top: 8px; padding-top: 10px; }
+            .main { width: 100%; }
+            .topbar { padding: 14px 16px; gap: 10px; flex-wrap: wrap; }
+            .topbar h1 { font-size: 18px; }
+            .content { padding: 18px 16px; }
+            .table-wrap { overscroll-behavior-x: contain; }
+            .kitchen-table { min-width: 760px; }
+            .pager-controls { gap: 6px; }
+            .pager-btn { min-height: 44px; }
+        }
+
+        @media (max-width: 480px) {
+            .content { padding: 14px 12px; }
+            .intro { padding: 14px; gap: 12px; }
+            .live-box { max-width: 100%; overflow-wrap: anywhere; }
+            .panel-head { padding: 12px; }
+            .pager { padding: 12px; align-items: flex-start; }
+            .pager-controls { width: 100%; }
+            .pager-meta { overflow-wrap: anywhere; }
+        }
     </style>
+    <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
 </head>
 <body>
 <div class="layout">
@@ -74,7 +109,7 @@
             <div style="font-size: 12px; color: #fecaca; margin-bottom: 8px;">
                 Petugas: <strong><?= esc(session()->get('nama') ?? 'Kasir') ?></strong>
             </div>
-            <a class="nav-link" href="<?= site_url('logout') ?>" style="background: rgba(0,0,0,0.2);">🚪 Keluar / Logout</a>
+            <a class="nav-link" href="<?= site_url('logout') ?>" style="background: rgba(0,0,0,0.2);">🚪 Keluar</a>
         </div>
     </aside>
 
@@ -87,7 +122,6 @@
         <div class="content">
             <div class="intro">
                 <div>
-                    <h2>Riwayat Semua Transaksi</h2>
                     <p>Seluruh transaksi ditampilkan dari yang paling baru. 5 baris per halaman.</p>
                 </div>
                 <div class="live-box" id="liveStatus">● Riwayat — diperbarui otomatis</div>

@@ -243,7 +243,64 @@ $success = session()->getFlashdata('success');
         .footer a:hover {
             text-decoration: underline;
         }
+
+        :focus-visible {
+            outline: 3px solid #dc2626;
+            outline-offset: 3px;
+        }
+
+        .toggle-password,
+        .btn-demo {
+            min-height: 44px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                min-height: 100svh;
+                align-items: flex-start;
+                padding: 14px;
+            }
+
+            .login-card {
+                margin: auto;
+                padding: 28px 22px;
+                border-radius: 16px;
+            }
+
+            .demo-buttons {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+            }
+
+            .btn-demo:last-child {
+                grid-column: 1 / -1;
+            }
+
+            .footer {
+                line-height: 1.6;
+                overflow-wrap: anywhere;
+            }
+        }
+
+        @media (max-width: 380px) {
+            body {
+                padding: 10px;
+            }
+
+            .login-card {
+                padding: 24px 18px;
+            }
+
+            h1 {
+                font-size: 21px;
+            }
+
+            .subtitle {
+                line-height: 1.45;
+            }
+        }
     </style>
+    <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
 </head>
 
 <body>
@@ -252,7 +309,7 @@ $success = session()->getFlashdata('success');
         <header class="login-header">
             <div class="logo">KM</div>
             <h1>Kantin Merah POS</h1>
-            <p class="subtitle">Sistem Point of Sale Self-Service Berbasis Web</p>
+            <p class="subtitle">Masuk sesuai peran Anda.</p>
             <div class="badge-campus">Studi Kasus: UNP Kampus 1</div>
         </header>
 

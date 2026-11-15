@@ -1,3 +1,47 @@
+<style>
+    @media (max-width: 600px) {
+        #customerStatusModal {
+            padding: 8px !important;
+            overscroll-behavior: contain;
+        }
+
+        #customerStatusModal > div {
+            width: 100%;
+            max-height: calc(100vh - 16px);
+            max-height: calc(100dvh - 16px);
+            margin: 0 auto !important;
+            overflow-y: auto !important;
+            overscroll-behavior: contain;
+        }
+
+        #customerStatusModal > div > div:first-child {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: #fff;
+        }
+
+        #customerStatusModal button {
+            min-height: 44px;
+        }
+
+        #closeCustomerStatus {
+            width: 44px;
+            min-width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #customerStatusModal strong,
+        #customerStatusModal span {
+            overflow-wrap: anywhere;
+        }
+    }
+</style>
 <div
     id="customerStatusModal"
     style="
@@ -123,7 +167,7 @@
                             Pemesan: Pelanggan
                         </div>
                     </div>
-                    <span style="background:#ea580c; color:#fff; font-size:11px; font-weight:700; padding:4px 8px; border-radius:6px;">
+                    <span style="background:var(--km-brand-soft); color:var(--km-brand); font-size:11px; font-weight:700; padding:4px 8px; border-radius:6px;">
                         AMBIL DI KASIR
                     </span>
                 </div>
@@ -134,17 +178,17 @@
                 id="statusReadyNotice"
                 style="
                     display:none;
-                    background:#dcfce7;
-                    border:1px solid #86efac;
+                    background:var(--km-success-bg);
+                    border:1px solid var(--km-success-border);
                     border-radius:10px;
                     padding:14px 16px;
                     margin-bottom:16px;
                 "
             >
-                <div style="font-size:15px; font-weight:800; color:#166534; margin-bottom:4px;">
+                <div style="font-size:15px; font-weight:800; color:var(--km-success); margin-bottom:4px;">
                     🔔 Makanan Siap Diambil!
                 </div>
-                <div id="statusReadyMessage" style="font-size:13px; color:#166534;">
+                <div id="statusReadyMessage" style="font-size:13px; color:var(--km-success);">
                     Silakan ambil makanan Anda di kasir.
                 </div>
             </div>
@@ -366,7 +410,7 @@
                     display:none;
                     width:100%;
                     border:none;
-                    background:#7c3aed;
+                    background:var(--km-brand);
                     color:#fff;
                     padding:12px;
                     border-radius:8px;
@@ -387,7 +431,7 @@
                     display:none;
                     width:100%;
                     border:none;
-                    background:#16a34a;
+                    background:var(--km-brand);
                     color:#fff;
                     padding:13px;
                     border-radius:8px;
@@ -972,7 +1016,7 @@
 
             if (statusBayar === 'Berhasil') {
                 labelStatus = 'Berhasil';
-                warnaStatus = '#15803d';
+                warnaStatus = 'var(--km-success)';
             } else if (statusBayar === 'Menunggu') {
                 labelStatus = 'Belum dibayar';
                 warnaStatus = '#b45309';

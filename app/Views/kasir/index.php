@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Dashboard Kasir - Kantin Merah POS</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f4f5f7; --surface:#fff; --surface-2:#f8f9fb; --line:#e7e9ee; --text:#14161c; --muted:#6a7080;
@@ -165,8 +162,37 @@ dialog .btn-plain{background:var(--surface-2);color:var(--text);border:1px solid
   .clock{display:none}
 }
 @media(max-width:520px){.stats{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
+@media(max-width:600px){
+  .topbar{padding:12px;gap:10px;flex-wrap:wrap}
+  .topbar h1{font-size:18px}
+  .topbar .sp{min-width:0}
+  .content{padding:16px 12px 32px}
+  .shift{padding:16px;gap:14px}
+  .shift-state{align-items:flex-start}
+  .shift-state>div{min-width:0}
+  .shift p{overflow-wrap:anywhere}
+  .stat{min-width:0;padding:14px}
+  .stat b{overflow-wrap:anywhere;font-size:19px}
+  .sec{align-items:flex-start;flex-wrap:wrap}
+  .sec h3{min-width:0;flex-wrap:wrap}
+  .card{min-width:0;padding:15px}
+  .card-head,.total{min-width:0;overflow-wrap:anywhere}
+  .card-head>div{min-width:0;overflow-wrap:anywhere}
+  .dest{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dest>div{min-width:0;padding:9px}
+  .dest b{overflow-wrap:anywhere;font-size:14px}
+  .items li{min-width:0}
+  .items li>div{min-width:0;overflow-wrap:anywhere}
+  .actions{flex-wrap:wrap}
+  .actions .btn{min-height:44px}
+  .quick button{min-height:40px}
+  .tbl-wrap{max-width:100%;overscroll-behavior-x:contain}
+  #toasts{right:12px;bottom:12px;left:12px}
+  .toast{max-width:none}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+<link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">

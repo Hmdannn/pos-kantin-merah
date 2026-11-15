@@ -181,8 +181,10 @@ class CustomerController extends BaseController
             // 2. Tabel Menu
             $db->query("CREATE TABLE IF NOT EXISTS `menu` (
               `id_menu` INT AUTO_INCREMENT PRIMARY KEY,
-              `nama_menu` VARCHAR(100) NOT NULL,
+              `nama_menu` VARCHAR(150) NOT NULL,
+              `deskripsi` TEXT NULL,
               `harga` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+              `harga_modal` DECIMAL(10,2) NULL DEFAULT 0.00,
               `jumlah_stok` INT NOT NULL DEFAULT 0,
               `status_stok` ENUM('Tersedia', 'Habis') NOT NULL DEFAULT 'Tersedia',
               `foto` VARCHAR(255) NULL,
@@ -190,6 +192,15 @@ class CustomerController extends BaseController
               `created_at` DATETIME NULL,
               `updated_at` DATETIME NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
+            // Lengkapi kolom baru jika tabel menu sudah ada dari versi lama.
+            if (!$db->fieldExists('deskripsi', 'menu')) {
+                $db->query("ALTER TABLE `menu` ADD `deskripsi` TEXT NULL AFTER `nama_menu`");
+            }
+
+            if (!$db->fieldExists('harga_modal', 'menu')) {
+                $db->query("ALTER TABLE `menu` ADD `harga_modal` DECIMAL(10,2) NULL DEFAULT 0.00 AFTER `harga`");
+            }
 
             // 3. Tabel Pesanan & Relasi
             $db->query("CREATE TABLE IF NOT EXISTS `pesanan` (
@@ -230,95 +241,11 @@ class CustomerController extends BaseController
               `created_at` DATETIME NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
-            // Cek apakah kategori sudah ada
-            $kategoriCount = $this->kategoriModel->countAllResults();
-            if ($kategoriCount === 0) {
-                $this->kategoriModel->insert(['id_kategori' => 1, 'nama_kategori' => 'Makanan Berat']);
-                $this->kategoriModel->insert(['id_kategori' => 2, 'nama_kategori' => 'Minuman Segar']);
-                $this->kategoriModel->insert(['id_kategori' => 3, 'nama_kategori' => 'Snack & Camilan']);
-            }
-
-            // Cek apakah menu sudah ada
+            // Katalog produk lengkap dipusatkan di ProdukKatalogSeeder agar
+            // data yang tampil di halaman customer sama dengan data awal.
             $menuCount = $this->menuModel->countAllResults();
             if ($menuCount === 0) {
-                $sampleMenus = [
-                    [
-                        'nama_menu'   => 'Nasi Goreng Kantin Merah Spesial',
-                        'harga'       => 15000,
-                        'jumlah_stok' => 35,
-                        'status_stok' => 'Tersedia',
-                        'foto'        => 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&auto=format&fit=crop&q=60',
-                        'id_kategori' => 1
-                    ],
-                    [
-                        'nama_menu'   => 'Ayam Geprek Sambal Bawang + Nasi',
-                        'harga'       => 16000,
-                        'jumlah_stok' => 25,
-                        'status_stok' => 'Tersedia',
-                        'foto'        => 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=500&auto=format&fit=crop&q=60',
-                        'id_kategori' => 1
-                    ],
-                    [
-                        'nama_menu'   => 'Mie Goreng Telur Sayur',
-                        'harga'       => 12000,
-                        'jumlah_stok' => 40,
-                        'status_stok' => 'Tersedia',
-                        'foto'        => 'https://images.unsplash.com/photo-1612927601601-6638404737ce?w=500&auto=format&fit=crop&q=60',
-                        'id_kategori' => 1
-                    ],
-                    [
-                        'nama_menu'   => 'Nasi Ayam Bakar Bumbu Madu',
-                        'harga'       => 17000,
-                        'jumlah_stok' => 20,
-                        'status_stok' => 'Tersedia',
-                        'foto'        => 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=500&auto=format&fit=crop&q=60',
-                        'id_kategori' => 1
-                    ],
-                    [
-                        'nama_menu'   => 'Es Teh Manis Jumbo',
-                        'harga'       => 4000,
-                        'jumlah_stok' => 50,
-                        'status_stok' => 'Tersedia',
-                        'foto'        => 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=500&auto=format&fit=crop&q=60',
-                        'id_kategori' => 2
-                    ],
-                    [
-                        'nama_menu'   => 'Kopi Susu Gula Aren Kampus',
-                        'harga'       => 8000,
-                        'jumlah_stok' => 30,
-                        'status_stok' => 'Tersedia',
-                        'foto'        => 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=500&auto=format&fit=crop&q=60',
-                        'id_kategori' => 2
-                    ],
-                    [
-                        'nama_menu'   => 'Es Jeruk Peras Segar',
-                        'harga'       => 6000,
-                        'jumlah_stok' => 35,
-                        'status_stok' => 'Tersedia',
-                        'foto'        => 'https://images.unsplash.com/photo-1613478223719-2ab802602423?w=500&auto=format&fit=crop&q=60',
-                        'id_kategori' => 2
-                    ],
-                    [
-                        'nama_menu'   => 'Kentang Goreng Crispy',
-                        'harga'       => 10000,
-                        'jumlah_stok' => 25,
-                        'status_stok' => 'Tersedia',
-                        'foto'        => 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500&auto=format&fit=crop&q=60',
-                        'id_kategori' => 3
-                    ],
-                    [
-                        'nama_menu'   => 'Pisang Bakar Coklat Keju',
-                        'harga'       => 10000,
-                        'jumlah_stok' => 20,
-                        'status_stok' => 'Tersedia',
-                        'foto'        => 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=500&auto=format&fit=crop&q=60',
-                        'id_kategori' => 3
-                    ],
-                ];
-
-                foreach ($sampleMenus as $m) {
-                    $this->menuModel->insert($m);
-                }
+                \App\Database\Seeds\ProdukKatalogSeeder::seed();
             }
         } catch (\Throwable $e) {
             // Error ditangani dengan baik

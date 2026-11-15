@@ -80,11 +80,19 @@ class ManajerialController extends BaseController
          */
         $pembayaran = $this->db
             ->table('pembayaran')
-            ->select('metode, SUM(jumlah_diterima) AS total')
+            ->select(
+                'metode,
+                 SUM(
+                    CASE
+                        WHEN metode = \'Tunai\'
+                            THEN COALESCE(jumlah_diterima, 0) - COALESCE(kembalian, 0)
+                        ELSE COALESCE(jumlah_diterima, 0)
+                    END
+                 ) AS total'
+            )
             ->where('DATE(waktu_bayar) >=', $tanggalMulai)
             ->where('DATE(waktu_bayar) <=', $tanggalSelesai)
             ->where('status_bayar', 'Berhasil')
-            ->where('id_kasir IS NOT NULL', null, false)
             ->groupBy('metode')
             ->get()
             ->getResultArray();

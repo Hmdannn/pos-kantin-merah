@@ -1,8 +1,8 @@
 <style>
     .btn-meja-chip {
         background: #ffffff;
-        border: 1px solid #fdba74;
-        color: #9a3412;
+        border: 1px solid var(--km-border);
+        color: var(--km-brand);
         padding: 5px 12px;
         border-radius: 9999px;
         font-size: 12px;
@@ -11,13 +11,56 @@
         transition: all 0.15s ease;
     }
     .btn-meja-chip:hover, .btn-meja-chip.active {
-        background: #ea580c;
+        background: var(--km-brand);
         color: #ffffff;
-        border-color: #ea580c;
-        box-shadow: 0 2px 4px rgba(234, 88, 12, 0.2);
+        border-color: var(--km-brand);
+        box-shadow: 0 2px 4px rgba(159, 18, 57, 0.16);
+    }
+
+    @media (max-width: 600px) {
+        #customerCheckoutModal {
+            padding: 8px !important;
+            overscroll-behavior: contain;
+        }
+
+        #customerCheckoutModal > div {
+            width: 100%;
+            max-height: calc(100vh - 16px);
+            max-height: calc(100dvh - 16px);
+            margin: 0 auto !important;
+            overflow-y: auto !important;
+            overscroll-behavior: contain;
+        }
+
+        #customerCheckoutModal > div > div:first-child {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: #fff;
+        }
+
+        #customerCheckoutModal button {
+            min-height: 44px;
+        }
+
+        #closeCustomerCheckout {
+            width: 44px;
+            min-width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #customerCheckoutContent input,
+        #customerCheckoutContent select,
+        #customerCheckoutContent textarea {
+            max-width: 100%;
+        }
     }
 </style>
-
 <div
     id="customerCheckoutModal"
     style="
@@ -118,7 +161,7 @@
             >
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
                     <span style="font-size:18px;">📍</span>
-                    <h3 style="margin:0; font-size:16px; color:#9a3412; font-weight:700;">
+                    <h3 style="margin:0; font-size:16px; color:var(--km-brand); font-weight:700;">
                         Identitas Pemesan & Nomor Meja
                     </h3>
                 </div>
@@ -367,8 +410,8 @@
                     width:60px;
                     height:60px;
                     border-radius:50%;
-                    background:#dcfce7;
-                    color:#16a34a;
+                    background:var(--km-success-bg);
+                    color:var(--km-success);
                     font-size:32px;
                     display:flex;
                     align-items:center;
@@ -415,7 +458,7 @@
                             Pemesan: Budi
                         </div>
                     </div>
-                    <span style="background:#ea580c; color:#fff; font-size:11px; font-weight:700; padding:4px 8px; border-radius:6px;">
+                    <span style="background:var(--km-brand-soft); color:var(--km-brand); font-size:11px; font-weight:700; padding:4px 8px; border-radius:6px;">
                         AMBIL DI KASIR
                     </span>
                 </div>
@@ -584,7 +627,7 @@
                     style="
                         width:100%;
                         border:none;
-                        background:#7c3aed;
+                        background:var(--km-brand);
                         color:#fff;
                         padding:12px;
                         border-radius:8px;
@@ -1830,7 +1873,7 @@
             if (checkoutQrisStatus) {
                 checkoutQrisStatus.textContent =
                     '✅ Pembayaran berhasil — pesanan diteruskan ke dapur';
-                checkoutQrisStatus.style.color = '#15803d';
+                checkoutQrisStatus.style.color = 'var(--km-success)';
                 checkoutQrisStatus.classList.add('paid');
             }
 

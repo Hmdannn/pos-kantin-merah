@@ -1,3 +1,47 @@
+<style>
+    @media (max-width: 600px) {
+        #menuDetailModal {
+            padding: 8px !important;
+            overscroll-behavior: contain;
+        }
+
+        #menuDetailModal > div {
+            width: 100%;
+            max-height: calc(100vh - 16px);
+            max-height: calc(100dvh - 16px);
+            margin: 0 auto !important;
+            overflow-y: auto !important;
+            overscroll-behavior: contain;
+        }
+
+        #menuDetailModal > div > div:first-child {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: #fff;
+        }
+
+        #menuDetailModal button {
+            min-height: 44px;
+        }
+
+        #closeMenuDetail {
+            width: 44px;
+            min-width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #detailMenuQuantity {
+            min-width: 0;
+            flex: 1;
+        }
+    }
+</style>
 <div
     id="menuDetailModal"
     style="
@@ -123,6 +167,18 @@
                     "
                 >
                 </h3>
+
+
+                <div
+                    id="detailMenuDescription"
+                    style="
+                        font-size:14px;
+                        line-height:1.5;
+                        color:#6b7280;
+                        margin-bottom:12px;
+                    "
+                >
+                </div>
 
 
                 <div
@@ -327,6 +383,11 @@
             'detailMenuName'
         );
 
+    const detailMenuDescription =
+        document.getElementById(
+            'detailMenuDescription'
+        );
+
     const detailMenuCategory =
         document.getElementById(
             'detailMenuCategory'
@@ -515,6 +576,13 @@
 
         detailMenuName.textContent =
             menu.nama_menu;
+
+
+        detailMenuDescription.textContent =
+            menu.deskripsi || '';
+
+        detailMenuDescription.style.display =
+            menu.deskripsi ? 'block' : 'none';
 
 
         detailMenuCategory.textContent =

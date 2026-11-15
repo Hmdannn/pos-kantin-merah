@@ -1,3 +1,62 @@
+<style>
+    @media (max-width: 600px) {
+        #customerCartModal {
+            padding: 8px !important;
+            overscroll-behavior: contain;
+        }
+
+        #customerCartModal > div {
+            width: 100%;
+            max-height: calc(100vh - 16px);
+            max-height: calc(100dvh - 16px);
+            margin: 0 auto !important;
+            overflow-y: auto !important;
+            overscroll-behavior: contain;
+        }
+
+        #customerCartModal > div > div:first-child {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: #fff;
+        }
+
+        #customerCartModal button {
+            min-height: 44px;
+        }
+
+        #closeCustomerCart {
+            width: 44px;
+            min-width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #customerCartItems .cart-item-controls {
+            flex-wrap: wrap;
+            row-gap: 8px;
+        }
+
+        #customerCartItems .cart-remove {
+            flex: 0 0 100%;
+            min-width: 64px;
+            margin-left: 0 !important;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: #fff7f7;
+            box-sizing: border-box;
+        }
+
+        #customerCartItems,
+        #customerCartTotal {
+            overflow-wrap: anywhere;
+        }
+    }
+</style>
 <div
     id="customerCartModal"
     style="
@@ -16,8 +75,9 @@
             max-width:700px;
             margin:30px auto;
             background:#fff;
-            border-radius:14px;
+            border-radius:20px;
             overflow:hidden;
+            box-shadow: 0 24px 42px rgba(15, 23, 42, 0.14);
         "
     >
 
@@ -31,7 +91,7 @@
             "
         >
 
-            <h2 style="margin:0;">
+            <h2 style="margin:0; font-size:20px; color:#1f2937; letter-spacing:-0.02em;">
                 Keranjang
             </h2>
 
@@ -41,9 +101,10 @@
                 style="
                     border:none;
                     background:none;
-                    font-size:26px;
-                    color:#666;
+                    font-size:28px;
+                    color:#64748b;
                     cursor:pointer;
+                    line-height:1;
                 "
             >
                 &times;
@@ -146,7 +207,8 @@
                     <span
                         style="
                             font-size:16px;
-                            color:#666;
+                            color:#475569;
+                            font-weight:600;
                         "
                     >
                         Total
@@ -155,8 +217,9 @@
                     <strong
                         id="customerCartTotal"
                         style="
-                            font-size:22px;
-                            color:#b91c1c;
+                            font-size:24px;
+                            color:#7a2b22;
+                            letter-spacing:-0.03em;
                         "
                     >
                         Rp0
@@ -171,13 +234,14 @@
                     style="
                         width:100%;
                         border:none;
-                        background:#b91c1c;
+                        background:linear-gradient(135deg, #7a2b22 0%, #9d4437 100%);
                         color:#fff;
                         padding:13px;
-                        border-radius:8px;
-                        font-weight:600;
+                        border-radius:12px;
+                        font-weight:700;
                         font-size:16px;
                         cursor:pointer;
+                        box-shadow: 0 10px 20px rgba(122, 43, 34, 0.2);
                     "
                 >
                     Lanjut ke Checkout
@@ -553,6 +617,7 @@
 
 
                         <div
+                            class="cart-item-controls"
                             style="
                                 display:flex;
                                 align-items:center;
