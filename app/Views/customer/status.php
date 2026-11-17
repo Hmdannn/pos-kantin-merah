@@ -40,6 +40,218 @@
         #customerStatusModal span {
             overflow-wrap: anywhere;
         }
+
+        .qris-demo-image-wrap img {
+            width: 170px;
+        }
+    }
+
+    .qris-demo-card {
+        background: linear-gradient(180deg, #ffffff 0%, #fff8f9 100%);
+        border: 1px solid #f1d6dc;
+        border-radius: 16px;
+        padding: 16px;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(159, 18, 57, 0.08);
+    }
+
+    .qris-demo-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .qris-demo-logo {
+        font-weight: 900;
+        font-size: 14px;
+        letter-spacing: 0.08em;
+        color: #9f1239;
+    }
+
+    .qris-demo-badge {
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #fff1f3;
+        color: #9f1239;
+        border: 1px solid #f3c7d1;
+    }
+
+    .qris-demo-merchant {
+        font-size: 15px;
+        font-weight: 800;
+        color: #111827;
+    }
+
+    .qris-demo-sub {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: 2px;
+    }
+
+    .qris-demo-image-wrap {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        margin: 12px auto;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+    }
+
+    .qris-demo-image-wrap img {
+        display: block;
+        width: 190px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .qris-demo-amount-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .qris-demo-amount {
+        font-size: 22px;
+        font-weight: 800;
+        color: #9f1239;
+        margin: 2px 0 6px;
+    }
+
+    .qris-demo-meta {
+        font-size: 12px;
+        color: #374151;
+        overflow-wrap: anywhere;
+    }
+
+    .qris-demo-divider {
+        height: 1px;
+        background: #f1d6dc;
+        margin: 12px 0;
+    }
+
+    .qris-demo-status {
+        font-size: 13px;
+        font-weight: 700;
+        color: #b45309;
+        margin-bottom: 6px;
+    }
+
+    .qris-demo-status.paid {
+        color: #15803d;
+    }
+
+    .qris-demo-paid-note {
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 6px;
+    }
+
+    .qris-demo-demo-note {
+        font-size: 11px;
+        color: #9ca3af;
+        line-height: 1.45;
+        margin-top: 8px;
+    }
+
+    .status-guide {
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 16px;
+        background: #fafafa;
+    }
+
+    .status-guide-title {
+        font-size: 13px;
+        font-weight: 800;
+        color: #374151;
+        margin-bottom: 10px;
+    }
+
+    .status-next {
+        border-radius: 10px;
+        padding: 12px 14px;
+        margin-bottom: 12px;
+        font-size: 13px;
+        line-height: 1.5;
+        border: 1px solid #e5e7eb;
+        background: #fff;
+        color: #374151;
+    }
+
+    .status-next strong {
+        display: block;
+        margin-bottom: 2px;
+        font-size: 14px;
+        color: #111827;
+    }
+
+    .status-next.wait-pay { border-color: #fde68a; background: #fffbeb; }
+    .status-next.wait-pay strong { color: #92400e; }
+    .status-next.wait-kitchen { border-color: #bfdbfe; background: #eff6ff; }
+    .status-next.wait-kitchen strong { color: #1e40af; }
+    .status-next.ready { border-color: #86efac; background: #f0fdf4; }
+    .status-next.ready strong { color: #166534; }
+    .status-next.done { border-color: #d1d5db; background: #f9fafb; }
+    .status-next.done strong { color: #374151; }
+    .status-next.expired { border-color: #fecaca; background: #fef2f2; }
+    .status-next.expired strong { color: #991b1b; }
+
+    .status-steps {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 8px;
+    }
+
+    .status-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 12.5px;
+        color: #6b7280;
+    }
+
+    .status-step-dot {
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 800;
+        flex: 0 0 22px;
+        margin-top: 1px;
+        background: #e5e7eb;
+        color: #6b7280;
+    }
+
+    .status-step-body { flex: 1; min-width: 0; }
+    .status-step-title { font-weight: 700; color: #374151; display: block; }
+    .status-step-desc { color: #6b7280; display: block; margin-top: 1px; line-height: 1.4; }
+
+    .status-step.done { color: #374151; }
+    .status-step.done .status-step-dot { background: #dcfce7; color: #166534; }
+    .status-step.active .status-step-dot { background: #9f1239; color: #fff; }
+    .status-step.active .status-step-title { color: #111827; }
+    .status-step.todo .status-step-dot { background: #e5e7eb; color: #9ca3af; }
+    .status-step.todo .status-step-title { color: #6b7280; }
+
+    .status-auto-note {
+        margin-top: 10px;
+        font-size: 11px;
+        color: #9ca3af;
+        text-align: center;
     }
 </style>
 <div
@@ -77,7 +289,7 @@
         >
 
             <h2 style="margin:0; font-size:20px; color:#111827;">
-                Status Pesanan
+                Pesanan
             </h2>
 
             <button
@@ -252,6 +464,14 @@
             </div>
 
 
+            <!-- Progres & panduan -->
+            <div id="statusGuideBox" class="status-guide" style="display:none; margin-bottom:16px;">
+                <div class="status-guide-title">Progres pesanan</div>
+                <div id="statusNextAction" class="status-next"></div>
+                <ol id="statusSteps" class="status-steps"></ol>
+                <div class="status-auto-note">Status pesanan akan diperbarui secara otomatis selama halaman ini terbuka.</div>
+            </div>
+
             <!-- 3. STATUS PESANAN -->
             <div
                 style="
@@ -269,7 +489,7 @@
                         margin-bottom:6px;
                     "
                 >
-                    Status Pesanan
+                    Status saat ini
                 </div>
 
                 <strong
@@ -507,23 +727,7 @@
             </div>
 
 
-            <button
-                type="button"
-                id="refreshCustomerStatus"
-                style="
-                    width:100%;
-                    border:1px solid #b91c1c;
-                    background:#fff;
-                    color:#b91c1c;
-                    padding:12px;
-                    border-radius:8px;
-                    font-weight:700;
-                    cursor:pointer;
-                    transition:0.15s;
-                "
-            >
-                🔄 Perbarui Status
-            </button>
+            <!-- Status diperbarui otomatis -->
 
         </div>
 
@@ -666,6 +870,15 @@
         document.getElementById(
             'statusPaymentCountdown'
         );
+
+    const statusGuideBox =
+        document.getElementById('statusGuideBox');
+
+    const statusNextAction =
+        document.getElementById('statusNextAction');
+
+    const statusSteps =
+        document.getElementById('statusSteps');
 
 
     let statusQrisConfirming =
@@ -886,6 +1099,10 @@
 
         customerStatusContent.style.display =
             'none';
+
+        if (statusGuideBox) {
+            statusGuideBox.style.display = 'none';
+        }
     }
 
 
@@ -901,6 +1118,10 @@
 
         customerStatusContent.style.display =
             'none';
+
+        if (statusGuideBox) {
+            statusGuideBox.style.display = 'none';
+        }
 
         customerStatusError.textContent =
             message;
@@ -920,6 +1141,10 @@
 
         customerStatusContent.style.display =
             'none';
+
+        if (statusGuideBox) {
+            statusGuideBox.style.display = 'none';
+        }
 
         customerStatusEmpty.style.display =
             'block';
@@ -964,6 +1189,112 @@
         }
     }
 
+
+    function renderStatusGuide(pesanan, pembayaran) {
+        if (!statusGuideBox || !statusNextAction || !statusSteps) {
+            return;
+        }
+
+        const statusPesanan = (pesanan && pesanan.status) ? pesanan.status : '';
+        const metodeBayar = (pesanan && pesanan.metode_bayar)
+            ? pesanan.metode_bayar
+            : (pembayaran && pembayaran.metode ? pembayaran.metode : 'Tunai');
+        const statusBayar = pembayaran ? pembayaran.status_bayar : null;
+        const expired = statusPesanan === 'Kadaluarsa' || statusBayar === 'Kadaluarsa';
+        const cancelled = statusPesanan === 'Dibatalkan';
+        const paid = statusBayar === 'Berhasil' || ['Dibayar', 'Diproses', 'Siap Diambil', 'Selesai'].includes(statusPesanan);
+        const waitingPay = statusPesanan === 'Menunggu Pembayaran' && !expired && !cancelled;
+
+        let nextClass = '';
+        let nextTitle = 'Status pesanan';
+        let nextText = 'Pantau perkembangan pesanan kamu di sini.';
+
+        if (statusPesanan === 'Selesai') {
+            nextClass = 'done';
+            nextTitle = 'Pesanan Telah Selesai';
+            nextText = 'Pesanan Anda telah selesai diproses dan diterima. Terima kasih atas kepercayaan dan kunjungan Anda di Kantin Merah.';
+        } else if (expired) {
+            nextClass = 'expired';
+            nextTitle = 'Pesanan berakhir';
+            nextText = 'Waktu pembayaran habis atau pembayaran kedaluwarsa. Pesanan dibatalkan otomatis. Silakan buat pesanan baru jika masih ingin memesan.';
+        } else if (cancelled) {
+            nextClass = 'expired';
+            nextTitle = 'Pesanan dibatalkan';
+            nextText = 'Pesanan ini dibatalkan.';
+        } else if (statusPesanan === 'Siap Diambil') {
+            nextClass = 'ready';
+            nextTitle = 'Pesanan siap diambil';
+            nextText = 'Ambil pesanan di kasir sesuai meja/nama pemesan, lalu tekan tombol “Saya Sudah Ambil Makanan” di bawah agar pesanan selesai.';
+        } else if (statusPesanan === 'Dibayar' || statusPesanan === 'Diproses') {
+            nextClass = 'wait-kitchen';
+            nextTitle = 'Pesanan sedang disiapkan dapur';
+            nextText = 'Pembayaran sudah diterima. Pesanan sedang diproses di dapur. Kamu tidak perlu melakukan apa-apa — tunggu sampai status berubah menjadi “Siap Diambil”.';
+        } else if (waitingPay && metodeBayar === 'QRIS') {
+            nextClass = 'wait-pay';
+            nextTitle = 'Selesaikan pembayaran QRIS';
+            nextText = 'Scan QRIS di bawah, lakukan pembayaran, lalu tekan tombol “Saya Sudah Membayar QRIS”. Setelah itu pesanan otomatis diteruskan ke dapur.';
+        } else if (waitingPay) {
+            nextClass = 'wait-pay';
+            nextTitle = 'Bayar di kasir (Tunai)';
+            nextText = 'Datang ke kasir dan tunjukkan kode pesanan serta nomor antrean untuk membayar tunai. Setelah kasir mengonfirmasi, pesanan akan diproses dapur.';
+        }
+
+        statusNextAction.className = 'status-next ' + nextClass;
+        statusNextAction.innerHTML =
+            '<strong>' + statusEscapeHtml(nextTitle) + '</strong>' +
+            '<span>' + statusEscapeHtml(nextText) + '</span>';
+
+        const steps = [
+            { key: 'buat', title: 'Pesanan dibuat', desc: 'Pesanan dan nomor antrean sudah tercatat.' },
+            { key: 'bayar', title: 'Pembayaran', desc: metodeBayar === 'QRIS' ? 'Pembayaran QRIS dikonfirmasi.' : 'Pembayaran tunai dikonfirmasi kasir.' },
+            { key: 'dapur', title: 'Dapur memproses', desc: 'Pesanan disiapkan oleh dapur.' },
+            { key: 'siap', title: 'Siap diambil', desc: 'Pesanan siap diambil di kasir.' },
+            { key: 'selesai', title: 'Selesai', desc: 'Pesanan sudah diambil.' }
+        ];
+
+        function stepState(key) {
+            if (expired || cancelled) {
+                if (key === 'buat') return 'done';
+                if (key === 'bayar') return 'active';
+                return 'todo';
+            }
+            if (key === 'buat') return 'done';
+            if (key === 'bayar') {
+                if (paid) return 'done';
+                if (waitingPay) return 'active';
+                return 'todo';
+            }
+            if (key === 'dapur') {
+                if (['Siap Diambil', 'Selesai'].includes(statusPesanan)) return 'done';
+                if (['Dibayar', 'Diproses'].includes(statusPesanan)) return 'active';
+                return 'todo';
+            }
+            if (key === 'siap') {
+                if (statusPesanan === 'Selesai') return 'done';
+                if (statusPesanan === 'Siap Diambil') return 'active';
+                return 'todo';
+            }
+            if (key === 'selesai') {
+                return statusPesanan === 'Selesai' ? 'done' : 'todo';
+            }
+            return 'todo';
+        }
+
+        statusSteps.innerHTML = steps.map(function (step, index) {
+            const state = stepState(step.key);
+            const mark = state === 'done' ? '✓' : String(index + 1);
+            return '' +
+                '<li class="status-step ' + state + '">' +
+                    '<span class="status-step-dot">' + mark + '</span>' +
+                    '<span class="status-step-body">' +
+                        '<span class="status-step-title">' + statusEscapeHtml(step.title) + '</span>' +
+                        '<span class="status-step-desc">' + statusEscapeHtml(step.desc) + '</span>' +
+                    '</span>' +
+                '</li>';
+        }).join('');
+
+        statusGuideBox.style.display = 'block';
+    }
 
     function renderCustomerStatus(
         result
@@ -1320,6 +1651,8 @@
         }
 
 
+        renderStatusGuide(pesanan, pembayaran);
+
         customerStatusLoading.style.display =
             'none';
 
@@ -1548,20 +1881,12 @@
     );
 
 
-    document
-        .getElementById(
-            'refreshCustomerStatus'
-        )
-        .addEventListener(
-            'click',
-            function () {
-
-                loadCustomerStatus(
-                    currentCustomerOrderCode
-                );
-
-            }
-        );
+    const refreshCustomerStatusBtn = document.getElementById('refreshCustomerStatus');
+    if (refreshCustomerStatusBtn) {
+        refreshCustomerStatusBtn.addEventListener('click', function () {
+            loadCustomerStatus(currentCustomerOrderCode);
+        });
+    }
 
 
     async function konfirmasiQrisStatus()

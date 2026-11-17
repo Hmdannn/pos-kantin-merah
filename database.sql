@@ -96,7 +96,11 @@ INSERT INTO `menu` (`id_menu`, `nama_menu`, `deskripsi`, `harga`, `harga_modal`,
 -- 4. Table pesanan
 CREATE TABLE `pesanan` (
   `id_pesanan` INT AUTO_INCREMENT PRIMARY KEY,
+  `no_antrian` INT UNSIGNED NULL,
   `kode_pesanan` VARCHAR(50) NOT NULL UNIQUE,
+  `nama_customer` VARCHAR(100) NULL DEFAULT 'Pelanggan',
+  `nomor_meja` VARCHAR(50) NULL DEFAULT 'Meja -',
+  `id_customer` VARCHAR(50) NULL DEFAULT '',
   `waktu_pesan` DATETIME NOT NULL,
   `status` ENUM('Menunggu Pembayaran', 'Dibayar', 'Diproses', 'Siap Diambil', 'Selesai', 'Kadaluarsa', 'Dibatalkan') NOT NULL DEFAULT 'Menunggu Pembayaran',
   `total_bayar` DECIMAL(10,2) NOT NULL DEFAULT 0.00,

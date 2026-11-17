@@ -36,6 +36,12 @@
             justify-content: center;
         }
 
+        #menuDetailModal input,
+        #menuDetailModal select,
+        #menuDetailModal textarea {
+            font-size: 16px !important;
+        }
+
         #detailMenuQuantity {
             min-width: 0;
             flex: 1;

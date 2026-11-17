@@ -6,7 +6,7 @@
     <title>Riwayat Transaksi - Kantin Merah POS</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f3f4f6; color: #1f2937; }
+        body { font-family: var(--font-primary); background: #f3f4f6; color: #1f2937; }
         .layout { display: flex; min-height: 100vh; }
         .sidebar { width: 250px; background: #8f1726; color: white; padding: 24px 18px; flex-shrink: 0; display: flex; flex-direction: column; }
         .brand { font-size: 20px; font-weight: 800; letter-spacing: 0.5px; }
@@ -92,30 +92,18 @@
         }
     </style>
     <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/kasir-sidebar.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/kasir-ui.css') ?>">
+    <?= view('layout/typography') ?>
+    <script src="<?= base_url('assets/js/kasir-sidebar.js') ?>" defer></script>
 </head>
 <body>
-<div class="layout">
-    <aside class="sidebar">
-        <div class="brand">KANTIN MERAH</div>
-        <div class="brand-subtitle">Point of Sale &bull; UNP Kampus 1</div>
-
-        <div class="nav-label">Menu Kasir</div>
-        <a class="nav-link" href="<?= site_url('kasir') ?>">📊 Antrean Pembayaran</a>
-        <a class="nav-link active" href="<?= site_url('kasir/riwayat') ?>">📜 Riwayat Transaksi</a>
-        <a class="nav-link" href="<?= site_url('kasir/shift') ?>">⏰ Kelola Shift Kasir</a>
-        <a class="nav-link" href="<?= site_url('customer') ?>" target="_blank">🛒 Halaman Customer</a>
-
-        <div class="sidebar-bottom">
-            <div style="font-size: 12px; color: #fecaca; margin-bottom: 8px;">
-                Petugas: <strong><?= esc(session()->get('nama') ?? 'Kasir') ?></strong>
-            </div>
-            <a class="nav-link" href="<?= site_url('logout') ?>" style="background: rgba(0,0,0,0.2);">🚪 Keluar</a>
-        </div>
-    </aside>
-
+<div class="layout kasir-layout">
+    <?= view('kasir/_sidebar', ['activeMenu' => 'riwayat']) ?>
     <main class="main">
         <header class="topbar">
-            <h1>📜 Riwayat Transaksi</h1>
+            <button type="button" class="kasir-menu-toggle" aria-label="Buka menu" aria-controls="kasirSidebar" aria-expanded="false">☰</button>
+            <h1>Riwayat Transaksi</h1>
             <div class="user-pill">Role: Kasir</div>
         </header>
 

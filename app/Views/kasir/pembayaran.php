@@ -5,23 +5,36 @@ $idPesanan = $idPesanan ?? ($_GET['id_pesanan'] ?? '');
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Pembayaran - Kantin Merah POS</title>
-
     <style>
-        * { box-sizing: border-box; }
-
-        body {
-            margin: 0;
-            padding: 24px;
-            background: #f5f6f8;
-            color: #1f2937;
-            font-family: Inter, -apple-system, BlinkMacSystemFont,
-                "Segoe UI", Arial, sans-serif;
+        :root{
+            --bg:#faf7f4; --surface:#fff; --surface-2:#f8f9fb; --line:#e2e5e9; --text:#20242b; --muted:#667085;
+            --brand:#9f1239; --brand-d:#881337; --brand-soft:#fff1f3;
+            --ok:#0e9f6e; --ok-soft:#dcf7ea; --warn:#c77700; --warn-soft:#fff1d6; --bad:#d92d20;
+            --r-lg:20px; --r-md:12px; --r-sm:8px;
+            --shadow:0 1px 2px rgba(20,22,28,.04),0 8px 24px -12px rgba(20,22,28,.12);
         }
-
-        .container { max-width: 900px; margin: auto; }
-
+        [data-theme="dark"]{
+            --bg:#0e1014; --surface:#171a21; --surface-2:#1d212a; --line:#272c37; --text:#eef0f5; --muted:#8e95a6;
+            --brand-soft:#3a1219; --ok-soft:#0f3325; --warn-soft:#3a2a0b;
+            --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        html{color-scheme:light dark}
+        body{font-family:var(--font-primary);background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+        
+        .layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 250px; background: #8f1726; color: white; padding: 24px 18px; flex-shrink: 0; display: flex; flex-direction: column; }
+        .brand { font-size: 20px; font-weight: 800; letter-spacing: .5px; }
+        .brand-subtitle { font-size: 11px; color: #fecaca; margin-bottom: 28px; }
+        .nav-label { font-size: 11px; color: #fca5a5; text-transform: uppercase; letter-spacing: 1px; margin: 18px 8px 8px; }
+        .nav-link { display: block; color: #fef2f2; text-decoration: none; padding: 11px 12px; border-radius: 8px; font-size: 14px; font-weight: 500; margin-bottom: 4px; transition: .15s; }
+        .nav-link:hover, .nav-link.active { background: #b91c1c; color: white; }
+        .sidebar-bottom { margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.15); }
+        .main { flex: 1; min-width: 0; }
+        .container { max-width: 900px; margin: auto; padding: 28px; }
+        
         .topbar {
             display: flex;
             justify-content: space-between;
@@ -30,48 +43,57 @@ $idPesanan = $idPesanan ?? ($_GET['id_pesanan'] ?? '');
             margin-bottom: 24px;
         }
 
-        h1 { margin: 0 0 6px; font-size: 26px; }
-        .muted { color: #6b7280; font-size: 14px; }
+        h1 { font-size: 22px; font-weight: 800; letter-spacing: -.01em; }
+        .muted { color: var(--muted); font-size: 13px; font-weight: 600; }
 
         .back-link {
-            color: #dc2626;
+            color: var(--brand);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
+        .back-link:hover { text-decoration: underline; }
 
         .card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 14px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--r-lg);
             padding: 24px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,.03);
+            box-shadow: var(--shadow);
         }
 
-        .card h2 { margin: 0 0 20px; font-size: 18px; }
+        .card h2 { margin: 0 0 18px; font-size: 17px; font-weight: 800; }
 
-        .form-group { margin-bottom: 18px; }
+        .form-group { margin-bottom: 16px; }
 
         label {
             display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--muted);
+            margin-bottom: 6px;
         }
 
         input, select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
+            padding: 12px 14px;
+            border: 1.5px solid var(--line);
+            border-radius: var(--r-sm);
             font-size: 15px;
-            background: white;
+            font-weight: 700;
+            background: var(--surface);
+            color: var(--text);
+            font-family: inherit;
         }
 
         input:focus, select:focus {
             outline: none;
-            border-color: #dc2626;
-            box-shadow: 0 0 0 3px rgba(220,38,38,.1);
+            border-color: var(--brand);
+            box-shadow: 0 0 0 3px var(--brand-soft);
         }
 
         .summary {
@@ -80,30 +102,32 @@ $idPesanan = $idPesanan ?? ($_GET['id_pesanan'] ?? '');
             align-items: center;
             gap: 16px;
             padding: 14px 0;
-            border-bottom: 1px solid #f3f4f6;
+            border-bottom: 1px solid var(--line);
         }
 
         .summary:last-child { border-bottom: 0; }
 
         .total {
-            color: #dc2626;
-            font-size: 28px;
+            color: var(--brand);
+            font-size: 26px;
             font-weight: 800;
+            letter-spacing: -.02em;
         }
 
         .change {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-radius: 10px;
+            background: var(--ok-soft);
+            border: 1px solid color-mix(in srgb, var(--ok) 30%, var(--line));
+            border-radius: var(--r-md);
             padding: 16px;
             margin-top: 16px;
         }
 
         .change strong {
             display: block;
-            margin-top: 6px;
-            font-size: 24px;
-            color: #15803d;
+            margin-top: 4px;
+            font-size: 22px;
+            color: var(--ok);
+            font-weight: 800;
         }
 
         .method-options {
@@ -115,108 +139,126 @@ $idPesanan = $idPesanan ?? ($_GET['id_pesanan'] ?? '');
         .method-option {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 15px;
-            border: 1px solid #d1d5db;
-            border-radius: 10px;
+            gap: 12px;
+            padding: 16px;
+            border: 1.5px solid var(--line);
+            border-radius: var(--r-md);
+            background: var(--surface);
             cursor: pointer;
+            transition: all .15s;
         }
 
         .method-option input {
             width: auto;
-            accent-color: #dc2626;
+            accent-color: var(--brand);
         }
 
         .method-option:has(input:checked) {
-            border-color: #dc2626;
-            background: #fef2f2;
+            border-color: var(--brand);
+            background: var(--brand-soft);
         }
 
         .button {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             border: 0;
-            border-radius: 8px;
-            padding: 12px 18px;
-            background: #dc2626;
-            color: white;
+            border-radius: var(--r-md);
+            padding: 12px 20px;
+            background: var(--brand);
+            color: #fff;
             font-size: 14px;
             font-weight: 700;
             cursor: pointer;
             text-decoration: none;
+            font-family: inherit;
+            transition: background .15s;
         }
 
-        .button:hover { background: #b91c1c; }
-        .button:disabled { background: #9ca3af; cursor: not-allowed; }
+        .button:hover { background: var(--brand-d); }
+        .button:disabled { background: var(--muted); opacity: .6; cursor: not-allowed; }
 
         .button-secondary {
-            background: #e5e7eb;
-            color: #374151;
+            background: var(--surface-2);
+            color: var(--text);
+            border: 1px solid var(--line);
         }
 
-        .button-secondary:hover { background: #d1d5db; }
+        .button-secondary:hover { background: var(--line); }
 
         .actions {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            margin-top: 22px;
+            margin-top: 24px;
         }
 
         .alert {
-            padding: 13px 15px;
-            margin-bottom: 18px;
-            border-radius: 8px;
-            font-size: 14px;
-            line-height: 1.5;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            border-radius: var(--r-md);
+            font-size: 13.5px;
+            font-weight: 600;
+            line-height: 1.4;
         }
 
         .alert-error {
-            background: #fef2f2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
+            background: color-mix(in srgb, var(--bad) 12%, var(--surface));
+            color: var(--bad);
+            border: 1px solid color-mix(in srgb, var(--bad) 30%, var(--line));
         }
 
         .alert-success {
-            background: #f0fdf4;
-            color: #166534;
-            border: 1px solid #bbf7d0;
+            background: var(--ok-soft);
+            color: var(--ok);
+            border: 1px solid color-mix(in srgb, var(--ok) 30%, var(--line));
         }
 
         .hidden { display: none !important; }
 
-        .status {
-            display: inline-block;
-            padding: 5px 9px;
-            border-radius: 20px;
-            background: #fef3c7;
-            color: #92400e;
-            font-size: 12px;
-            font-weight: 700;
+        @media (max-width: 860px) {
+            .layout { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                padding: 14px;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 4px;
+            }
+            .brand, .brand-subtitle, .nav-label, .sidebar-bottom { grid-column: 1 / -1; }
+            .brand-subtitle { margin-bottom: 8px; }
+            .nav-label { margin: 8px 4px 4px; }
+            .nav-link { min-width: 0; min-height: 44px; margin: 0; }
+            .sidebar-bottom { margin-top: 8px; padding-top: 10px; }
+            .main { width: 100%; }
+            .container { padding: 18px 16px; }
         }
 
         @media (max-width: 600px) {
-            body { padding: 14px; }
+            .container { padding: 14px 12px; }
             .card { padding: 18px; }
-            .topbar { align-items: flex-start; flex-wrap: wrap; }
-            h1 { font-size: 22px; }
             .method-options { grid-template-columns: 1fr; }
-            .total { font-size: 23px; }
-            .method-option { min-height: 56px; }
-            .button { min-height: 44px; }
-            .summary { align-items: flex-start; }
-            .summary > * { min-width: 0; overflow-wrap: anywhere; }
+            .total { font-size: 22px; }
         }
     </style>
     <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/kasir-sidebar.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/kasir-ui.css') ?>">
+    <?= view('layout/typography') ?>
+    <script src="<?= base_url('assets/js/kasir-sidebar.js') ?>" defer></script>
 </head>
 
 <body>
-<div class="container">
+<div class="layout kasir-layout">
+    <?= view('kasir/_sidebar', ['activeMenu' => 'dashboard']) ?>
+    <main class="main">
+      <div class="container">
     <div class="topbar">
+        <button type="button" class="kasir-menu-toggle" aria-label="Buka menu" aria-controls="kasirSidebar" aria-expanded="false">☰</button>
         <div>
-            <h1>Pembayaran</h1>
+            <h1>Form Pembayaran Kasir</h1>
         </div>
-        <a class="back-link" href="<?= site_url('kasir') ?>">Kembali ke Kasir</a>
+        <a class="back-link" href="<?= site_url('kasir') ?>">← Kembali ke Kasir</a>
     </div>
 
     <div id="alertBox" class="alert hidden" role="alert"></div>
@@ -237,7 +279,7 @@ $idPesanan = $idPesanan ?? ($_GET['id_pesanan'] ?? '');
 
         <div class="summary">
             <span class="muted">Status pesanan</span>
-            <strong id="orderStatus">-</strong>
+            <strong id="orderStatus" style="font-size: 15px;">-</strong>
         </div>
 
         <div class="summary">
@@ -246,14 +288,14 @@ $idPesanan = $idPesanan ?? ($_GET['id_pesanan'] ?? '');
         </div>
 
         <div class="actions">
-            <button type="button" class="button" id="loadOrderBtn">
-                Muat Pesanan
+            <button type="button" class="button button-secondary" id="loadOrderBtn">
+                Muat Data Pesanan
             </button>
         </div>
     </section>
 
     <section class="card">
-        <h2>Metode Pembayaran</h2>
+        <h2>Pilih Metode Pembayaran</h2>
 
         <form id="paymentForm">
             <?= csrf_field() ?>
@@ -261,23 +303,23 @@ $idPesanan = $idPesanan ?? ($_GET['id_pesanan'] ?? '');
             <div class="method-options">
                 <label class="method-option">
                     <input type="radio" name="metode" value="Tunai" checked>
-                    <span>
-                        <strong>Tunai</strong><br>
-                        <small class="muted">Bayar langsung ke kasir</small>
-                    </span>
+                    <div>
+                        <strong style="font-size: 15px;">Tunai</strong><br>
+                        <span class="muted">Bayar langsung di kasir</span>
+                    </div>
                 </label>
 
                 <label class="method-option">
                     <input type="radio" name="metode" value="QRIS">
-                    <span>
-                        <strong>QRIS</strong><br>
-                        <small class="muted">Buat pembayaran berstatus menunggu</small>
-                    </span>
+                    <div>
+                        <strong style="font-size: 15px;">QRIS</strong><br>
+                        <span class="muted">Status menunggu konfirmasi</span>
+                    </div>
                 </label>
             </div>
 
-            <div class="form-group" id="cashGroup" style="margin-top:22px">
-                <label for="jumlahDiterima">Uang Diterima (Rp)</label>
+            <div class="form-group" id="cashGroup" style="margin-top:20px">
+                <label for="jumlahDiterima">Uang Tunai Diterima (Rp)</label>
                 <input
                     type="number"
                     id="jumlahDiterima"
@@ -287,15 +329,13 @@ $idPesanan = $idPesanan ?? ($_GET['id_pesanan'] ?? '');
                 >
 
                 <div class="change">
-                    <span class="muted">Estimasi kembalian</span>
+                    <span class="muted" style="color:var(--ok)">Estimasi Kembalian</span>
                     <strong id="kembalian">Rp0</strong>
                 </div>
             </div>
 
-            <div id="qrisInfo" class="alert hidden" style="margin-top:20px">
-                Pembayaran QRIS akan dibuat dengan status menunggu. Setelah customer
-                mengonfirmasi pembayaran di halaman status, pesanan otomatis
-                diteruskan ke dapur.
+            <div id="qrisInfo" class="alert hidden" style="margin-top:20px; background:var(--surface-2); color:var(--text); border:1px solid var(--line);">
+                Pembayaran QRIS akan dibuat dengan status menunggu. Setelah pelanggan menyelesaikan konfirmasi, pesanan otomatis diteruskan ke dapur.
             </div>
 
             <div class="actions">
@@ -303,16 +343,18 @@ $idPesanan = $idPesanan ?? ($_GET['id_pesanan'] ?? '');
                     Proses Pembayaran
                 </button>
                 <button type="button" class="button button-secondary" id="resetButton">
-                    Reset
+                    Reset Form
                 </button>
             </div>
         </form>
     </section>
 
     <section class="card hidden" id="resultCard">
-        <h2>Hasil Pembayaran</h2>
+        <h2>Hasil Transaksi Pembayaran</h2>
         <div id="resultContent"></div>
     </section>
+      </div>
+    </main>
 </div>
 
 <script>
@@ -424,14 +466,12 @@ $idPesanan = $idPesanan ?? ($_GET['id_pesanan'] ?? '');
             statusElement.textContent = currentOrder.status || '-';
             updateChange();
 
-            // Cek apakah pembayaran untuk pesanan ini sudah pernah dibuat.
             try {
                 const paymentResponse = await requestJson(
                     `<?= site_url('pesanan') ?>/${encodeURIComponent(id)}/pembayaran`
                 );
                 currentPayment = paymentResponse.data || null;
             } catch (error) {
-                // Jangan menganggap pembayaran sudah ada jika endpoint gagal.
                 console.warn('Pemeriksaan pembayaran gagal:', error.message);
             }
 

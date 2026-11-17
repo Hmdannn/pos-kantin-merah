@@ -1,0 +1,332 @@
+/* Sidebar kasir — dipakai di semua halaman role kasir */
+:root {
+    --ks-surface: #ffffff;
+    --ks-surface-2: #f8f9fb;
+    --ks-line: #ebecf1;
+    --ks-text: #1a1c23;
+    --ks-muted: #7c808e;
+    --ks-brand: #b3122b;
+    --ks-brand-dark: #8c0e22;
+    --ks-brand-soft: #fdecef;
+}
+
+:root[data-theme="dark"] {
+    --ks-surface: #171a21;
+    --ks-surface-2: #1d212a;
+    --ks-line: #272c37;
+    --ks-text: #eef0f5;
+    --ks-muted: #939aab;
+    --ks-brand: #e04a61;
+    --ks-brand-dark: #c03550;
+    --ks-brand-soft: #3a1219;
+}
+
+.kasir-layout {
+    display: flex;
+    align-items: flex-start;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.kasir-sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex: 0 0 250px;
+    flex-direction: column;
+    width: 250px;
+    height: 100vh;
+    height: 100dvh;
+    padding: 18px 14px 16px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-right: 1px solid var(--ks-line);
+    background: var(--ks-surface);
+    color: var(--ks-text);
+    z-index: 50;
+}
+
+.kasir-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 4px 8px 18px;
+    color: var(--ks-text);
+    text-decoration: none;
+}
+
+.kasir-brand-mark {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    place-items: center;
+    border-radius: 12px;
+    background: linear-gradient(140deg, #c2183a, #96102a);
+    color: #fff;
+    box-shadow: 0 8px 18px -12px rgba(179, 18, 43, .9);
+}
+
+.kasir-brand-mark svg.i {
+    width: 22px;
+    height: 22px;
+}
+
+.kasir-brand-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.15;
+}
+
+.kasir-brand-text strong {
+    font-size: 15.5px;
+    font-weight: 800;
+    letter-spacing: -.01em;
+    white-space: nowrap;
+}
+
+.kasir-brand-text small {
+    margin-top: 2px;
+    color: var(--ks-muted);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.kasir-nav-label {
+    padding: 10px 10px 6px;
+    color: var(--ks-muted);
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.kasir-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.kasir-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 11px;
+    border-radius: 10px;
+    color: var(--ks-muted);
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .15s, color .15s;
+}
+
+.kasir-nav-link:hover {
+    background: var(--ks-brand-soft);
+    color: var(--ks-brand);
+}
+
+.kasir-nav-link.active {
+    background: var(--ks-brand);
+    color: #fff;
+    box-shadow: 0 8px 18px -14px rgba(179, 18, 43, .95);
+}
+
+.kasir-nav-link.active:hover {
+    background: var(--ks-brand-dark);
+    color: #fff;
+}
+
+.kasir-nav-link svg.i {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.kasir-nav-link:focus-visible,
+.kasir-brand:focus-visible,
+.kasir-logout:focus-visible {
+    outline: 2px solid var(--ks-brand);
+    outline-offset: 2px;
+}
+
+.kasir-sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--ks-line);
+}
+
+.kasir-operator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border: 1px solid var(--ks-line);
+    border-radius: 12px;
+    background: var(--ks-surface-2);
+}
+
+.kasir-avatar {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--ks-brand-soft);
+    color: var(--ks-brand);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.kasir-op-meta {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.2;
+}
+
+.kasir-op-meta strong {
+    overflow: hidden;
+    color: var(--ks-text);
+    font-size: 12.5px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.kasir-op-meta small {
+    color: var(--ks-muted);
+    font-size: 10.5px;
+    font-weight: 600;
+}
+
+.kasir-logout {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    place-items: center;
+    border-radius: 8px;
+    color: var(--ks-muted);
+}
+
+.kasir-logout:hover {
+    background: var(--ks-brand-soft);
+    color: var(--ks-brand);
+}
+
+.kasir-logout svg.i {
+    width: 16px;
+    height: 16px;
+}
+
+.kasir-sidebar-note {
+    padding: 0 4px;
+    color: var(--ks-muted);
+    font-size: 10.5px;
+    text-align: center;
+}
+
+/* ikon inline */
+.kasir-sidebar svg.i,
+.kasir-menu-toggle svg.i {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.kasir-menu-toggle {
+    display: none;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid var(--ks-line);
+    border-radius: 10px;
+    background: var(--ks-surface);
+    color: var(--ks-text);
+    font: inherit;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.kasir-menu-toggle:focus-visible {
+    outline: 2px solid var(--ks-brand);
+    outline-offset: 2px;
+}
+
+.kasir-nav-backdrop {
+    display: none;
+}
+
+.kasir-layout > .main {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+}
+
+@media (max-width: 860px) {
+    .kasir-layout {
+        flex-direction: row;
+    }
+
+    .kasir-sidebar {
+        position: fixed;
+        z-index: 1201;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: min(290px, calc(100vw - 48px));
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100dvh;
+        padding: 18px 14px 16px;
+        transform: translateX(-105%);
+        transition: transform .22s ease;
+        box-shadow: 12px 0 32px rgba(32, 36, 43, .2);
+    }
+
+    .kasir-layout.is-nav-open .kasir-sidebar {
+        transform: translateX(0);
+    }
+
+    .kasir-layout.is-nav-open .kasir-nav-backdrop {
+        position: fixed;
+        z-index: 1200;
+        inset: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        border: 0;
+        background: rgba(15, 23, 42, .52);
+        cursor: default;
+    }
+
+    .kasir-menu-toggle {
+        display: inline-flex;
+    }
+
+    body.kasir-nav-open {
+        overflow: hidden;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .kasir-sidebar {
+        transition: none;
+    }
+}

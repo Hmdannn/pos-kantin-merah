@@ -6,7 +6,7 @@
     <title>Dapur - Kantin Merah POS</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #111827; color: #f9fafb; min-height: 100vh; }
+        body { font-family: var(--font-primary); background: #111827; color: #f9fafb; min-height: 100vh; }
         
         /* Top Navigation Bar */
         .topbar { background: #1f2937; padding: 14px 24px; border-bottom: 2px solid #374151; display: flex; justify-content: space-between; align-items: center; }
@@ -158,6 +158,7 @@
         }
     </style>
     <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
+    <?= view('layout/typography') ?>
 </head>
 <body>
 

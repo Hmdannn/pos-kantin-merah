@@ -11,6 +11,7 @@
         <?= esc($title ?? 'Kantin Merah') ?>
     </title>
     <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
+    <?= view('layout/typography') ?>
 </head>
 
 <body>

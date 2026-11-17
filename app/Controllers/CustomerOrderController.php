@@ -67,7 +67,7 @@ class CustomerOrderController extends BaseController
         }
 
         $items = $payload['items'];
-        $metodeBayar = $payload['metode'] ?? 'Tunai';
+        $metodeBayar = $payload['metode'] ?? $payload['metode_bayar'] ?? 'Tunai';
 
         if (!in_array($metodeBayar, ['Tunai', 'QRIS'], true)) {
             $metodeBayar = 'Tunai';

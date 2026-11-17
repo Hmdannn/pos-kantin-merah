@@ -6,7 +6,7 @@
     <title>Laporan Penjualan - Kantin Merah POS</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f8fafc; color: #1e293b; }
+        body { font-family: var(--font-primary); background: #f8fafc; color: #1e293b; }
         .layout { display: flex; min-height: 100vh; }
         
         /* Sidebar */
@@ -60,6 +60,26 @@
         .table-wrap table { min-width: 520px; }
         .table-wrap:focus-visible { outline: 2px solid #9f1239; outline-offset: 2px; }
 
+        /* Charts use values returned by the sales report endpoint. */
+        .report-chart-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr); gap: 20px; margin: 0 0 26px; }
+        .chart-panel { min-width: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.03); }
+        .chart-panel-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+        .chart-panel-header h3 { font-size: 15px; color: #0f172a; }
+        .chart-legend { display: flex; gap: 14px; color: #64748b; font-size: 11px; }
+        .chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
+        .chart-key { width: 8px; height: 8px; border-radius: 50%; background: #e11d48; }
+        .chart-key.previous { background: #fda4af; }
+        .report-trend-svg { display: block; width: 100%; height: 210px; overflow: visible; }
+        .category-chart-content { min-height: 210px; display: flex; align-items: center; justify-content: space-around; gap: 18px; flex-wrap: wrap; }
+        .category-donut { width: 155px; height: 155px; flex: 0 0 155px; transform: rotate(-90deg); }
+        .category-donut-bg, .category-donut-segment { fill: none; stroke-width: 16; }
+        .category-donut-bg { stroke: #f1f5f9; }
+        .category-legend { display: flex; flex-direction: column; gap: 11px; min-width: 130px; flex: 1; }
+        .category-legend-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12px; }
+        .category-legend-name { display: flex; align-items: center; gap: 7px; color: #334155; min-width: 0; }
+        .category-legend-dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 9px; }
+        .category-legend-value { font-weight: 700; color: #0f172a; white-space: nowrap; }
+
         @media (max-width: 900px) {
             .layout { flex-direction: column; }
             .sidebar {
@@ -91,32 +111,20 @@
             .kpi-val { overflow-wrap: anywhere; font-size: 21px; }
             .card-panel { padding: 15px; }
             .panel-header { align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+            .report-chart-grid { grid-template-columns: 1fr; }
+            .chart-panel { padding: 16px; }
+            .chart-panel-header { align-items: flex-start; flex-wrap: wrap; }
         }
     </style>
-    <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/kasir-sidebar.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/kasir-ui.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/managerial-ui.css') ?>">
+    <?= view('layout/typography') ?>
     <script src="<?= base_url('assets/js/managerial-drawer.js') ?>" defer></script>
 </head>
 <body>
-<div class="layout managerial-layout">
-    <!-- Sidebar -->
-    <aside class="sidebar managerial-sidebar" id="managerialSidebar" role="navigation" aria-label="Navigasi manajerial" aria-hidden="false">
-        <button type="button" class="managerial-menu-close" aria-label="Tutup menu navigasi">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <div class="brand">KANTIN MERAH</div>
-
-        <div class="nav-label">Menu Manajerial</div>
-        <a class="nav-link active" href="<?= site_url('manajerial') ?>">📊 Laporan Penjualan</a>
-        <a class="nav-link" href="<?= site_url('menu') ?>">🍲 Kelola Menu & Kategori</a>
-
-        <div class="sidebar-bottom">
-            <div style="font-size: 12px; color: #fecdd3; margin-bottom: 8px;">
-                Login: <strong><?= esc(session()->get('nama') ?? 'Manajerial') ?></strong>
-            </div>
-            <a class="nav-link" href="<?= site_url('logout') ?>" style="background: rgba(0,0,0,0.2);">🚪 Keluar</a>
-        </div>
-    </aside>
-    <button type="button" class="managerial-nav-backdrop" aria-hidden="true" tabindex="-1"></button>
+<div class="layout kasir-layout managerial-layout">
+    <?= view('manajerial/_sidebar', ['activeMenu' => 'report']) ?>
 
     <!-- Main -->
     <main class="main">
@@ -124,17 +132,23 @@
             <div class="managerial-heading">
                 <button
                     type="button"
-                    class="managerial-menu-toggle"
+                    class="managerial-menu-toggle kasir-menu-toggle"
                     aria-label="Buka menu navigasi"
                     aria-controls="managerialSidebar"
                     aria-expanded="false"
                 >
-                    <span aria-hidden="true">☰</span>
+                    <svg class="i" aria-hidden="true"><use href="#i-menu"/></svg>
                 </button>
-                <h1>Laporan Penjualan</h1>
+                <div class="managerial-heading-copy">
+                    <h1>Laporan Penjualan</h1>
+                    <p class="topbar-sub">Pantau ringkasan penjualan dan aktivitas kantin.</p>
+                </div>
             </div>
-            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                <a href="<?= site_url('menu') ?>" style="background: #9f1239; color: white; text-decoration: none; padding: 7px 13px; border-radius: 8px; font-size: 13px; font-weight: 600;">🍲 Kelola Menu</a>
+            <div class="topbar-actions">
+                <a href="<?= site_url('menu') ?>" class="btn btn-primary">
+                    <svg class="managerial-action-icon" aria-hidden="true"><use href="#i-bowl"/></svg>
+                    Kelola Menu
+                </a>
                 <div class="user-pill">Role: Manajerial / Owner</div>
             </div>
         </header>
@@ -142,8 +156,9 @@
         <div class="content">
             <!-- Period Selector (Sesuai PDF: Harian, Mingguan, Bulanan) -->
             <div class="period-bar">
-                <div>
-                    <span id="range-label" style="font-size: 13px; color: #64748b;">Memuat data...</span>
+                <div class="period-intro">
+                    <span class="section-eyebrow">Rentang laporan</span>
+                    <strong id="range-label" aria-live="polite">Memuat data...</strong>
                 </div>
                 <div class="period-buttons">
                     <button class="btn-period active" onclick="loadLaporan('harian', this)">Harian</button>
@@ -153,9 +168,16 @@
             </div>
 
             <!-- KPI Cards -->
+            <div class="report-section-head">
+                <div>
+                    <span class="section-eyebrow">Ikhtisar</span>
+                    <h2>Ringkasan penjualan</h2>
+                </div>
+                <p>Perbandingan kanal pembayaran dan volume transaksi untuk rentang terpilih.</p>
+            </div>
             <div class="kpi-grid">
-                <div class="kpi-card">
-                    <div class="kpi-title">Total Penjualan</div>
+                <div class="kpi-card kpi-card-primary">
+                    <div class="kpi-title">Total Pendapatan</div>
                     <div class="kpi-val" id="kpi-total">Rp 0</div>
                     <div class="kpi-sub">Omset kotor terbayar</div>
                 </div>
@@ -176,13 +198,36 @@
                 </div>
             </div>
 
+            <div class="report-chart-grid">
+                <section class="chart-panel" aria-labelledby="sales-trend-title">
+                    <div class="chart-panel-header">
+                        <h3 id="sales-trend-title">Tren penjualan</h3>
+                        <div class="chart-legend" aria-label="Legenda tren penjualan">
+                            <span><i class="chart-key"></i><span id="trend-current-label">Periode ini</span></span>
+                            <span><i class="chart-key previous"></i><span id="trend-previous-label">Periode sebelumnya</span></span>
+                        </div>
+                    </div>
+                    <svg id="sales-trend-chart" class="report-trend-svg" viewBox="0 0 620 190" preserveAspectRatio="none" role="img" aria-label="Grafik omzet periode ini dibanding periode sebelumnya"></svg>
+                </section>
+
+                <section class="chart-panel" aria-labelledby="category-performance-title">
+                    <div class="chart-panel-header"><h3 id="category-performance-title">Performa kategori</h3></div>
+                    <div class="category-chart-content">
+                        <svg id="category-donut-chart" class="category-donut" viewBox="0 0 100 100" role="img" aria-label="Grafik omzet menurut kategori">
+                            <circle class="category-donut-bg" cx="50" cy="50" r="38"></circle>
+                        </svg>
+                        <div id="category-donut-legend" class="category-legend" aria-live="polite"></div>
+                    </div>
+                </section>
+            </div>
+
             <!-- Content Grid: Top Menu & Peak Hours (Sesuai PDF) -->
             <div class="content-grid">
                 <!-- Menu Terlaris -->
                 <div class="card-panel">
                     <div class="panel-header">
-                        <span>🔥 Menu Paling Laris</span>
-                        <small style="color: #64748b; font-weight: normal;">Berdasarkan kuantitas terjual</small>
+                        <span>Menu terlaris</span>
+                        <small>Berdasarkan kuantitas terjual</small>
                     </div>
                     <div class="table-wrap" role="region" aria-label="Menu paling laris" tabindex="0">
                     <table>
@@ -204,8 +249,8 @@
                 <!-- Jam Paling Ramai -->
                 <div class="card-panel">
                     <div class="panel-header">
-                        <span>⏰ Jam Paling Ramai</span>
-                        <small style="color: #64748b; font-weight: normal;">Untuk penjadwalan staf</small>
+                        <span>Jam tersibuk</span>
+                        <small>Untuk penjadwalan staf</small>
                     </div>
                     <div class="table-wrap" role="region" aria-label="Jam paling ramai" tabindex="0">
                     <table>
@@ -229,6 +274,145 @@
 </div>
 
 <script>
+    function formatMoney(value) {
+        return 'Rp ' + Number(value || 0).toLocaleString('id-ID');
+    }
+
+    function renderSalesTrend(trend) {
+        const svg = document.getElementById('sales-trend-chart');
+        const namespace = 'http://www.w3.org/2000/svg';
+        const points = trend && Array.isArray(trend.titik) ? trend.titik : [];
+        const node = (tag, attrs = {}, text = '') => {
+            const element = document.createElementNS(namespace, tag);
+            Object.entries(attrs).forEach(([key, value]) => element.setAttribute(key, value));
+            if (text) element.textContent = text;
+            return element;
+        };
+
+        svg.replaceChildren();
+        const left = 52, right = 610, top = 14, bottom = 150;
+        const maximum = Math.max(0, ...points.flatMap(point => [Number(point.current) || 0, Number(point.previous) || 0]));
+        const rawStep = Math.max(maximum / 3, 1);
+        const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
+        const step = Math.ceil(rawStep / magnitude) * magnitude;
+        const ceiling = step * 3;
+
+        const compactMoney = value => value >= 1000000
+            ? `${(value / 1000000).toLocaleString('id-ID', { maximumFractionDigits: 1 })} jt`
+            : value >= 1000
+                ? `${(value / 1000).toLocaleString('id-ID', { maximumFractionDigits: 0 })} rb`
+                : Math.round(value).toLocaleString('id-ID');
+
+        for (let index = 0; index <= 3; index++) {
+            const y = top + ((bottom - top) * index / 3);
+            const amount = ceiling - step * index;
+            svg.append(
+                node('line', { x1: left, y1: y, x2: right, y2: y, stroke: '#f1f5f9' }),
+                node('text', { x: left - 8, y: y + 4, fill: '#94a3b8', 'font-size': 10, 'text-anchor': 'end' }, compactMoney(amount))
+            );
+        }
+
+        const currentLabel = trend && trend.granularitas === 'jam' ? 'Hari ini' : 'Periode ini';
+        const previousLabel = trend && trend.granularitas === 'jam' ? 'Hari sebelumnya' : 'Periode sebelumnya';
+        document.getElementById('trend-current-label').textContent = currentLabel;
+        document.getElementById('trend-previous-label').textContent = previousLabel;
+        if (!points.length) return;
+
+        const coords = field => points.map((point, index) => ({
+            x: points.length === 1 ? (left + right) / 2 : left + ((right - left) * index / (points.length - 1)),
+            y: bottom - (((Number(point[field]) || 0) / ceiling) * (bottom - top)),
+            value: Number(point[field]) || 0,
+            source: point
+        }));
+        const current = coords('current');
+        const previous = coords('previous');
+        const path = series => series.map((point, index) => `${index ? 'L' : 'M'} ${point.x} ${point.y}`).join(' ');
+        const defs = node('defs');
+        const gradient = node('linearGradient', { id: 'salesTrendFill', x1: 0, y1: 0, x2: 0, y2: 1 });
+        gradient.append(node('stop', { offset: '0%', 'stop-color': '#e11d48', 'stop-opacity': '.18' }), node('stop', { offset: '100%', 'stop-color': '#e11d48', 'stop-opacity': '0' }));
+        defs.appendChild(gradient);
+        svg.appendChild(defs);
+        const area = `${path(current)} L ${current[current.length - 1].x} ${bottom} L ${current[0].x} ${bottom} Z`;
+        svg.append(
+            node('path', { d: area, fill: 'url(#salesTrendFill)' }),
+            node('path', { d: path(previous), fill: 'none', stroke: '#fda4af', 'stroke-width': 2, 'stroke-dasharray': '4 3' }),
+            node('path', { d: path(current), fill: 'none', stroke: '#e11d48', 'stroke-width': 2.6 })
+        );
+
+        current.forEach((point, index) => {
+            const dateLabel = point.source.date || point.source.label;
+            const dot = node('circle', { cx: point.x, cy: point.y, r: 3.5, fill: '#e11d48', stroke: '#fff', 'stroke-width': 2 });
+            dot.appendChild(node('title', {}, `${dateLabel} | ${currentLabel}: ${formatMoney(point.value)} | ${previousLabel}: ${formatMoney(previous[index].value)}`));
+            svg.appendChild(dot);
+        });
+
+        const labelEvery = points.length > 14 ? Math.ceil(points.length / 7) : 1;
+        points.forEach((point, index) => {
+            if (index % labelEvery !== 0 && index !== points.length - 1) return;
+            const x = points.length === 1 ? (left + right) / 2 : left + ((right - left) * index / (points.length - 1));
+            svg.appendChild(node('text', { x, y: 178, fill: '#64748b', 'font-size': 10, 'text-anchor': 'middle' }, point.label));
+        });
+    }
+
+    function renderCategoryPerformance(categories) {
+        const svg = document.getElementById('category-donut-chart');
+        const legend = document.getElementById('category-donut-legend');
+        const rows = Array.isArray(categories) ? categories : [];
+        const colors = ['#8b5cf6', '#06b6d4', '#f97316', '#e11d48', '#22c55e', '#eab308', '#64748b'];
+        const total = rows.reduce((sum, row) => sum + (Number(row.total_penjualan) || 0), 0);
+        const circumference = 2 * Math.PI * 38;
+        let offset = 0;
+
+        svg.querySelectorAll('.category-donut-segment').forEach(segment => segment.remove());
+        legend.replaceChildren();
+        if (total <= 0) {
+            const empty = document.createElement('div');
+            empty.className = 'category-legend-row';
+            empty.textContent = 'Belum ada penjualan pada periode ini';
+            empty.style.color = '#64748b';
+            legend.appendChild(empty);
+            return;
+        }
+
+        rows.forEach((row, index) => {
+            const value = Number(row.total_penjualan) || 0;
+            if (value <= 0) return;
+            const ratio = value / total;
+            const color = colors[index % colors.length];
+            const length = circumference * ratio;
+            const segment = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            segment.setAttribute('class', 'category-donut-segment');
+            segment.setAttribute('cx', '50');
+            segment.setAttribute('cy', '50');
+            segment.setAttribute('r', '38');
+            segment.setAttribute('stroke', color);
+            segment.setAttribute('stroke-dasharray', `${length} ${circumference - length}`);
+            segment.setAttribute('stroke-dashoffset', `${-offset}`);
+            const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+            title.textContent = `${row.nama_kategori}: ${formatMoney(value)}`;
+            segment.appendChild(title);
+            svg.appendChild(segment);
+            offset += length;
+
+            const item = document.createElement('div');
+            item.className = 'category-legend-row';
+            const nameWrap = document.createElement('span');
+            nameWrap.className = 'category-legend-name';
+            const dot = document.createElement('i');
+            dot.className = 'category-legend-dot';
+            dot.style.backgroundColor = color;
+            const name = document.createElement('span');
+            name.textContent = row.nama_kategori || 'Kategori';
+            nameWrap.append(dot, name);
+            const amount = document.createElement('span');
+            amount.className = 'category-legend-value';
+            amount.textContent = `${Math.round(ratio * 100)}%`;
+            amount.title = formatMoney(value);
+            item.append(nameWrap, amount);
+            legend.appendChild(item);
+        });
+    }
+
     async function loadLaporan(periode, btnEl) {
         if (btnEl) {
             document.querySelectorAll('.btn-period').forEach(b => b.classList.remove('active'));
@@ -238,7 +422,7 @@
         document.getElementById('range-label').innerText = 'Memuat laporan periode ' + periode + '...';
 
         try {
-            const res = await fetch('<?= site_url('manajerial/laporan') ?>?periode=' + periode);
+            const res = await fetch('<?= site_url('manajerial/laporan') ?>?format=json&periode=' + periode);
             const resJson = await res.json();
 
             if (!resJson.status) {
@@ -247,6 +431,8 @@
             }
 
             const data = resJson.data;
+            renderSalesTrend(data.tren_penjualan);
+            renderCategoryPerformance(data.performa_kategori);
             document.getElementById('range-label').innerText = 'Rentang: ' + data.tanggal_mulai + ' s/d ' + data.tanggal_selesai;
 
             // KPI
@@ -306,4 +492,3 @@
 </script>
 </body>
 </html>
-

@@ -35,51 +35,10 @@ class KasirController extends BaseController
             ->where('waktu_selesai', null)
             ->first();
 
-        // 2. Semua pesanan yang masih menunggu pembayaran
-        $pesananMenunggu = $this->pesananModel
-            ->where('status', 'Menunggu Pembayaran')
-            ->orderBy('no_antrian', 'ASC')
-            ->orderBy('waktu_pesan', 'ASC')
-            ->findAll();
+        // 2. Antrean customer: pembayaran tunai dan pesanan siap diambil.
+        [$pesananTunai, $pesananSiap] = $this->ambilPesananAntrean();
 
-        foreach ($pesananMenunggu as &$p) {
-            $p['items'] = $this->detailPesananModel
-                ->select('detail_pesanan.*, menu.nama_menu')
-                ->join('menu', 'menu.id_menu = detail_pesanan.id_menu', 'left')
-                ->where('detail_pesanan.id_pesanan', $p['id_pesanan'])
-                ->findAll();
-
-            $p['pembayaran'] = $this->pembayaranModel
-                ->where('id_pesanan', $p['id_pesanan'])
-                ->first();
-        }
-        unset($p);
-
-        // Antrean tunai tetap diverifikasi kasir.
-        $pesananTunai = array_values(array_filter(
-            $pesananMenunggu,
-            static function ($p) {
-                return ($p['metode_bayar'] ?? 'Tunai') === 'Tunai';
-            }
-        ));
-
-        // 3. Pesanan Siap Diambil (self service -> ditandai Selesai)
-        $pesananSiap = $this->pesananModel
-            ->where('status', 'Siap Diambil')
-            ->orderBy('no_antrian', 'ASC')
-            ->orderBy('waktu_pesan', 'ASC')
-            ->findAll();
-
-        foreach ($pesananSiap as &$p) {
-            $p['items'] = $this->detailPesananModel
-                ->select('detail_pesanan.*, menu.nama_menu')
-                ->join('menu', 'menu.id_menu = detail_pesanan.id_menu', 'left')
-                ->where('detail_pesanan.id_pesanan', $p['id_pesanan'])
-                ->findAll();
-        }
-        unset($p);
-
-        // 4. Transaksi baru yang sudah dibayar dan siap masuk dapur.
+        // 3. Transaksi baru yang sudah dibayar dan siap masuk dapur.
         $pesananBaruMasuk = $this->pesananModel
             ->select('id_pesanan, no_antrian, kode_pesanan, id_customer, nama_customer, nomor_meja, status, total_bayar, waktu_pesan, updated_at')
             ->where('status', 'Dibayar')
@@ -107,6 +66,78 @@ class KasirController extends BaseController
             'pesananBaruMasuk'  => $pesananBaruMasuk,
             'jumlahDapurAktif'  => $jumlahDapurAktif,
         ]);
+    }
+
+    /**
+     * Halaman antrean customer: pembayaran tunai + pesanan siap diantar.
+     */
+    public function antrean()
+    {
+        $idKasir = session()->get('id_user');
+
+        $shiftAktif = $this->shiftModel
+            ->where('id_kasir', $idKasir)
+            ->where('waktu_selesai', null)
+            ->first();
+
+        [$pesananTunai, $pesananSiap] = $this->ambilPesananAntrean();
+
+        return view('kasir/antrean', [
+            'shiftAktif'   => $shiftAktif,
+            'pesananTunai' => $pesananTunai,
+            'pesananSiap'  => $pesananSiap,
+        ]);
+    }
+
+    /**
+     * Data antrean yang dipakai dashboard dan halaman antrean.
+     *
+     * @return array{0: array, 1: array}
+     */
+    private function ambilPesananAntrean(): array
+    {
+        $pesananMenunggu = $this->pesananModel
+            ->where('status', 'Menunggu Pembayaran')
+            ->orderBy('no_antrian', 'ASC')
+            ->orderBy('waktu_pesan', 'ASC')
+            ->findAll();
+
+        foreach ($pesananMenunggu as &$p) {
+            $p['items'] = $this->detailPesananModel
+                ->select('detail_pesanan.*, menu.nama_menu')
+                ->join('menu', 'menu.id_menu = detail_pesanan.id_menu', 'left')
+                ->where('detail_pesanan.id_pesanan', $p['id_pesanan'])
+                ->findAll();
+
+            $p['pembayaran'] = $this->pembayaranModel
+                ->where('id_pesanan', $p['id_pesanan'])
+                ->first();
+        }
+        unset($p);
+
+        $pesananTunai = array_values(array_filter(
+            $pesananMenunggu,
+            static function ($p) {
+                return ($p['metode_bayar'] ?? 'Tunai') === 'Tunai';
+            }
+        ));
+
+        $pesananSiap = $this->pesananModel
+            ->where('status', 'Siap Diambil')
+            ->orderBy('no_antrian', 'ASC')
+            ->orderBy('waktu_pesan', 'ASC')
+            ->findAll();
+
+        foreach ($pesananSiap as &$p) {
+            $p['items'] = $this->detailPesananModel
+                ->select('detail_pesanan.*, menu.nama_menu')
+                ->join('menu', 'menu.id_menu = detail_pesanan.id_menu', 'left')
+                ->where('detail_pesanan.id_pesanan', $p['id_pesanan'])
+                ->findAll();
+        }
+        unset($p);
+
+        return [$pesananTunai, $pesananSiap];
     }
 
     /**

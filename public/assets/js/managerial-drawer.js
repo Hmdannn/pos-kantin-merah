@@ -3,13 +3,14 @@
     const trigger = document.querySelector('.managerial-menu-toggle');
     const closeButton = document.querySelector('.managerial-menu-close');
     const backdrop = document.querySelector('.managerial-nav-backdrop');
+    const layout = document.querySelector('.managerial-layout');
     const main = document.querySelector('.managerial-layout > .main');
 
-    if (!drawer || !trigger || !closeButton || !backdrop || !main) {
+    if (!drawer || !trigger || !closeButton || !backdrop || !layout || !main) {
         return;
     }
 
-    const mobileQuery = window.matchMedia('(max-width: 900px)');
+    const mobileQuery = window.matchMedia('(max-width: 860px)');
     const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
     function setDrawerOpen(open, restoreFocus) {
@@ -19,6 +20,7 @@
 
         drawer.classList.toggle('is-open', open);
         backdrop.classList.toggle('is-open', open);
+        layout.classList.toggle('is-nav-open', open);
         trigger.setAttribute('aria-expanded', String(open));
         drawer.setAttribute('aria-hidden', String(!open && mobileQuery.matches));
         drawer.inert = !open && mobileQuery.matches;
@@ -82,6 +84,7 @@
         const focusWasInDrawer = drawer.contains(document.activeElement);
         drawer.classList.remove('is-open');
         backdrop.classList.remove('is-open');
+        layout.classList.remove('is-nav-open');
         trigger.setAttribute('aria-expanded', 'false');
         drawer.setAttribute('aria-hidden', String(mobileQuery.matches));
         drawer.inert = mobileQuery.matches;

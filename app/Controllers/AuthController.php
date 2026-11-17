@@ -64,10 +64,11 @@ class AuthController extends BaseController
                 ->with('error', 'Akun dengan email "' . esc($email) . '" belum terdaftar di database.');
         }
 
-        // Verifikasi password (dengan fallback dev password123)
-        $isValidPassword = password_verify($password, $user['password'])
-            || ($user['password'] === $password)
-            || ($password === 'password123');
+        // Verifikasi password.
+        // Fallback: jika hash tersimpan masih plaintext (data lama/dev),
+        // izinkan sekali lalu perbarui ke hash yang aman di bawah.
+        $isPlainMatch = hash_equals((string) $user['password'], $password);
+        $isValidPassword = password_verify($password, $user['password']) || $isPlainMatch;
 
         if (!$isValidPassword) {
             return redirect()->to(site_url('login'))

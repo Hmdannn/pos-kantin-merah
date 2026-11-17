@@ -133,15 +133,22 @@ class CustomerController extends BaseController
 
     private function fotoMenuUrl(?string $foto): ?string
     {
-        if (!$foto) {
+        if (!$foto || trim($foto) === '') {
             return null;
         }
+
+        $foto = trim($foto);
 
         if (preg_match('#^https?://#i', $foto)) {
             return $foto;
         }
 
-        return base_url(ltrim(str_replace('\\', '/', $foto), '/'));
+        $clean = ltrim(str_replace('\\', '/', $foto), '/');
+        if (!str_starts_with($clean, 'uploads/') && !str_starts_with($clean, 'assets/')) {
+            $clean = 'uploads/menu/' . $clean;
+        }
+
+        return base_url($clean);
     }
 
     /**
@@ -152,7 +159,7 @@ class CustomerController extends BaseController
     public function pesananSiap()
     {
         $pesanan = $this->pesananModel
-            ->select('id_pesanan, kode_pesanan, nama_customer, nomor_meja, id_customer, waktu_pesan, total_bayar, metode_bayar, updated_at')
+            ->select('id_pesanan, kode_pesanan, no_antrian, nama_customer, nomor_meja, id_customer, waktu_pesan, total_bayar, metode_bayar, status, updated_at')
             ->where('status', 'Siap Diambil')
             ->orderBy('waktu_pesan', 'ASC')
             ->findAll();

@@ -7,11 +7,13 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 
 // ======================================================
-// TEST
+// TEST (khusus pengembangan)
 // ======================================================
 
-$routes->get('test/user', 'Test::user');
-$routes->get('test/init-users', 'Test::initUsers');
+if (ENVIRONMENT === 'development') {
+    $routes->get('test/user', 'Test::user');
+    $routes->get('test/init-users', 'Test::initUsers');
+}
 
 // ======================================================
 // AUTHENTICATION
@@ -28,6 +30,14 @@ $routes->get('logout', 'AuthController::logout');
 $routes->get(
     'kasir',
     'KasirController::index',
+    [
+        'filter' => ['auth', 'role:kasir']
+    ]
+);
+
+$routes->get(
+    'kasir/antrean',
+    'KasirController::antrean',
     [
         'filter' => ['auth', 'role:kasir']
     ]
@@ -77,61 +87,24 @@ $routes->get(
 );
 
 // ======================================================
-// PESANAN
+// PESANAN (internal/staf)
 // ======================================================
 
-$routes->get(
-    'pesanan',
-    'PesananController::index'
-);
+$routes->group('pesanan', ['filter' => ['auth', 'role:kasir,dapur,manajerial']], static function ($routes) {
+    $routes->get('/', 'PesananController::index');
+    $routes->get('(:num)', 'PesananController::show/$1');
+    $routes->post('/', 'PesananController::store');
+    $routes->post('(:num)/status', 'PesananController::updateStatus/$1');
+    $routes->get('(:num)/total', 'PesananController::calculateTotal/$1');
 
-$routes->get(
-    'pesanan/(:num)',
-    'PesananController::show/$1'
-);
+    // Detail pesanan
+    $routes->post('(:num)/detail', 'DetailPesananController::store/$1');
+    $routes->delete('detail/(:num)', 'DetailPesananController::delete/$1');
 
-$routes->post(
-    'pesanan',
-    'PesananController::store'
-);
-
-$routes->post(
-    'pesanan/(:num)/status',
-    'PesananController::updateStatus/$1'
-);
-
-$routes->get(
-    'pesanan/(:num)/total',
-    'PesananController::calculateTotal/$1'
-);
-
-// ======================================================
-// DETAIL PESANAN
-// ======================================================
-
-$routes->post(
-    'pesanan/(:num)/detail',
-    'DetailPesananController::store/$1'
-);
-
-$routes->delete(
-    'pesanan/detail/(:num)',
-    'DetailPesananController::delete/$1'
-);
-
-// ======================================================
-// PEMBAYARAN
-// ======================================================
-
-$routes->get(
-    'pesanan/(:num)/pembayaran',
-    'PembayaranController::showByPesanan/$1'
-);
-
-$routes->post(
-    'pesanan/(:num)/pembayaran',
-    'PembayaranController::store/$1'
-);
+    // Pembayaran
+    $routes->get('(:num)/pembayaran', 'PembayaranController::showByPesanan/$1');
+    $routes->post('(:num)/pembayaran', 'PembayaranController::store/$1');
+});
 
 // ======================================================
 // SHIFT - KHUSUS KASIR

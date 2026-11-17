@@ -55,6 +55,12 @@
         #customerCartTotal {
             overflow-wrap: anywhere;
         }
+
+        #customerCartModal input,
+        #customerCartModal select,
+        #customerCartModal textarea {
+            font-size: 16px !important;
+        }
     }
 </style>
 <div

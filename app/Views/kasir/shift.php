@@ -10,18 +10,48 @@
 
         body {
             margin: 0;
-            padding: 24px;
             background: #f5f6f8;
             color: #1f2937;
-            font-family: Arial, sans-serif;
+            font-family: var(--font-primary);
         }
+
+        .layout { display: flex; min-height: 100vh; }
+
+        .sidebar {
+            position: sticky;
+            top: 0;
+            display: flex;
+            flex: 0 0 248px;
+            flex-direction: column;
+            width: 248px;
+            height: 100vh;
+            padding: 22px 14px;
+            background: #1b0f13;
+            color: #d9c9cc;
+        }
+
+        .brand { display: flex; gap: 12px; align-items: center; padding: 0 8px 22px; }
+        .brand-mark { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 12px; background: #b3122b; color: #fff; font-size: 18px; font-weight: 800; }
+        .brand-name { color: #fff; font-size: 16px; font-weight: 800; line-height: 1.1; }
+        .brand-sub { font-size: 11px; opacity: .65; }
+        .nav-label { margin: 14px 10px 6px; font-size: 12px; opacity: .5; }
+        .nav-link { display: flex; gap: 12px; align-items: center; margin-bottom: 2px; padding: 11px 12px; border-radius: 8px; color: #d9c9cc; font-weight: 600; text-decoration: none; }
+        .nav-link:hover { background: rgba(255,255,255,.07); color: #fff; }
+        .nav-link.active { background: #b3122b; color: #fff; }
+        .sidebar-bottom { margin-top: auto; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.1); }
+        .operator { padding: 6px 10px 12px; color: #fff; font-size: 13px; }
+        .operator small { display: block; font-size: 11px; opacity: .6; }
+        .main { flex: 1; min-width: 0; }
+        .scrim { display: none; }
+        .menu-btn { display: none; }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
+            padding: 24px;
         }
 
-        .page-header { margin-bottom: 24px; }
+        .page-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
 
         h1 {
             margin: 0 0 8px;
@@ -156,7 +186,7 @@
         }
 
         @media (max-width: 600px) {
-            body { padding: 14px; }
+            .container { padding: 14px; }
             .card { padding: 18px; }
             .info-grid { grid-template-columns: 1fr; }
             h1 { font-size: 23px; }
@@ -164,18 +194,59 @@
             .status-row h2 { min-width: 0; }
             .actions .btn { min-height: 44px; }
         }
+
+        @media (max-width: 860px) {
+            .sidebar {
+                position: fixed;
+                z-index: 50;
+                top: 0;
+                left: 0;
+                overflow-y: auto;
+                transform: translateX(-100%);
+                transition: transform .25s;
+            }
+            .sidebar.open { transform: none; }
+            .scrim {
+                position: fixed;
+                z-index: 40;
+                inset: 0;
+                background: rgba(0,0,0,.5);
+            }
+            .sidebar.open + .scrim { display: block; }
+            .menu-btn {
+                display: grid;
+                flex: 0 0 40px;
+                width: 40px;
+                height: 40px;
+                place-items: center;
+                border: 1px solid #e5e7eb;
+                border-radius: 50%;
+                background: #fff;
+                cursor: pointer;
+            }
+        }
     </style>
     <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/kasir-sidebar.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/kasir-ui.css') ?>">
+    <?= view('layout/typography') ?>
+    <script src="<?= base_url('assets/js/kasir-sidebar.js') ?>" defer></script>
 </head>
 
 <body>
-<div class="container">
+<div class="layout kasir-layout">
+    <?= view('kasir/_sidebar', ['activeMenu' => 'dashboard']) ?>
+    <main class="main">
+      <div class="container">
 
     <header class="page-header">
+        <button type="button" class="kasir-menu-toggle" aria-label="Buka menu" aria-controls="kasirSidebar" aria-expanded="false">☰</button>
+        <div>
         <h1>Shift Kasir</h1>
         <p class="subtitle">
             Periksa shift aktif sebelum memproses pembayaran tunai.
         </p>
+        </div>
     </header>
 
     <div id="messageBox" class="message" role="status"></div>
@@ -221,6 +292,8 @@
         </p>
     </section>
 
+      </div>
+    </main>
 </div>
 
 <script>

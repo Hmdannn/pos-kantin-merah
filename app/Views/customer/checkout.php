@@ -58,7 +58,128 @@
         #customerCheckoutContent select,
         #customerCheckoutContent textarea {
             max-width: 100%;
+            font-size: 16px !important;
         }
+
+        .qris-demo-image-wrap img {
+            width: 170px;
+        }
+    }
+
+    .qris-demo-card {
+        background: linear-gradient(180deg, #ffffff 0%, #fff8f9 100%);
+        border: 1px solid #f1d6dc;
+        border-radius: 16px;
+        padding: 16px;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(159, 18, 57, 0.08);
+    }
+
+    .qris-demo-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .qris-demo-logo {
+        font-weight: 900;
+        font-size: 14px;
+        letter-spacing: 0.08em;
+        color: #9f1239;
+    }
+
+    .qris-demo-badge {
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #fff1f3;
+        color: #9f1239;
+        border: 1px solid #f3c7d1;
+    }
+
+    .qris-demo-merchant {
+        font-size: 15px;
+        font-weight: 800;
+        color: #111827;
+    }
+
+    .qris-demo-sub {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: 2px;
+    }
+
+    .qris-demo-image-wrap {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        margin: 12px auto;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+    }
+
+    .qris-demo-image-wrap img {
+        display: block;
+        width: 190px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .qris-demo-amount-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .qris-demo-amount {
+        font-size: 22px;
+        font-weight: 800;
+        color: #9f1239;
+        margin: 2px 0 6px;
+    }
+
+    .qris-demo-meta {
+        font-size: 12px;
+        color: #374151;
+        overflow-wrap: anywhere;
+    }
+
+    .qris-demo-divider {
+        height: 1px;
+        background: #f1d6dc;
+        margin: 12px 0;
+    }
+
+    .qris-demo-status {
+        font-size: 13px;
+        font-weight: 700;
+        color: #b45309;
+        margin-bottom: 6px;
+    }
+
+    .qris-demo-status.paid {
+        color: #15803d;
+    }
+
+    .qris-demo-paid-note {
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 6px;
+    }
+
+    .qris-demo-demo-note {
+        font-size: 11px;
+        color: #9ca3af;
+        line-height: 1.45;
+        margin-top: 8px;
     }
 </style>
 <div
@@ -661,7 +782,7 @@
                     cursor:pointer;
                 "
             >
-                Lihat Status Pesanan Saya
+                Lihat Pesanan Saya
             </button>
 
         </div>

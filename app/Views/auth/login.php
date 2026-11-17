@@ -9,7 +9,7 @@ $success = session()->getFlashdata('success');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Kantin Merah POS</title>
-
+    
     <style>
         * {
             box-sizing: border-box;
@@ -22,121 +22,153 @@ $success = session()->getFlashdata('success');
             align-items: center;
             justify-content: center;
             padding: 20px;
-            background: linear-gradient(135deg, #7a0f1d 0%, #a81c2d 50%, #dc2626 100%);
+            background: radial-gradient(circle at top right, #9f1239, #7a0f1d, #4c0519);
             color: #1f2937;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: var(--font-primary);
         }
 
         .login-card {
             width: 100%;
             max-width: 440px;
-            padding: 36px 32px;
+            padding: 40px 36px;
             background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Aksen garis atas kartu */
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #9f1239, #f43f5e);
         }
 
         .login-header {
             text-align: center;
-            margin-bottom: 26px;
+            margin-bottom: 28px;
         }
 
         .logo {
-            width: 68px;
-            height: 68px;
-            margin: 0 auto 14px;
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 16px;
-            background: linear-gradient(135deg, #b91c1c, #ef4444);
+            border-radius: 20px;
+            background: linear-gradient(135deg, #9f1239, #e11d48);
             color: #fff;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 800;
-            box-shadow: 0 8px 18px rgba(185, 28, 28, 0.35);
+            box-shadow: 0 10px 20px rgba(159, 18, 57, 0.4);
+            letter-spacing: -1px;
         }
 
         h1 {
             margin: 0 0 6px;
             font-size: 24px;
-            color: #111827;
+            color: #0f172a;
             font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
             margin: 0;
-            color: #6b7280;
+            color: #64748b;
             font-size: 14px;
+            font-weight: 400;
         }
 
         .badge-campus {
-            display: inline-block;
-            margin-top: 8px;
-            background: #fee2e2;
-            color: #991b1b;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            background: #fff1f2;
+            color: #9f1239;
             font-size: 11px;
             font-weight: 700;
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 9999px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border: 1px solid #fecdd3;
         }
 
         .alert {
-            margin-bottom: 18px;
-            padding: 12px 14px;
-            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            border-radius: 12px;
             font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            font-weight: 500;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .alert-error {
-            background: #fef2f2;
+            background: #fff5f5;
             color: #991b1b;
-            border: 1px solid #fecaca;
+            border: 1px solid #f87171;
         }
 
         .alert-success {
-            background: #ecfdf5;
-            color: #065f46;
-            border: 1px solid #a7f3d0;
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #4ade80;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-bottom: 7px;
+            margin-bottom: 8px;
             font-size: 13px;
             font-weight: 600;
-            color: #374151;
+            color: #334155;
+        }
+
+        .input-wrapper {
+            position: relative;
         }
 
         input {
             width: 100%;
-            padding: 12px 14px;
-            border: 1.5px solid #d1d5db;
-            border-radius: 10px;
+            padding: 13px 16px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 12px;
             outline: none;
             font-size: 14px;
-            transition: all .15s ease;
+            color: #0f172a;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+        }
+
+        input:hover {
+            border-color: #94a3b8;
         }
 
         input:focus {
-            border-color: #dc2626;
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, .15);
-        }
-
-        .password-wrapper {
-            position: relative;
+            background: #ffffff;
+            border-color: #9f1239;
+            box-shadow: 0 0 0 4px rgba(159, 18, 57, 0.12);
         }
 
         .password-wrapper input {
-            padding-right: 85px;
+            padding-right: 95px;
         }
 
         .toggle-password {
@@ -144,53 +176,67 @@ $success = session()->getFlashdata('success');
             top: 50%;
             right: 10px;
             transform: translateY(-50%);
-            border: 0;
-            background: transparent;
-            color: #b91c1c;
+            border: none;
+            background: #f1f5f9;
+            color: #64748b;
             cursor: pointer;
             font-size: 12px;
             font-weight: 600;
-            padding: 4px 6px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            transition: all 0.15s ease;
+        }
+
+        .toggle-password:hover {
+            background: #e2e8f0;
+            color: #1e293b;
         }
 
         .submit-button {
             width: 100%;
-            padding: 13px;
-            border: 0;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #b91c1c, #dc2626);
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #9f1239, #e11d48);
             color: #fff;
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(185, 28, 28, 0.3);
-            transition: all .15s ease;
+            box-shadow: 0 4px 12px rgba(159, 18, 57, 0.35);
+            transition: all 0.2s ease;
+            margin-top: 4px;
         }
 
         .submit-button:hover {
-            opacity: 0.95;
+            background: linear-gradient(135deg, #881337, #be123c);
             transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(159, 18, 57, 0.45);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
         }
 
         .submit-button:disabled {
-            opacity: .7;
-            cursor: wait;
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
         }
 
         /* Demo Account Quick Switcher */
         .demo-box {
-            margin-top: 24px;
-            padding-top: 20px;
-            border-top: 1px dashed #e5e7eb;
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px dashed #e2e8f0;
         }
 
         .demo-title {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            color: #6b7280;
+            color: #64748b;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
             text-align: center;
         }
 
@@ -201,106 +247,66 @@ $success = session()->getFlashdata('success');
         }
 
         .btn-demo {
-            padding: 9px 6px;
-            border: 1px solid #e5e7eb;
-            background: #f9fafb;
-            border-radius: 8px;
+            padding: 10px 6px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            border-radius: 10px;
             font-size: 12px;
             font-weight: 600;
-            color: #374151;
+            color: #334155;
             cursor: pointer;
             text-align: center;
-            transition: all .15s ease;
+            transition: all 0.2s ease;
         }
 
         .btn-demo:hover {
-            background: #fee2e2;
-            border-color: #fca5a5;
-            color: #991b1b;
+            background: #fff1f2;
+            border-color: #fecdd3;
+            color: #9f1239;
+            transform: translateY(-1px);
         }
 
         .btn-demo small {
             display: block;
             font-size: 10px;
-            color: #6b7280;
-            font-weight: normal;
-            margin-top: 2px;
+            color: #64748b;
+            font-weight: 500;
+            margin-top: 3px;
         }
 
         .footer {
-            margin-top: 22px;
+            margin-top: 26px;
             text-align: center;
-            color: #9ca3af;
-            font-size: 12px;
+            color: #64748b;
+            font-size: 13px;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 20px;
         }
 
         .footer a {
-            color: #b91c1c;
+            color: #9f1239;
             text-decoration: none;
             font-weight: 600;
+            transition: color 0.15s ease;
         }
 
         .footer a:hover {
+            color: #4c0519;
             text-decoration: underline;
         }
 
-        :focus-visible {
-            outline: 3px solid #dc2626;
-            outline-offset: 3px;
-        }
-
-        .toggle-password,
-        .btn-demo {
-            min-height: 44px;
-        }
-
-        @media (max-width: 600px) {
-            body {
-                min-height: 100svh;
-                align-items: flex-start;
-                padding: 14px;
-            }
-
+        @media (max-width: 480px) {
             .login-card {
-                margin: auto;
-                padding: 28px 22px;
-                border-radius: 16px;
+                padding: 30px 20px;
+                border-radius: 20px;
             }
-
             .demo-buttons {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 8px;
-            }
-
-            .btn-demo:last-child {
-                grid-column: 1 / -1;
-            }
-
-            .footer {
-                line-height: 1.6;
-                overflow-wrap: anywhere;
-            }
-        }
-
-        @media (max-width: 380px) {
-            body {
-                padding: 10px;
-            }
-
-            .login-card {
-                padding: 24px 18px;
-            }
-
-            h1 {
-                font-size: 21px;
-            }
-
-            .subtitle {
-                line-height: 1.45;
+                grid-template-columns: repeat(1, 1fr);
             }
         }
     </style>
     <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
+    <?= view('layout/typography') ?>
 </head>
 
 <body>
@@ -309,19 +315,21 @@ $success = session()->getFlashdata('success');
         <header class="login-header">
             <div class="logo">KM</div>
             <h1>Kantin Merah POS</h1>
-            <p class="subtitle">Masuk sesuai peran Anda.</p>
-            <div class="badge-campus">Studi Kasus: UNP Kampus 1</div>
+            <p class="subtitle">Silakan masuk sesuai peran operasional Anda.</p>
+            <div class="badge-campus">
+                <span>📍</span> Studi Kasus: UNP Kampus 1
+            </div>
         </header>
 
         <?php if ($error): ?>
             <div class="alert alert-error" role="alert">
-                <span>⚠️</span> <?= esc($error) ?>
+                <span>⚠️</span> <div><?= esc($error) ?></div>
             </div>
         <?php endif; ?>
 
         <?php if ($success): ?>
             <div class="alert alert-success" role="status">
-                <span>✅</span> <?= esc($success) ?>
+                <span>✅</span> <div><?= esc($success) ?></div>
             </div>
         <?php endif; ?>
 
@@ -344,8 +352,7 @@ $success = session()->getFlashdata('success');
 
             <div class="form-group">
                 <label for="password">Password</label>
-
-                <div class="password-wrapper">
+                <div class="input-wrapper password-wrapper">
                     <input
                         type="password"
                         id="password"
@@ -354,13 +361,12 @@ $success = session()->getFlashdata('success');
                         autocomplete="current-password"
                         required
                     >
-
                     <button
                         type="button"
                         class="toggle-password"
                         id="togglePassword"
                     >
-                        Tampilkan
+                        Lihat
                     </button>
                 </div>
             </div>
@@ -370,9 +376,9 @@ $success = session()->getFlashdata('success');
             </button>
         </form>
 
-        <!-- Quick Fill Role Selector (Sesuai PDF 4 Aktor) -->
+        <!-- Quick Fill Role Selector -->
         <div class="demo-box">
-            <div class="demo-title">Pilih Akun Demo (1-Click Login Langsung)</div>
+            <div class="demo-title">Pilih Akun Demo (1-Klik Instan)</div>
             <div class="demo-buttons">
                 <button type="button" class="btn-demo" onclick="fillRole('kasir@kantinmerah.com', 'password123', true)">
                     💰 Kasir
@@ -390,9 +396,12 @@ $success = session()->getFlashdata('success');
         </div>
 
         <footer class="footer">
-            Customer / Pembeli? <a href="<?= site_url('customer') ?>" target="_blank">Buka Menu Pesan Mandiri &rarr;</a>
-            <br><br>
-            <small style="color: #cbd5e1;">Belum ada akun di database? <a href="<?= site_url('test/init-users') ?>" target="_blank" style="color: #94a3b8;">Inisialisasi User Demo</a></small>
+            <div style="margin-bottom: 8px;">
+                Customer / Pembeli? <a href="<?= site_url('customer') ?>" target="_blank">Buka Menu Pesan Mandiri →</a>
+            </div>
+            <small style="color: #94a3b8;">
+                Belum ada akun di database? <a href="<?= site_url('test/init-users') ?>" target="_blank" style="color: #64748b;">Inisialisasi User Demo</a>
+            </small>
         </footer>
 
     </main>
@@ -407,7 +416,7 @@ $success = session()->getFlashdata('success');
         togglePassword.addEventListener('click', function () {
             const show = passwordInput.type === 'password';
             passwordInput.type = show ? 'text' : 'password';
-            togglePassword.textContent = show ? 'Sembunyikan' : 'Tampilkan';
+            togglePassword.textContent = show ? 'Sembunyi' : 'Lihat';
         });
 
         loginForm.addEventListener('submit', function () {
@@ -423,8 +432,8 @@ $success = session()->getFlashdata('success');
                 submitButton.textContent = 'Memverifikasi...';
                 loginForm.submit();
             } else {
-                emailInput.style.borderColor = '#dc2626';
-                passwordInput.style.borderColor = '#dc2626';
+                emailInput.style.borderColor = '#9f1239';
+                passwordInput.style.borderColor = '#9f1239';
                 setTimeout(() => {
                     emailInput.style.borderColor = '';
                     passwordInput.style.borderColor = '';

@@ -14,7 +14,7 @@
         body {
             margin: 0;
             padding: 24px;
-            font-family: Arial, sans-serif;
+            font-family: var(--font-primary);
             background: #f5f6f8;
             color: #1f2937;
         }
@@ -207,6 +207,7 @@
         }
     </style>
     <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
+    <?= view('layout/typography') ?>
 </head>
 
 <body>

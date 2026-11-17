@@ -22,12 +22,12 @@
 }
 
 html {
-    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: var(--font-primary);
     color-scheme: light;
 }
 
 body {
-    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif !important;
+    font-family: var(--font-primary) !important;
     background: var(--km-bg) !important;
     color: var(--km-text) !important;
 }
@@ -58,7 +58,7 @@ button,
 input,
 select,
 textarea {
-    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif !important;
+    font-family: var(--font-primary) !important;
 }
 
 :focus-visible {
@@ -413,7 +413,7 @@ label,
 }
 
 .text-mono {
-    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif !important;
+    font-family: var(--font-primary) !important;
     font-variant-numeric: tabular-nums;
 }
 
@@ -571,7 +571,7 @@ tr,
 html,
 body,
 body * {
-    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif !important;
+    font-family: var(--font-primary) !important;
 }
 
 body {

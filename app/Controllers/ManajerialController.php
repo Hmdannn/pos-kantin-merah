@@ -18,6 +18,14 @@ class ManajerialController extends BaseController
 
     public function laporan()
     {
+        $wantsJson = $this->request->isAJAX()
+            || $this->request->getGet('format') === 'json'
+            || str_contains($this->request->getHeaderLine('Accept'), 'application/json');
+
+        if (!$wantsJson) {
+            return view('manajerial/laporan');
+        }
+
         $periode = $this->request->getGet('periode') ?? 'harian';
 
         $tanggalMulai = null;
@@ -143,7 +151,81 @@ class ManajerialController extends BaseController
             ->getResultArray();
 
         /*
-         * 4. Jam paling ramai
+         * 4. Tren omzet pada periode terpilih dibanding periode sebelumnya.
+         */
+        $jumlahHari = (int) ((strtotime($tanggalSelesai) - strtotime($tanggalMulai)) / 86400) + 1;
+        $tanggalSebelumnyaSelesai = date('Y-m-d', strtotime($tanggalMulai . ' -1 day'));
+        $tanggalSebelumnyaMulai = date('Y-m-d', strtotime($tanggalSebelumnyaSelesai . ' -' . ($jumlahHari - 1) . ' days'));
+        $granularitasTren = $periode === 'harian' ? 'jam' : 'hari';
+        $bucketTren = $periode === 'harian'
+            ? 'FLOOR(HOUR(waktu_pesan) / 4)'
+            : 'DATE(waktu_pesan)';
+
+        $ambilTren = function (string $mulai, string $selesai) use ($bucketTren): array {
+            $rows = $this->db
+                ->table('pesanan')
+                ->select($bucketTren . ' AS bucket, SUM(total_bayar) AS total_penjualan', false)
+                ->where('DATE(waktu_pesan) >=', $mulai)
+                ->where('DATE(waktu_pesan) <=', $selesai)
+                ->whereIn('status', ['Dibayar', 'Diproses', 'Siap Diambil', 'Selesai'])
+                ->groupBy('bucket')
+                ->get()
+                ->getResultArray();
+
+            $hasil = [];
+            foreach ($rows as $row) {
+                $hasil[(string) $row['bucket']] = (float) $row['total_penjualan'];
+            }
+            return $hasil;
+        };
+
+        $trenSekarang = $ambilTren($tanggalMulai, $tanggalSelesai);
+        $trenSebelumnya = $ambilTren($tanggalSebelumnyaMulai, $tanggalSebelumnyaSelesai);
+        $titikTren = [];
+
+        if ($granularitasTren === 'jam') {
+            for ($slot = 0; $slot < 6; $slot++) {
+                $titikTren[] = [
+                    'label' => str_pad((string) ($slot * 4), 2, '0', STR_PAD_LEFT) . ':00',
+                    'current' => $trenSekarang[(string) $slot] ?? 0,
+                    'previous' => $trenSebelumnya[(string) $slot] ?? 0,
+                ];
+            }
+        } else {
+            $namaHari = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+            for ($offset = 0; $offset < $jumlahHari; $offset++) {
+                $tanggal = date('Y-m-d', strtotime($tanggalMulai . ' +' . $offset . ' days'));
+                $tanggalLalu = date('Y-m-d', strtotime($tanggalSebelumnyaMulai . ' +' . $offset . ' days'));
+                $titikTren[] = [
+                    'label' => $periode === 'mingguan'
+                        ? $namaHari[(int) date('w', strtotime($tanggal))]
+                        : date('d', strtotime($tanggal)),
+                    'date' => $tanggal,
+                    'current' => $trenSekarang[$tanggal] ?? 0,
+                    'previous' => $trenSebelumnya[$tanggalLalu] ?? 0,
+                ];
+            }
+        }
+
+        /*
+         * 5. Omzet per kategori dari item pesanan pada periode terpilih.
+         */
+        $performaKategori = $this->db
+            ->table('detail_pesanan')
+            ->select('kategori.id_kategori, kategori.nama_kategori, SUM(detail_pesanan.subtotal) AS total_penjualan, SUM(detail_pesanan.jumlah) AS jumlah_terjual')
+            ->join('menu', 'menu.id_menu = detail_pesanan.id_menu')
+            ->join('kategori', 'kategori.id_kategori = menu.id_kategori')
+            ->join('pesanan', 'pesanan.id_pesanan = detail_pesanan.id_pesanan')
+            ->where('DATE(pesanan.waktu_pesan) >=', $tanggalMulai)
+            ->where('DATE(pesanan.waktu_pesan) <=', $tanggalSelesai)
+            ->whereIn('pesanan.status', ['Dibayar', 'Diproses', 'Siap Diambil', 'Selesai'])
+            ->groupBy('kategori.id_kategori')
+            ->orderBy('total_penjualan', 'DESC')
+            ->get()
+            ->getResultArray();
+
+        /*
+         * 6. Jam paling ramai
          */
         $jamRamai = $this->db
             ->table('pesanan')
@@ -187,6 +269,15 @@ class ManajerialController extends BaseController
                 ],
 
                 'menu_terlaris' => $menuTerlaris,
+
+                'tren_penjualan' => [
+                    'granularitas' => $granularitasTren,
+                    'tanggal_sebelumnya_mulai' => $tanggalSebelumnyaMulai,
+                    'tanggal_sebelumnya_selesai' => $tanggalSebelumnyaSelesai,
+                    'titik' => $titikTren,
+                ],
+
+                'performa_kategori' => $performaKategori,
 
                 'jam_ramai' => $jamRamai
             ]

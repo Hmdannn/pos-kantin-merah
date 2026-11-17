@@ -28,14 +28,7 @@
         }
 
         body {
-            font-family:
-                Inter,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                Arial,
-                sans-serif;
+            font-family: var(--font-primary);
 
             background: #f5f6f8;
             color: #1f2937;
@@ -300,6 +293,7 @@
         }
     </style>
     <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
+    <?= view('layout/typography') ?>
 </head>
 
 <body>

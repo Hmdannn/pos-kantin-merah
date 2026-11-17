@@ -4,21 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelola Menu & Kategori - Kantin Merah POS</title>
+    <link rel="stylesheet" href="<?= base_url('assets/css/kasir-sidebar.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/kasir-ui.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/managerial-ui.css') ?>">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f8fafc; color: #1e293b; }
+        body { font-family: var(--font-primary); background: #f8fafc; color: #1e293b; }
         .layout { display: flex; min-height: 100vh; }
-
-        /* Sidebar */
-        .sidebar { width: 250px; background: #881337; color: white; padding: 24px 18px; flex-shrink: 0; display: flex; flex-direction: column; }
-        .brand { font-size: 20px; font-weight: 800; letter-spacing: 0.5px; }
-        .brand-subtitle { font-size: 11px; color: #fecdd3; margin-bottom: 28px; }
-        .nav-label { font-size: 11px; color: #fda4af; text-transform: uppercase; letter-spacing: 1px; margin: 18px 8px 8px; }
-        .nav-link { display: block; color: #fff1f2; text-decoration: none; padding: 11px 12px; border-radius: 8px; font-size: 14px; font-weight: 500; margin-bottom: 4px; transition: 0.15s; }
-        .nav-link:hover, .nav-link.active { background: #be123c; color: white; }
-        .sidebar-bottom { margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.15); }
-
-        /* Main */
         .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
         .topbar { background: white; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; }
         .topbar h1 { font-size: 20px; font-weight: 700; color: #0f172a; }
@@ -75,19 +67,27 @@
         /* Table */
         .table-wrap { overflow-x: auto; border: 1px solid #f1f5f9; border-radius: 10px; }
         table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 760px; }
-        th { text-align: left; padding: 11px 12px; color: #64748b; font-weight: 700; border-bottom: 1px solid #e2e8f0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; background: #f8fafc; }
-        td { padding: 11px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        th { text-align: center !important; padding: 11px 12px; color: #64748b; font-weight: 700; border-bottom: 1px solid #e2e8f0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; background: #f8fafc; }
+        td { padding: 11px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; text-align: center !important; }
         tr:last-child td { border-bottom: none; }
+        .menu-name-cell { justify-content: center; }
+        .menu-pagination { display: none; margin-top: 14px; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+        .menu-pagination-meta { font-size: 13px; color: #64748b; }
+        .menu-pagination-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .menu-pagination-btn { border: 1px solid #cbd5e1; background: #fff; color: #334155; border-radius: 8px; padding: 7px 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
+        .menu-pagination-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .menu-page-jump { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #475569; }
+        .menu-page-jump input { width: 72px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 6px 8px; font-size: 13px; }
         .menu-thumb { width: 64px; aspect-ratio: 4 / 3; height: auto; object-fit: cover; border-radius: 7px; background: #f1f5f9; display: block; }
         .thumb-empty { width: 64px; aspect-ratio: 4 / 3; height: auto; border-radius: 7px; background: #f1f5f9; color: #94a3b8; display: flex; align-items: center; justify-content: center; font-size: 10px; text-align: center; }
         .menu-name-cell { font-weight: 700; color: #0f172a; margin-bottom: 4px; overflow-wrap: anywhere; }
         .status-badge { display: inline-block; font-size: 10px; font-weight: 800; padding: 3px 7px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.3px; }
         .status-badge.tersedia { background: #dcfce7; color: #166534; }
         .status-badge.habis { background: #fee2e2; color: #b91c1c; }
-        .harga-cell { font-weight: 700; color: #9f1239; white-space: nowrap; }
-        .stok-cell { font-weight: 700; }
+        .harga-cell { font-weight: 700; color: #9f1239; white-space: nowrap; text-align: center !important; }
+        .stok-cell { font-weight: 700; text-align: center !important; }
         .stok-cell.habis { color: #b91c1c; }
-        .row-actions { display: flex; gap: 5px; flex-wrap: wrap; }
+        .row-actions { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; width: 100%; }
         .empty { text-align: center; padding: 34px 18px; color: #64748b; font-size: 13px; background: #f8fafc; border-radius: 10px; }
 
         /* Modal */
@@ -118,80 +118,35 @@
         .toast.error { background: #b91c1c; }
         .toast.show { display: block; }
 
-        @media (max-width: 860px) {
-            .layout { flex-direction: column; }
-            .sidebar {
-                width: 100%;
-                padding: 14px;
-                display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 4px;
-            }
-            .brand, .brand-subtitle, .nav-label, .sidebar-bottom { grid-column: 1 / -1; }
-            .brand-subtitle { margin-bottom: 8px; }
-            .nav-label { margin: 8px 4px 4px; }
-            .nav-link { min-width: 0; min-height: 44px; margin: 0; }
-            .sidebar-bottom { margin-top: 8px; padding-top: 10px; }
-            .content { padding: 18px 16px 50px; }
-            .topbar { padding: 16px; }
-        }
-
         @media (max-width: 560px) {
-            .topbar { align-items: flex-start; }
-            .topbar > div { min-width: 0; }
+            .topbar { align-items: flex-start; padding: 16px; }
             .topbar-actions { width: 100%; align-items: stretch; }
             .topbar-actions .btn { flex: 1 1 100%; min-height: 44px; }
-            .topbar-actions .user-pill { width: fit-content; }
             .content { padding: 14px 12px 34px; }
             .panel { padding: 15px; }
-            .panel-head { align-items: flex-start; }
-            .panel-head .btn { min-height: 44px; }
-            .toolbar { align-items: stretch; }
             .toolbar input, .toolbar select { min-width: 0; width: 100%; min-height: 44px; }
-            .table-wrap { overscroll-behavior-x: contain; }
             .modal { padding: 8px; }
-            .modal-card { max-height: calc(100vh - 16px); max-height: calc(100dvh - 16px); margin: 0 auto; overflow-y: auto; }
-            .modal-head { position: sticky; top: 0; z-index: 1; background: #fff; }
-            .modal-actions { flex-wrap: wrap; }
-            .modal-actions .btn { min-height: 44px; flex: 1 1 120px; }
             .toast { right: 12px; bottom: 12px; left: 12px; max-width: none; }
         }
     </style>
-    <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
+    <?= view('layout/typography') ?>
     <script src="<?= base_url('assets/js/managerial-drawer.js') ?>" defer></script>
 </head>
 <body>
-<div class="layout managerial-layout">
-    <aside class="sidebar managerial-sidebar" id="managerialSidebar" role="navigation" aria-label="Navigasi manajerial" aria-hidden="false">
-        <button type="button" class="managerial-menu-close" aria-label="Tutup menu navigasi">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <div class="brand">KANTIN MERAH</div>
-
-        <div class="nav-label">Menu Manajerial</div>
-        <a class="nav-link" href="<?= site_url('manajerial') ?>">📊 Laporan Penjualan</a>
-        <a class="nav-link active" href="<?= site_url('menu') ?>">🍲 Kelola Menu & Kategori</a>
-
-        <div class="sidebar-bottom">
-            <div style="font-size: 12px; color: #fecdd3; margin-bottom: 8px;">
-                Login: <strong><?= esc(session()->get('nama') ?? 'Manajerial') ?></strong>
-            </div>
-            <a class="nav-link" href="<?= site_url('logout') ?>" style="background: rgba(0,0,0,0.2);">🚪 Keluar</a>
-        </div>
-    </aside>
-    <button type="button" class="managerial-nav-backdrop" aria-hidden="true" tabindex="-1"></button>
+<div class="layout kasir-layout managerial-layout">
+    <?= view('manajerial/_sidebar', ['activeMenu' => 'menu']) ?>
 
     <main class="main">
         <header class="topbar">
-            <div class="managerial-heading">
+            <div class="managerial-heading" style="display:flex;align-items:center;gap:12px;">
                 <button
                     type="button"
-                    class="managerial-menu-toggle"
+                    class="managerial-menu-toggle kasir-menu-toggle"
                     aria-label="Buka menu navigasi"
                     aria-controls="managerialSidebar"
                     aria-expanded="false"
                 >
-                    <span aria-hidden="true">☰</span>
+                    <svg class="i" aria-hidden="true"><use href="#i-menu"/></svg>
                 </button>
                 <div class="managerial-heading-copy">
                     <h1>Kelola Menu & Kategori</h1>
@@ -199,7 +154,7 @@
                 </div>
             </div>
             <div class="topbar-actions">
-                <a href="<?= site_url('customer') ?>" target="_blank" rel="noopener" class="btn btn-light">🛒 Lihat Halaman Customer</a>
+                <a href="<?= site_url('customer') ?>" target="_blank" rel="noopener" class="btn btn-light">Lihat Halaman Customer</a>
                 <div class="user-pill">Role: Manajerial</div>
             </div>
         </header>
@@ -264,15 +219,27 @@
                                 <th style="width: 88px;">Foto</th>
                                 <th>Menu</th>
                                 <th>Kategori</th>
-                                <th style="text-align: right;">Harga</th>
-                                <th style="text-align: center;">Stok</th>
-                                <th style="text-align: center;">Aksi</th>
+                                <th>Harga</th>
+                                <th>Stok</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="menuTbody"></tbody>
                     </table>
                 </div>
                 <div class="empty" id="menuEmpty" style="display: none;">Tidak ada menu yang cocok dengan pencarian.</div>
+                <div class="menu-pagination" id="menuPagination" aria-label="Navigasi daftar menu">
+                    <div class="menu-pagination-meta" id="menuPaginationMeta"></div>
+                    <div class="menu-pagination-controls">
+                        <button type="button" class="menu-pagination-btn" id="prevMenuPage">Previous</button>
+                        <span id="menuPageInfo" style="font-size:13px;color:#334155;font-weight:600;">1 / 1</span>
+                        <button type="button" class="menu-pagination-btn" id="nextMenuPage">Next</button>
+                        <label class="menu-page-jump" for="menuPageInput">Go
+                            <input type="number" id="menuPageInput" min="1" value="1">
+                        </label>
+                        <button type="button" class="menu-pagination-btn" id="goMenuPage">Go</button>
+                    </div>
+                </div>
             </section>
         </div>
     </main>
@@ -382,6 +349,8 @@
 
     let menuData = <?= json_encode($menu, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
     let kategoriData = <?= json_encode($kategori, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+    const MENU_PAGE_SIZE = 5;
+    let menuPage = 1;
 
     const menuModal = document.getElementById('menuModal');
     const kategoriModal = document.getElementById('kategoriModal');
@@ -549,27 +518,45 @@
         const tbody = document.getElementById('menuTbody');
         const wrap = document.getElementById('menuTableWrap');
         const empty = document.getElementById('menuEmpty');
+        const pagination = document.getElementById('menuPagination');
         const daftar = menuTersaring();
 
         if (daftar.length === 0) {
             tbody.innerHTML = '';
             wrap.style.display = 'none';
             empty.style.display = 'block';
+            pagination.style.display = 'none';
+            menuPage = 1;
             renderStats();
             return;
         }
 
+        const totalPages = Math.max(1, Math.ceil(daftar.length / MENU_PAGE_SIZE));
+        menuPage = Math.max(1, Math.min(menuPage, totalPages));
+        const startIndex = (menuPage - 1) * MENU_PAGE_SIZE;
+        const daftarHalaman = daftar.slice(startIndex, startIndex + MENU_PAGE_SIZE);
+        const endIndex = Math.min(startIndex + daftarHalaman.length, daftar.length);
+
         wrap.style.display = 'block';
         empty.style.display = 'none';
+        pagination.style.display = 'flex';
+        document.getElementById('menuPaginationMeta').textContent =
+            'Menampilkan ' + (startIndex + 1) + '–' + endIndex + ' dari ' + daftar.length + ' menu';
+        document.getElementById('menuPageInfo').textContent = menuPage + ' / ' + totalPages;
+        document.getElementById('menuPageInput').min = 1;
+        document.getElementById('menuPageInput').max = totalPages;
+        document.getElementById('menuPageInput').value = menuPage;
+        document.getElementById('prevMenuPage').disabled = menuPage <= 1;
+        document.getElementById('nextMenuPage').disabled = menuPage >= totalPages;
 
-        tbody.innerHTML = daftar.map(function (item) {
+        tbody.innerHTML = daftarHalaman.map(function (item) {
             const id = Number(item.id_menu);
             const stok = Number(item.jumlah_stok || 0);
             const tersedia = item.status_stok === 'Tersedia' && stok > 0;
 
             const foto = item.foto_url
-                ? `<img src="${escapeHtml(item.foto_url)}" alt="${escapeHtml(item.nama_menu)}" class="menu-thumb">`
-                : '<div class="thumb-empty">Tanpa foto</div>';
+                ? `<img src="${escapeHtml(item.foto_url)}" alt="${escapeHtml(item.nama_menu)}" class="menu-thumb" style="margin:0 auto;">`
+                : '<div class="thumb-empty" style="margin:0 auto;">Tanpa foto</div>';
 
             const badge = tersedia
                 ? '<span class="status-badge tersedia">Tersedia</span>'
@@ -583,14 +570,16 @@
                 <tr>
                     <td>${foto}</td>
                     <td>
-                        <div class="menu-name-cell">${escapeHtml(item.nama_menu)}</div>
-                        ${badge}
+                        <div class="menu-name-cell" style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+                            <span>${escapeHtml(item.nama_menu)}</span>
+                            ${badge}
+                        </div>
                     </td>
                     <td>${escapeHtml(item.nama_kategori || 'Tanpa kategori')}</td>
-                    <td class="harga-cell" style="text-align: right;">${formatRupiah(item.harga)}</td>
-                    <td class="stok-cell ${stok <= 0 ? 'habis' : ''}" style="text-align: center;">${stok}</td>
+                    <td class="harga-cell">${formatRupiah(item.harga)}</td>
+                    <td class="stok-cell ${stok <= 0 ? 'habis' : ''}">${stok}</td>
                     <td>
-                        <div class="row-actions">
+                        <div class="row-actions" style="justify-content:center;">
                             <button type="button" class="btn btn-mini btn-light" data-edit-menu="${id}">Edit</button>
                             ${tombolToggle}
                             <button type="button" class="btn btn-mini btn-danger" data-hapus-menu="${id}">Hapus</button>
@@ -800,9 +789,32 @@
         }
     });
 
-    document.getElementById('searchMenu').addEventListener('input', renderMenu);
-    document.getElementById('filterKategori').addEventListener('change', renderMenu);
-    document.getElementById('filterStatus').addEventListener('change', renderMenu);
+    function resetMenuPage() {
+        menuPage = 1;
+        renderMenu();
+    }
+
+    function goToMenuPage(pageNumber) {
+        const totalPages = Math.max(1, Math.ceil(menuTersaring().length / MENU_PAGE_SIZE));
+        const requested = Number(pageNumber);
+        menuPage = Number.isFinite(requested) ? Math.max(1, Math.min(Math.trunc(requested), totalPages)) : 1;
+        renderMenu();
+    }
+
+    document.getElementById('searchMenu').addEventListener('input', resetMenuPage);
+    document.getElementById('filterKategori').addEventListener('change', resetMenuPage);
+    document.getElementById('filterStatus').addEventListener('change', resetMenuPage);
+    document.getElementById('prevMenuPage').addEventListener('click', function () { goToMenuPage(menuPage - 1); });
+    document.getElementById('nextMenuPage').addEventListener('click', function () { goToMenuPage(menuPage + 1); });
+    document.getElementById('goMenuPage').addEventListener('click', function () {
+        goToMenuPage(document.getElementById('menuPageInput').value);
+    });
+    document.getElementById('menuPageInput').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            goToMenuPage(this.value);
+        }
+    });
 
     document.getElementById('menuTbody').addEventListener('click', async function (event) {
         const editButton = event.target.closest('[data-edit-menu]');
