@@ -8,318 +8,364 @@ $success = session()->getFlashdata('success');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Kantin Merah POS</title>
+    <title>Kantin Merah POS - Login</title>
     
     <style>
+        :root {
+            --brand-red: #e11d48;
+            --brand-red-dark: #be123c;
+            --brand-red-light: #fff1f2;
+            --brand-red-soft: #ffe4e6;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            --bg-page: #f8fafc;
+        }
+
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            background: radial-gradient(circle at top right, #9f1239, #7a0f1d, #4c0519);
-            color: #1f2937;
-            font-family: var(--font-primary);
+            padding: 24px 16px;
+            background: var(--bg-page);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
         }
 
         .login-card {
             width: 100%;
-            max-width: 440px;
-            padding: 40px 36px;
+            max-width: 400px;
             background: #ffffff;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Aksen garis atas kartu */
-        .login-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #9f1239, #f43f5e);
-        }
-
-        .login-header {
+            border-radius: 28px;
+            padding: 38px 26px 30px;
+            box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.08), 0 4px 16px -2px rgba(15, 23, 42, 0.03);
             text-align: center;
-            margin-bottom: 28px;
         }
 
-        .logo {
-            width: 72px;
-            height: 72px;
+        /* App Logo (KM in red squircle) */
+        .app-logo {
+            width: 84px;
+            height: 84px;
             margin: 0 auto 16px;
+            background: linear-gradient(145deg, #ff334b 0%, #e11438 55%, #b91030 100%);
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 20px;
-            background: linear-gradient(135deg, #9f1239, #e11d48);
-            color: #fff;
-            font-size: 26px;
-            font-weight: 800;
-            box-shadow: 0 10px 20px rgba(159, 18, 57, 0.4);
-            letter-spacing: -1px;
+            box-shadow: 0 16px 30px -4px rgba(225, 29, 72, 0.4);
         }
 
-        h1 {
-            margin: 0 0 6px;
+        .app-logo span {
+            font-family: "Times New Roman", Times, "Playfair Display", Georgia, serif;
+            font-style: italic;
+            font-weight: 900;
+            font-size: 42px;
+            color: #ffffff;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-right: 2px;
+            user-select: none;
+        }
+
+        /* Heading */
+        .app-title {
             font-size: 24px;
-            color: #0f172a;
             font-weight: 800;
-            letter-spacing: -0.5px;
+            color: var(--text-dark);
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
         }
 
-        .subtitle {
-            margin: 0;
-            color: #64748b;
-            font-size: 14px;
-            font-weight: 400;
+        .app-subtitle {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
         }
 
-        .badge-campus {
+        /* Location Badge */
+        .location-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            margin-top: 12px;
-            background: #fff1f2;
-            color: #9f1239;
-            font-size: 11px;
+            background: var(--brand-red-light);
+            color: var(--brand-red);
+            font-size: 11.5px;
             font-weight: 700;
-            padding: 6px 12px;
-            border-radius: 9999px;
-            letter-spacing: 0.3px;
-            border: 1px solid #fecdd3;
+            padding: 6px 14px;
+            border-radius: 999px;
+            margin-bottom: 22px;
+            border: 1px solid var(--brand-red-soft);
         }
 
+        .location-badge svg {
+            flex-shrink: 0;
+        }
+
+        /* Alert Messages */
         .alert {
-            margin-bottom: 20px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            font-size: 13px;
+            margin-bottom: 16px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            font-weight: 600;
+            text-align: left;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-weight: 500;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-4px); }
-            to { opacity: 1; transform: translateY(0); }
+            gap: 8px;
         }
 
         .alert-error {
             background: #fff5f5;
-            color: #991b1b;
-            border: 1px solid #f87171;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
         }
 
         .alert-success {
             background: #f0fdf4;
-            color: #166534;
-            border: 1px solid #4ade80;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
         }
 
+        /* Form Controls */
         .form-group {
-            margin-bottom: 20px;
+            text-align: left;
+            margin-bottom: 16px;
         }
 
-        label {
+        .form-label {
             display: block;
-            margin-bottom: 8px;
             font-size: 13px;
-            font-weight: 600;
-            color: #334155;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 7px;
         }
 
-        .input-wrapper {
-            position: relative;
-        }
-
-        input {
+        .input-control {
             width: 100%;
-            padding: 13px 16px;
-            border: 1.5px solid #cbd5e1;
+            height: 46px;
+            padding: 0 14px;
+            border: 1.5px solid var(--border-light);
             border-radius: 12px;
-            outline: none;
             font-size: 14px;
-            color: #0f172a;
-            background: #f8fafc;
-            transition: all 0.2s ease;
-        }
-
-        input:hover {
-            border-color: #94a3b8;
-        }
-
-        input:focus {
+            color: var(--text-dark);
             background: #ffffff;
-            border-color: #9f1239;
-            box-shadow: 0 0 0 4px rgba(159, 18, 57, 0.12);
+            outline: none;
+            transition: all 0.2s ease;
+            font-family: inherit;
         }
 
-        .password-wrapper input {
-            padding-right: 95px;
+        .input-control:focus {
+            border-color: var(--brand-red);
+            box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.12);
         }
 
-        .toggle-password {
+        .password-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-wrap .input-control {
+            padding-right: 76px;
+        }
+
+        .toggle-btn {
             position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
+            right: 8px;
+            background: var(--brand-red-light);
+            color: var(--brand-red);
             border: none;
-            background: #f1f5f9;
-            color: #64748b;
-            cursor: pointer;
             font-size: 12px;
-            font-weight: 600;
-            padding: 6px 10px;
+            font-weight: 700;
+            padding: 6px 12px;
             border-radius: 8px;
-            transition: all 0.15s ease;
+            cursor: pointer;
+            transition: background 0.15s ease;
         }
 
-        .toggle-password:hover {
-            background: #e2e8f0;
-            color: #1e293b;
+        .toggle-btn:hover {
+            background: var(--brand-red-soft);
         }
 
-        .submit-button {
+        /* Submit Button */
+        .btn-submit {
             width: 100%;
-            padding: 14px;
+            height: 48px;
             border: none;
             border-radius: 12px;
-            background: linear-gradient(135deg, #9f1239, #e11d48);
-            color: #fff;
+            background: linear-gradient(135deg, #f43f5e 0%, #e11d48 50%, #be123c 100%);
+            color: #ffffff;
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(159, 18, 57, 0.35);
+            box-shadow: 0 8px 20px -3px rgba(225, 29, 72, 0.38);
             transition: all 0.2s ease;
             margin-top: 4px;
+            font-family: inherit;
         }
 
-        .submit-button:hover {
-            background: linear-gradient(135deg, #881337, #be123c);
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(159, 18, 57, 0.45);
+            box-shadow: 0 10px 24px -2px rgba(225, 29, 72, 0.45);
         }
 
-        .submit-button:active {
+        .btn-submit:active {
             transform: translateY(0);
         }
 
-        .submit-button:disabled {
+        .btn-submit:disabled {
             opacity: 0.7;
             cursor: not-allowed;
             transform: none;
         }
 
-        /* Demo Account Quick Switcher */
-        .demo-box {
-            margin-top: 28px;
-            padding-top: 24px;
-            border-top: 1px dashed #e2e8f0;
-        }
-
-        .demo-title {
-            font-size: 11px;
-            font-weight: 700;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 12px;
+        /* Demo Divider */
+        .demo-divider {
+            display: flex;
+            align-items: center;
             text-align: center;
+            color: #94a3b8;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            margin: 24px 0 14px;
         }
 
-        .demo-buttons {
+        .demo-divider::before,
+        .demo-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .demo-divider:not(:empty)::before {
+            margin-right: 10px;
+        }
+
+        .demo-divider:not(:empty)::after {
+            margin-left: 10px;
+        }
+
+        /* Demo Account Cards (3 columns) */
+        .demo-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 10px;
         }
 
-        .btn-demo {
-            padding: 10px 6px;
-            border: 1px solid #e2e8f0;
-            background: #f8fafc;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #334155;
+        .demo-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            padding: 14px 6px 12px;
             cursor: pointer;
-            text-align: center;
             transition: all 0.2s ease;
-        }
-
-        .btn-demo:hover {
-            background: #fff1f2;
-            border-color: #fecdd3;
-            color: #9f1239;
-            transform: translateY(-1px);
-        }
-
-        .btn-demo small {
-            display: block;
-            font-size: 10px;
-            color: #64748b;
-            font-weight: 500;
-            margin-top: 3px;
-        }
-
-        .footer {
-            margin-top: 26px;
             text-align: center;
-            color: #64748b;
+            position: relative;
+        }
+
+        .demo-card:hover {
+            border-color: #fecdd3;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(225, 29, 72, 0.08);
+            background: #fffafa;
+        }
+
+        .demo-icon-wrap {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--brand-red-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+        }
+
+        .demo-role-name {
             font-size: 13px;
-            border-top: 1px solid #f1f5f9;
-            padding-top: 20px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 3px;
+            text-align: center;
+            padding: 0;
         }
 
-        .footer a {
-            color: #9f1239;
+        .demo-role-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 0;
+        }
+
+        .demo-role-desc {
+            font-size: 10px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+        }
+
+        .demo-role-arrow {
+            color: var(--brand-red);
+            font-size: 11px;
+            font-weight: 800;
+            margin-left: 0;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Footer link */
+        .footer-link {
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .footer-link a {
+            color: var(--brand-red);
             text-decoration: none;
-            font-weight: 600;
-            transition: color 0.15s ease;
+            font-weight: 700;
         }
 
-        .footer a:hover {
-            color: #4c0519;
+        .footer-link a:hover {
             text-decoration: underline;
         }
-
-        @media (max-width: 480px) {
-            .login-card {
-                padding: 30px 20px;
-                border-radius: 20px;
-            }
-            .demo-buttons {
-                grid-template-columns: repeat(1, 1fr);
-            }
-        }
     </style>
-    <link rel="stylesheet" href="<?= base_url('assets/css/formal-ui.css') ?>">
-    <?= view('layout/typography') ?>
 </head>
 
 <body>
     <main class="login-card">
 
-        <header class="login-header">
-            <div class="logo">KM</div>
-            <h1>Kantin Merah POS</h1>
-            <p class="subtitle">Silakan masuk sesuai peran operasional Anda.</p>
-            <div class="badge-campus">
-                <span>📍</span> Studi Kasus: UNP Kampus 1
-            </div>
-        </header>
+        <!-- App Logo -->
+        <div class="app-logo">
+            <span>KM</span>
+        </div>
+
+        <!-- Heading -->
+        <h1 class="app-title">Kantin Merah POS</h1>
+        <p class="app-subtitle">Silakan masuk sesuai peran operasional Anda.</p>
+
+        <!-- Location Badge -->
+        <div class="location-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#e11d48">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+            </svg>
+            <span>Studi Kasus: UNP Kampus 1</span>
+        </div>
 
         <?php if ($error): ?>
             <div class="alert alert-error" role="alert">
@@ -333,16 +379,18 @@ $success = session()->getFlashdata('success');
             </div>
         <?php endif; ?>
 
+        <!-- Form Login -->
         <form action="<?= site_url('login/attempt') ?>" method="post" id="loginForm">
             <?= csrf_field() ?>
 
             <div class="form-group">
-                <label for="email">Alamat Email</label>
+                <label for="email" class="form-label">Alamat Email</label>
                 <input
                     type="email"
                     id="email"
                     name="email"
-                    value="<?= esc(old('email') ?? '') ?>"
+                    class="input-control"
+                    value="<?= esc(old('email') ?? 'dapur@kantinmerah.com') ?>"
                     placeholder="nama@kantinmerah.com"
                     autocomplete="username"
                     required
@@ -351,19 +399,21 @@ $success = session()->getFlashdata('success');
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
-                <div class="input-wrapper password-wrapper">
+                <label for="password" class="form-label">Password</label>
+                <div class="password-wrap">
                     <input
                         type="password"
                         id="password"
                         name="password"
-                        placeholder="••••••••"
+                        class="input-control"
+                        value="password123"
+                        placeholder="••••••••••••"
                         autocomplete="current-password"
                         required
                     >
                     <button
                         type="button"
-                        class="toggle-password"
+                        class="toggle-btn"
                         id="togglePassword"
                     >
                         Lihat
@@ -371,38 +421,77 @@ $success = session()->getFlashdata('success');
                 </div>
             </div>
 
-            <button type="submit" class="submit-button" id="submitButton">
-                Masuk ke Sistem
+            <button type="submit" class="btn-submit" id="submitButton">
+                Masuk
             </button>
         </form>
 
-        <!-- Quick Fill Role Selector -->
-        <div class="demo-box">
-            <div class="demo-title">Pilih Akun Demo (1-Klik Instan)</div>
-            <div class="demo-buttons">
-                <button type="button" class="btn-demo" onclick="fillRole('kasir@kantinmerah.com', 'password123', true)">
-                    💰 Kasir
-                    <small>Shift & Bayar</small>
-                </button>
-                <button type="button" class="btn-demo" onclick="fillRole('dapur@kantinmerah.com', 'password123', true)">
-                    🍳 Dapur
-                    <small>FIFO & Masak</small>
-                </button>
-                <button type="button" class="btn-demo" onclick="fillRole('manajerial@kantinmerah.com', 'password123', true)">
-                    📊 Manajer
-                    <small>Laporan & Menu</small>
-                </button>
+        <!-- Demo Divider -->
+        <div class="demo-divider">Pilih Akun Demo (1-Klik Instan)</div>
+
+        <!-- 3 Demo Account Cards -->
+        <div class="demo-grid">
+            <!-- Kasir -->
+            <div class="demo-card" onclick="fillRole('kasir@kantinmerah.com', 'password123', true)" title="Login sebagai Kasir">
+                <div class="demo-icon-wrap">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#e11d48">
+                        <path d="M5 4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2H5V4zm-2 4h18a1 1 0 0 1 .98 1.2l-1.5 7.5A2 2 0 0 1 18.52 18H5.48a2 2 0 0 1-1.96-1.3L2.02 9.2A1 1 0 0 1 3 8zm3 2v1.5h2V10H6zm4 0v1.5h2V10h-2zm4 0v1.5h2V10h-2zm-8 3v1.5h2V13H6zm4 0v1.5h2V13h-2zm4 0v1.5h2V13h-2zm-7 6h14a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1zm6 1.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5z"/>
+                    </svg>
+                </div>
+                <div class="demo-role-name">Kasir</div>
+                <div class="demo-role-bottom">
+                    <span class="demo-role-desc">Shift & Bayar</span>
+                    <span class="demo-role-arrow">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Dapur -->
+            <div class="demo-card" onclick="fillRole('dapur@kantinmerah.com', 'password123', true)" title="Login sebagai Dapur">
+                <div class="demo-icon-wrap">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#e11d48">
+                        <path d="M12 2c-2.4 0-4.4 1.7-4.9 4a4.5 4.5 0 0 0-3.6 4.5c0 2 1.3 3.7 3.1 4.2l.4 3.3h5.2c.4-.7 1-1.3 1.7-1.7V15a1 1 0 0 1 2 0v.3c.7.4 1.3 1 1.7 1.7H20l.4-3.3c1.8-.5 3.1-2.2 3.1-4.2a4.5 4.5 0 0 0-3.6-4.5c-.5-2.3-2.5-4-4.9-4z"/>
+                        <path d="M17 14c-.6 1.5-1.8 2.5-2.2 3.5-.4 1-.2 2.2.8 2.8.9.5 2 .2 2.6-.5.2.8.9 1.4 1.8 1.4 1.1 0 2-.9 2-2 0-2.2-2.2-3.8-5-5.2z"/>
+                    </svg>
+                </div>
+                <div class="demo-role-name">Dapur</div>
+                <div class="demo-role-bottom">
+                    <span class="demo-role-desc">FIFO & Masak</span>
+                    <span class="demo-role-arrow">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Manajer -->
+            <div class="demo-card" onclick="fillRole('manajerial@kantinmerah.com', 'password123', true)" title="Login sebagai Manajer">
+                <div class="demo-icon-wrap">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#e11d48">
+                        <rect x="2" y="13" width="5.5" height="9" rx="1.5"/>
+                        <rect x="9.25" y="7" width="5.5" height="15" rx="1.5"/>
+                        <rect x="16.5" y="2" width="5.5" height="20" rx="1.5"/>
+                    </svg>
+                </div>
+                <div class="demo-role-name">Manajer</div>
+                <div class="demo-role-bottom">
+                    <span class="demo-role-desc">Laporan & Menu</span>
+                    <span class="demo-role-arrow">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </span>
+                </div>
             </div>
         </div>
 
-        <footer class="footer">
-            <div style="margin-bottom: 8px;">
-                Customer / Pembeli? <a href="<?= site_url('customer') ?>" target="_blank">Buka Menu Pesan Mandiri →</a>
-            </div>
-            <small style="color: #94a3b8;">
-                Belum ada akun di database? <a href="<?= site_url('test/init-users') ?>" target="_blank" style="color: #64748b;">Inisialisasi User Demo</a>
-            </small>
-        </footer>
+        <div class="footer-link">
+            Customer / Mahasiswa? <a href="<?= site_url('customer') ?>" target="_blank">Pesan Mandiri &rarr;</a>
+        </div>
 
     </main>
 
@@ -414,9 +503,9 @@ $success = session()->getFlashdata('success');
         const submitButton = document.getElementById('submitButton');
 
         togglePassword.addEventListener('click', function () {
-            const show = passwordInput.type === 'password';
-            passwordInput.type = show ? 'text' : 'password';
-            togglePassword.textContent = show ? 'Sembunyi' : 'Lihat';
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            togglePassword.textContent = isPassword ? 'Sembunyi' : 'Lihat';
         });
 
         loginForm.addEventListener('submit', function () {
@@ -431,13 +520,6 @@ $success = session()->getFlashdata('success');
                 submitButton.disabled = true;
                 submitButton.textContent = 'Memverifikasi...';
                 loginForm.submit();
-            } else {
-                emailInput.style.borderColor = '#9f1239';
-                passwordInput.style.borderColor = '#9f1239';
-                setTimeout(() => {
-                    emailInput.style.borderColor = '';
-                    passwordInput.style.borderColor = '';
-                }, 600);
             }
         }
     </script>
