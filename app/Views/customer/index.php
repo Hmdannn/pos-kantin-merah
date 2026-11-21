@@ -120,6 +120,28 @@
             align-items: center;
             gap: 8px;
             transition: all 0.2s;
+            position: relative;
+        }
+
+        .nav-ready-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 0 2px #ffffff, 0 0 8px #22c55e;
+            animation: navDotPulse 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes navDotPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 0.75;
+            }
         }
 
         .track-btn:hover {
@@ -1227,6 +1249,7 @@
             <div class="header-actions">
                 <button class="track-btn" onclick="openCustomerStatus()">
                     <i class="fa-solid fa-receipt"></i> Pesanan
+                    <span id="navOrderReadyDot" class="nav-ready-dot" style="display:none;" title="Pesanan siap diambil!"></span>
                 </button>
                 <button class="cart-button" onclick="scrollToCart()">
                     <i class="fa-solid fa-cart-shopping"></i> Keranjang
@@ -1558,6 +1581,9 @@
                     if (kode) {
                         // Simpan ke storage yang dibaca oleh status.php
                         localStorage.setItem('kantin_merah_last_order', JSON.stringify({ kode_pesanan: kode }));
+                        if (typeof startCustomerBackgroundWatcher === 'function') {
+                            startCustomerBackgroundWatcher();
+                        }
                     }
 
                     // Tutup modal checkout dan buka modal status pesanan

@@ -253,7 +253,229 @@
         color: #9ca3af;
         text-align: center;
     }
+
+    /* === NOTIFIKASI MAKANAN SIAP DIAMBIL === */
+    .status-ready-notice-card {
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        border: 2px solid #86efac;
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 16px;
+        box-shadow: 0 8px 24px rgba(22, 101, 52, 0.12);
+        animation: readyGlowPulse 2.5s infinite ease-in-out;
+    }
+
+    @keyframes readyGlowPulse {
+        0%, 100% {
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4), 0 8px 24px rgba(22, 101, 52, 0.12);
+        }
+        50% {
+            box-shadow: 0 0 0 8px rgba(34, 197, 94, 0), 0 10px 28px rgba(22, 101, 52, 0.2);
+        }
+    }
+
+    .ready-notice-body {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .ready-notice-badge-icon {
+        position: relative;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        flex-shrink: 0;
+        box-shadow: 0 4px 12px rgba(22, 101, 52, 0.2);
+    }
+
+    .ready-pulse-ring {
+        position: absolute;
+        inset: -4px;
+        border-radius: 16px;
+        border: 2px solid #22c55e;
+        animation: ringPulse 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes ringPulse {
+        75%, 100% {
+            transform: scale(1.3);
+            opacity: 0;
+        }
+    }
+
+    /* Floating Alert Banner di Halaman Customer Storefront */
+    .customer-ready-floating {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1250;
+        width: calc(100% - 32px);
+        max-width: 540px;
+        animation: slideUpFloating 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUpFloating {
+        from {
+            opacity: 0;
+            transform: translate(-50%, 40px);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+    }
+
+    .ready-floating-card {
+        background: #ffffff;
+        border: 2px solid #22c55e;
+        border-radius: 16px;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 16px 36px rgba(22, 101, 52, 0.22), 0 0 0 4px rgba(34, 197, 94, 0.15);
+    }
+
+    .ready-floating-icon {
+        position: relative;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+        color: #fff;
+    }
+
+    .ready-floating-content {
+        flex: 1;
+        min-width: 0;
+        cursor: pointer;
+    }
+
+    .ready-floating-top {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .ready-floating-title {
+        font-size: 14px;
+        font-weight: 800;
+        color: #15803d;
+    }
+
+    .ready-floating-badge {
+        font-size: 11px;
+        font-weight: 800;
+        padding: 2px 7px;
+        background: #dcfce7;
+        color: #166534;
+        border-radius: 6px;
+        border: 1px solid #bbf7d0;
+    }
+
+    .ready-floating-actions {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+    }
+
+    .ready-floating-btn {
+        background: #16a34a;
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        padding: 9px 14px;
+        font-size: 12.5px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+        white-space: nowrap;
+    }
+
+    .ready-floating-btn:hover {
+        background: #15803d;
+        transform: translateY(-1px);
+    }
+
+    .ready-floating-close {
+        background: none;
+        border: none;
+        font-size: 20px;
+        color: #9ca3af;
+        cursor: pointer;
+        padding: 4px 6px;
+        line-height: 1;
+        border-radius: 6px;
+    }
+
+    .ready-floating-close:hover {
+        color: #4b5563;
+        background: #f3f4f6;
+    }
+
+    @media (max-width: 600px) {
+        .customer-ready-floating {
+            bottom: 16px;
+            width: calc(100% - 20px);
+        }
+        .ready-floating-card {
+            padding: 10px 12px;
+            gap: 10px;
+        }
+        .ready-floating-icon {
+            width: 38px;
+            height: 38px;
+            font-size: 18px;
+        }
+        .ready-floating-title {
+            font-size: 13.5px;
+        }
+        .ready-floating-btn {
+            padding: 7px 11px;
+            font-size: 11.5px;
+        }
+    }
 </style>
+
+<!-- FLOATING ALERT BANNER (PESANAN SIAP DIAMBIL) -->
+<div id="customerReadyFloatingBar" class="customer-ready-floating" style="display: none;">
+    <div class="ready-floating-card">
+        <div class="ready-floating-icon">
+            <span class="ready-ping"></span>
+            <i class="fa-solid fa-bell"></i>
+        </div>
+        <div class="ready-floating-content" onclick="openCustomerStatus()">
+            <div class="ready-floating-top">
+                <span class="ready-floating-title">Pesanan Siap Diambil</span>
+                <span id="floatingOrderMejaBadge" class="ready-floating-badge">Meja -</span>
+            </div>
+        </div>
+        <div class="ready-floating-actions">
+            <button type="button" class="ready-floating-btn" onclick="openCustomerStatus()">
+                Lihat Pesanan
+            </button>
+            <button type="button" class="ready-floating-close" onclick="dismissReadyFloating(event)" title="Tutup pemberitahuan">
+                &times;
+            </button>
+        </div>
+    </div>
+</div>
+
 <div
     id="customerStatusModal"
     style="
@@ -357,7 +579,7 @@
             "
         >
 
-            <!-- 1. IDENTITAS PENGAMBILAN (SELF SERVICE) -->
+            <!-- 1. IDENTITAS PENGAMBILAN -->
             <div
                 style="
                     background:#fff7ed;
@@ -368,7 +590,7 @@
                 "
             >
                 <div style="font-size:11px; font-weight:800; color:#c2410c; text-transform:uppercase; letter-spacing:0.5px;">
-                    🍽️ Identitas Pengambilan (Self Service)
+                    Informasi Pengambilan Pesanan
                 </div>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
                     <div>
@@ -388,20 +610,22 @@
             <!-- BANNER NOTIFIKASI MAKANAN SIAP -->
             <div
                 id="statusReadyNotice"
-                style="
-                    display:none;
-                    background:var(--km-success-bg);
-                    border:1px solid var(--km-success-border);
-                    border-radius:10px;
-                    padding:14px 16px;
-                    margin-bottom:16px;
-                "
+                class="status-ready-notice-card"
+                style="display:none;"
             >
-                <div style="font-size:15px; font-weight:800; color:var(--km-success); margin-bottom:4px;">
-                    🔔 Makanan Siap Diambil!
-                </div>
-                <div id="statusReadyMessage" style="font-size:13px; color:var(--km-success);">
-                    Silakan ambil makanan Anda di kasir.
+                <div class="ready-notice-body">
+                    <div class="ready-notice-badge-icon">
+                        <span class="ready-pulse-ring"></span>
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="font-size:15px; font-weight:800; color:#15803d;">
+                            Pesanan Siap Diambil
+                        </div>
+                        <div id="statusReadyMessage" style="font-size:13px; color:#166534; margin-top:2px; line-height:1.45;">
+                            Pesanan Anda telah selesai disiapkan. Silakan ambil pesanan di meja kasir.
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -466,10 +690,10 @@
 
             <!-- Progres & panduan -->
             <div id="statusGuideBox" class="status-guide" style="display:none; margin-bottom:16px;">
-                <div class="status-guide-title">Progres pesanan</div>
+                <div class="status-guide-title">Progres Pesanan</div>
                 <div id="statusNextAction" class="status-next"></div>
                 <ol id="statusSteps" class="status-steps"></ol>
-                <div class="status-auto-note">Status pesanan akan diperbarui secara otomatis selama halaman ini terbuka.</div>
+                <div class="status-auto-note">Pembaruan status pesanan berlangsung secara otomatis.</div>
             </div>
 
             <!-- 3. STATUS PESANAN -->
@@ -661,7 +885,7 @@
                     margin-bottom:16px;
                 "
             >
-                ✅ Saya Sudah Ambil Makanan
+                Konfirmasi Pesanan Diterima
             </button>
 
 
@@ -880,6 +1104,21 @@
     const statusSteps =
         document.getElementById('statusSteps');
 
+    // Elemen notifikasi makanan siap diambil
+    const customerReadyFloatingBar =
+        document.getElementById('customerReadyFloatingBar');
+
+    const floatingOrderMejaBadge =
+        document.getElementById('floatingOrderMejaBadge');
+
+    const navOrderReadyDot =
+        document.getElementById('navOrderReadyDot');
+
+    let customerBgWatcherTimer =
+        null;
+
+    let dismissedReadyOrders =
+        new Set();
 
     let statusQrisConfirming =
         false;
@@ -898,6 +1137,139 @@
 
     let statusCountdownExpired =
         false;
+
+    /**
+     * Memainkan suara bel lonceng merdu (2-tone chime)
+     * Menggunakan Web Audio API sintetis (tanpa file mp3 eksternal).
+     */
+    function playReadyChime()
+    {
+        try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+
+            const ctx = new AudioCtx();
+            if (ctx.state === 'suspended') {
+                ctx.resume();
+            }
+
+            const now = ctx.currentTime;
+
+            // Nada 1: D5 (~587 Hz)
+            const osc1 = ctx.createOscillator();
+            const gain1 = ctx.createGain();
+            osc1.type = 'sine';
+            osc1.frequency.setValueAtTime(587.33, now);
+            gain1.gain.setValueAtTime(0.001, now);
+            gain1.gain.linearRampToValueAtTime(0.35, now + 0.04);
+            gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.7);
+            osc1.connect(gain1);
+            gain1.connect(ctx.destination);
+            osc1.start(now);
+            osc1.stop(now + 0.7);
+
+            // Nada 2: A5 (~880 Hz) - nada kedua lebih tinggi & ceria
+            const osc2 = ctx.createOscillator();
+            const gain2 = ctx.createGain();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(880, now + 0.22);
+            gain2.gain.setValueAtTime(0.001, now + 0.22);
+            gain2.gain.linearRampToValueAtTime(0.45, now + 0.26);
+            gain2.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+            osc2.start(now + 0.22);
+            osc2.stop(now + 1.2);
+        } catch (e) {
+            console.warn('Audio playback notice:', e);
+        }
+
+        // Efek getar untuk perangkat HP
+        if ('vibrate' in navigator) {
+            try {
+                navigator.vibrate([200, 100, 250, 100, 350]);
+            } catch (e) {}
+        }
+    }
+
+    /**
+     * Memicu notifikasi suara & push web notification untuk order yang siap
+     */
+    function triggerReadyNotification(pesanan)
+    {
+        if (!pesanan || !pesanan.kode_pesanan) return;
+
+        const sessionKey = 'km_ready_notified_' + pesanan.kode_pesanan;
+        if (sessionStorage.getItem(sessionKey)) {
+            return; // Sudah pernah dibunyikan pada sesi tab ini
+        }
+        sessionStorage.setItem(sessionKey, '1');
+
+        playReadyChime();
+
+        // Browser HTML5 Notification
+        if ('Notification' in window && Notification.permission === 'granted') {
+            try {
+                const meja = pesanan.nomor_meja ? ' (Meja ' + pesanan.nomor_meja + ')' : '';
+                const noAntrian = pesanan.no_antrian ? 'Antrean #' + pesanan.no_antrian + ' • ' : '';
+                new Notification('Pesanan Siap Diambil - Kantin Merah', {
+                    body: noAntrian + 'Pesanan ' + pesanan.kode_pesanan + meja + ' telah siap diambil di meja kasir.',
+                    icon: '<?= base_url('uploads/menu/ecf3c30eb6e1f68b8518fabea9f16ef4.jpg') ?>'
+                });
+            } catch (err) {}
+        }
+    }
+
+    /**
+     * Memperbarui UI floating banner dan dot indikator navbar
+     */
+    function updateCustomerReadyNotification(pesanan)
+    {
+        if (!pesanan || !pesanan.status) return;
+
+        const isReady = pesanan.status === 'Siap Diambil';
+        const isDoneOrCancelled = ['Selesai', 'Dibatalkan', 'Kadaluarsa'].includes(pesanan.status);
+
+        if (navOrderReadyDot) {
+            navOrderReadyDot.style.display = isReady ? 'inline-block' : 'none';
+        }
+
+        if (customerReadyFloatingBar) {
+            if (isReady && !dismissedReadyOrders.has(pesanan.kode_pesanan)) {
+                if (floatingOrderMejaBadge) {
+                    floatingOrderMejaBadge.textContent = pesanan.nomor_meja ? 'Meja ' + pesanan.nomor_meja : 'Meja -';
+                }
+                customerReadyFloatingBar.style.display = 'block';
+            } else {
+                customerReadyFloatingBar.style.display = 'none';
+            }
+        }
+
+        if (isReady) {
+            triggerReadyNotification(pesanan);
+        }
+
+        if (isDoneOrCancelled) {
+            stopCustomerBackgroundWatcher();
+        }
+    }
+
+    /**
+     * Menutup / menyembunyikan floating alert sementara
+     */
+    function dismissReadyFloating(event)
+    {
+        if (event) {
+            event.stopPropagation();
+        }
+        if (customerReadyFloatingBar) {
+            customerReadyFloatingBar.style.display = 'none';
+        }
+        const kode = currentCustomerOrderCode || getSavedOrderCode();
+        if (kode) {
+            dismissedReadyOrders.add(kode);
+        }
+    }
 
 
     function statusFormatRupiah(
@@ -1206,37 +1578,37 @@
         const waitingPay = statusPesanan === 'Menunggu Pembayaran' && !expired && !cancelled;
 
         let nextClass = '';
-        let nextTitle = 'Status pesanan';
-        let nextText = 'Pantau perkembangan pesanan kamu di sini.';
+        let nextTitle = 'Status Pesanan';
+        let nextText = 'Informasi status pesanan Anda.';
 
         if (statusPesanan === 'Selesai') {
             nextClass = 'done';
-            nextTitle = 'Pesanan Telah Selesai';
-            nextText = 'Pesanan Anda telah selesai diproses dan diterima. Terima kasih atas kepercayaan dan kunjungan Anda di Kantin Merah.';
+            nextTitle = 'Pesanan Selesai';
+            nextText = 'Pesanan telah diterima. Terima kasih atas kunjungan Anda di Kantin Merah.';
         } else if (expired) {
             nextClass = 'expired';
-            nextTitle = 'Pesanan berakhir';
-            nextText = 'Waktu pembayaran habis atau pembayaran kedaluwarsa. Pesanan dibatalkan otomatis. Silakan buat pesanan baru jika masih ingin memesan.';
+            nextTitle = 'Batas Waktu Pembayaran Berakhir';
+            nextText = 'Batas waktu pembayaran telah habis. Pesanan dibatalkan secara otomatis oleh sistem.';
         } else if (cancelled) {
             nextClass = 'expired';
-            nextTitle = 'Pesanan dibatalkan';
-            nextText = 'Pesanan ini dibatalkan.';
+            nextTitle = 'Pesanan Dibatalkan';
+            nextText = 'Pesanan ini telah dibatalkan.';
         } else if (statusPesanan === 'Siap Diambil') {
             nextClass = 'ready';
-            nextTitle = 'Pesanan siap diambil';
-            nextText = 'Ambil pesanan di kasir sesuai meja/nama pemesan, lalu tekan tombol “Saya Sudah Ambil Makanan” di bawah agar pesanan selesai.';
+            nextTitle = 'Pesanan Siap Diambil';
+            nextText = 'Pesanan telah siap. Silakan ambil pesanan di kasir dan konfirmasi penerimaan di bawah.';
         } else if (statusPesanan === 'Dibayar' || statusPesanan === 'Diproses') {
             nextClass = 'wait-kitchen';
-            nextTitle = 'Pesanan sedang disiapkan dapur';
-            nextText = 'Pembayaran sudah diterima. Pesanan sedang diproses di dapur. Kamu tidak perlu melakukan apa-apa — tunggu sampai status berubah menjadi “Siap Diambil”.';
+            nextTitle = 'Pesanan Sedang Diproses';
+            nextText = 'Pembayaran telah diterima. Bagian dapur sedang menyiapkan pesanan Anda.';
         } else if (waitingPay && metodeBayar === 'QRIS') {
             nextClass = 'wait-pay';
-            nextTitle = 'Selesaikan pembayaran QRIS';
-            nextText = 'Scan QRIS di bawah, lakukan pembayaran, lalu tekan tombol “Saya Sudah Membayar QRIS”. Setelah itu pesanan otomatis diteruskan ke dapur.';
+            nextTitle = 'Menunggu Pembayaran QRIS';
+            nextText = 'Silakan pindai kode QRIS dan selesaikan pembayaran, kemudian lakukan konfirmasi.';
         } else if (waitingPay) {
             nextClass = 'wait-pay';
-            nextTitle = 'Bayar di kasir (Tunai)';
-            nextText = 'Datang ke kasir dan tunjukkan kode pesanan serta nomor antrean untuk membayar tunai. Setelah kasir mengonfirmasi, pesanan akan diproses dapur.';
+            nextTitle = 'Menunggu Pembayaran di Kasir';
+            nextText = 'Silakan menuju meja kasir untuk melakukan pembayaran tunai sesuai kode pesanan.';
         }
 
         statusNextAction.className = 'status-next ' + nextClass;
@@ -1245,11 +1617,11 @@
             '<span>' + statusEscapeHtml(nextText) + '</span>';
 
         const steps = [
-            { key: 'buat', title: 'Pesanan dibuat', desc: 'Pesanan dan nomor antrean sudah tercatat.' },
-            { key: 'bayar', title: 'Pembayaran', desc: metodeBayar === 'QRIS' ? 'Pembayaran QRIS dikonfirmasi.' : 'Pembayaran tunai dikonfirmasi kasir.' },
-            { key: 'dapur', title: 'Dapur memproses', desc: 'Pesanan disiapkan oleh dapur.' },
-            { key: 'siap', title: 'Siap diambil', desc: 'Pesanan siap diambil di kasir.' },
-            { key: 'selesai', title: 'Selesai', desc: 'Pesanan sudah diambil.' }
+            { key: 'buat', title: 'Pesanan Diterima', desc: 'Pesanan dan nomor antrean tercatat di sistem.' },
+            { key: 'bayar', title: 'Pembayaran', desc: metodeBayar === 'QRIS' ? 'Verifikasi pembayaran QRIS.' : 'Pembayaran tunai di meja kasir.' },
+            { key: 'dapur', title: 'Proses Dapur', desc: 'Pesanan disiapkan oleh dapur.' },
+            { key: 'siap', title: 'Siap Diambil', desc: 'Pesanan siap diambil di meja kasir.' },
+            { key: 'selesai', title: 'Selesai', desc: 'Pesanan telah diserahkan.' }
         ];
 
         function stepState(key) {
@@ -1453,6 +1825,9 @@
         const notifikasi =
             result.notifikasi || null;
 
+        // Perbarui notifikasi floating & audio di sisi customer
+        updateCustomerReadyNotification(pesanan);
+
         if (statusReadyNotice) {
 
             const siapDiambil =
@@ -1466,7 +1841,7 @@
                 const pesanNotif =
                     notifikasi && notifikasi.pesan
                         ? notifikasi.pesan
-                        : 'Makanan Anda sudah siap. Silakan ambil makanan Anda di kasir.';
+                        : 'Pesanan Anda telah selesai disiapkan. Silakan ambil pesanan di meja kasir.';
 
                 statusReadyMessage.textContent =
                     pesanNotif;
@@ -1487,7 +1862,7 @@
                 statusAmbilButton.style.opacity =
                     statusAmbilProcessing ? '0.6' : '1';
                 statusAmbilButton.textContent =
-                    '✅ Saya Sudah Ambil Makanan';
+                    'Konfirmasi Pesanan Diterima';
             }
         }
 
@@ -1974,7 +2349,7 @@
 
         if (
             !confirm(
-                'Konfirmasi bahwa Anda sudah mengambil makanan ini?'
+                'Konfirmasi bahwa Anda telah mengambil pesanan ini?'
             )
         ) {
             return;
@@ -2007,12 +2382,12 @@
             if (!response.ok || !result.status) {
                 throw new Error(
                     result.message ||
-                    'Gagal menandai pesanan selesai.'
+                    'Gagal mengonfirmasi penerimaan pesanan.'
                 );
             }
 
             alert(
-                'Terima kasih! Pesanan sudah ditandai selesai.'
+                'Pesanan telah selesai. Terima kasih atas kunjungan Anda.'
             );
 
             await loadCustomerStatus(
@@ -2023,14 +2398,14 @@
 
             alert(
                 error.message ||
-                'Gagal menandai pesanan selesai.'
+                'Gagal mengonfirmasi penerimaan pesanan.'
             );
 
             if (statusAmbilButton) {
                 statusAmbilButton.disabled = false;
                 statusAmbilButton.style.opacity = '1';
                 statusAmbilButton.textContent =
-                    '✅ Saya Sudah Ambil Makanan';
+                    'Konfirmasi Pesanan Diterima';
             }
 
         } finally {
@@ -2048,12 +2423,83 @@
         );
     }
 
+    /**
+     * Background Watcher untuk mendeteksi status "Siap Diambil"
+     * secara otomatis bahkan ketika modal ditutup.
+     */
+    function startCustomerBackgroundWatcher()
+    {
+        stopCustomerBackgroundWatcher();
+        const kode = currentCustomerOrderCode || getSavedOrderCode();
+        if (!kode) return;
+
+        // Pengecekan pertama langsung
+        checkBackgroundOrderStatus(kode);
+
+        // Polling setiap 7 detik
+        customerBgWatcherTimer = setInterval(function () {
+            const activeKode = currentCustomerOrderCode || getSavedOrderCode();
+            if (activeKode) {
+                checkBackgroundOrderStatus(activeKode);
+            } else {
+                stopCustomerBackgroundWatcher();
+            }
+        }, 7000);
+    }
+
+    function stopCustomerBackgroundWatcher()
+    {
+        if (customerBgWatcherTimer) {
+            clearInterval(customerBgWatcherTimer);
+            customerBgWatcherTimer = null;
+        }
+    }
+
+    async function checkBackgroundOrderStatus(kode)
+    {
+        if (!kode) return;
+        try {
+            const response = await fetch(`${CUSTOMER_STATUS_API}/${encodeURIComponent(kode)}`, {
+                method: 'GET',
+                headers: { 'Accept': 'application/json' }
+            });
+            const result = await response.json();
+            if (response.ok && result && result.status && result.data && result.data.pesanan) {
+                const pesanan = result.data.pesanan;
+                updateCustomerReadyNotification(pesanan);
+                // Jika modal sedang terbuka, perbarui isinya
+                if (customerStatusModal && customerStatusModal.style.display === 'block') {
+                    renderCustomerStatus(result.data);
+                }
+            }
+        } catch (err) {
+            // Polling background senyap
+        }
+    }
+
+    // Inisialisasi background watcher otomatis saat halaman siap
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startCustomerBackgroundWatcher);
+    } else {
+        startCustomerBackgroundWatcher();
+    }
 
     window.openCustomerStatus =
         openCustomerStatus;
 
-
     window.closeCustomerStatus =
         closeCustomerStatus;
+
+    window.playReadyChime =
+        playReadyChime;
+
+    window.dismissReadyFloating =
+        dismissReadyFloating;
+
+    window.startCustomerBackgroundWatcher =
+        startCustomerBackgroundWatcher;
+
+    window.stopCustomerBackgroundWatcher =
+        stopCustomerBackgroundWatcher;
 
 </script>
