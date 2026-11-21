@@ -63,82 +63,98 @@ $searchText = static function (array $p): string {
 
   <main class="main">
     <div class="topbar">
-      <button type="button" class="kasir-menu-toggle" aria-label="Buka menu" aria-controls="kasirSidebar" aria-expanded="false">&#9776;</button>
-
-      <label class="searchbox">
-        <svg class="i"><use href="#i-search"/></svg>
-        <input id="orderSearch" type="search" placeholder="Cari pesanan, menu, meja, atau pemesan..." autocomplete="off">
-      </label>
-
-      <div class="sp"></div>
-
-      <span class="clock-chip" id="clock">--:--:--</span>
-      <button type="button" class="icon-btn" id="themeBtn" aria-label="Ganti tema gelap/terang">
-        <svg class="i"><use href="#i-moon"/></svg>
-      </button>
-
-      <button type="button" class="icon-btn bell" aria-label="Notifikasi" onclick="toast('Tidak ada notifikasi baru saat ini.')">
-        <svg class="i"><use href="#i-bell"/></svg>
-        <span class="bell-dot" aria-hidden="true"></span>
-      </button>
-
-      <span class="online-pill <?= $shiftAktif ? '' : 'off' ?>">
-        <span class="online-dot" aria-hidden="true"></span>
-        <span><?= $shiftAktif ? 'Shift aktif' : 'Shift tutup' ?></span>
-      </span>
-    </div>
-
-    <div class="content" id="dashboard">
-      <div class="greeting">
-        <div>
-          <h1>Selamat datang, <?= esc($namaKasir) ?>!</h1>
-          <p>Berikut ringkasan aktivitas kantin hari ini.</p>
-        </div>
-        <div class="greet-actions">
-          <span class="date-pill"><?= date('d/m/Y') ?></span>
-          <a class="btn btn-brand" href="<?= site_url('kasir/antrean') ?>">
-            <svg class="i"><use href="#i-inbox"/></svg>
-            Buka Antrean Customer
-          </a>
+      <div class="topbar-heading">
+        <button type="button" class="kasir-menu-toggle" aria-label="Buka menu navigasi" aria-controls="kasirSidebar" aria-expanded="false">&#9776;</button>
+        <div class="topbar-heading-copy">
+          <h1>Dashboard Kasir</h1>
+          <p class="topbar-sub">Selamat datang, <?= esc($namaKasir) ?> &bull; <?= date('d/m/Y') ?></p>
         </div>
       </div>
 
-      <!-- Kartu statistik -->
+      <div class="topbar-actions">
+        <label class="searchbox">
+          <svg class="i"><use href="#i-search"/></svg>
+          <input id="orderSearch" type="search" placeholder="Cari pesanan, meja, pemesan..." autocomplete="off">
+        </label>
+
+        <a class="btn btn-brand" href="<?= site_url('kasir/antrean') ?>">
+          <svg class="i"><use href="#i-inbox"/></svg>
+          <span>Antrean Customer</span>
+        </a>
+
+        <div class="user-pill">Role: Kasir</div>
+
+        <span class="online-pill <?= $shiftAktif ? '' : 'off' ?>">
+          <span class="online-dot" aria-hidden="true"></span>
+          <span><?= $shiftAktif ? 'Shift aktif' : 'Shift tutup' ?></span>
+        </span>
+
+        <span class="clock-chip" id="clock">--:--:--</span>
+
+        <button type="button" class="icon-btn" id="themeBtn" aria-label="Ganti tema gelap/terang">
+          <svg class="i"><use href="#i-moon"/></svg>
+        </button>
+
+        <button type="button" class="icon-btn bell" aria-label="Notifikasi" onclick="toast('Tidak ada notifikasi baru saat ini.')">
+          <svg class="i"><use href="#i-bell"/></svg>
+          <span class="bell-dot" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="content" id="dashboard">
+      <!-- Kartu statistik (Sesuai Desain Manajerial) -->
       <div class="stats">
         <article class="stat">
-          <div class="stat-ic ic-pink"><svg class="i"><use href="#i-wallet"/></svg></div>
-          <small>Menunggu bayar tunai</small>
-          <b><?= count($pesananTunai) ?></b>
-          <span class="trend <?= count($pesananTunai) > 0 ? 'trend-amber' : 'trend-gray' ?>">
-            <?= count($pesananTunai) > 0 ? 'Perlu tindakan' : 'Tidak ada antrean' ?>
-          </span>
+          <div class="stat-top">
+            <span class="stat-label">Menunggu bayar tunai</span>
+            <div class="stat-ic ic-pink"><svg class="i"><use href="#i-wallet"/></svg></div>
+          </div>
+          <div class="stat-val"><?= count($pesananTunai) ?></div>
+          <div class="stat-bottom">
+            <span class="trend <?= count($pesananTunai) > 0 ? 'trend-amber' : 'trend-gray' ?>">
+              <?= count($pesananTunai) > 0 ? 'Perlu tindakan' : 'Tidak ada antrean' ?>
+            </span>
+          </div>
         </article>
 
         <article class="stat">
-          <div class="stat-ic ic-green"><svg class="i"><use href="#i-bag"/></svg></div>
-          <small>Siap diserahkan</small>
-          <b><?= count($pesananSiap) ?></b>
-          <span class="trend <?= count($pesananSiap) > 0 ? 'trend-green' : 'trend-gray' ?>">
-            <?= count($pesananSiap) > 0 ? 'Siap antar' : 'Belum ada' ?>
-          </span>
+          <div class="stat-top">
+            <span class="stat-label">Siap diserahkan</span>
+            <div class="stat-ic ic-green"><svg class="i"><use href="#i-bag"/></svg></div>
+          </div>
+          <div class="stat-val"><?= count($pesananSiap) ?></div>
+          <div class="stat-bottom">
+            <span class="trend <?= count($pesananSiap) > 0 ? 'trend-green' : 'trend-gray' ?>">
+              <?= count($pesananSiap) > 0 ? 'Siap antar' : 'Belum ada' ?>
+            </span>
+          </div>
         </article>
 
         <article class="stat">
-          <div class="stat-ic ic-blue"><svg class="i"><use href="#i-fire"/></svg></div>
-          <small>Pesanan di dapur</small>
-          <b><?= (int) $jumlahDapurAktif ?></b>
-          <span class="trend <?= $jumlahDapurAktif > 0 ? 'trend-blue' : 'trend-gray' ?>">
-            <?= $jumlahDapurAktif > 0 ? 'Sedang diproses' : 'Dapur kosong' ?>
-          </span>
+          <div class="stat-top">
+            <span class="stat-label">Pesanan di dapur</span>
+            <div class="stat-ic ic-blue"><svg class="i"><use href="#i-fire"/></svg></div>
+          </div>
+          <div class="stat-val"><?= (int) $jumlahDapurAktif ?></div>
+          <div class="stat-bottom">
+            <span class="trend <?= $jumlahDapurAktif > 0 ? 'trend-blue' : 'trend-gray' ?>">
+              <?= $jumlahDapurAktif > 0 ? 'Sedang diproses' : 'Dapur kosong' ?>
+            </span>
+          </div>
         </article>
 
         <article class="stat">
-          <div class="stat-ic ic-purple"><svg class="i"><use href="#i-coins"/></svg></div>
-          <small>Kas shift ini</small>
-          <b>Rp <?= number_format($kasTotal, 0, ',', '.') ?></b>
-          <span class="trend <?= $shiftAktif ? 'trend-green' : 'trend-gray' ?>">
-            <?= $shiftAktif ? 'Shift berjalan' : 'Belum buka shift' ?>
-          </span>
+          <div class="stat-top">
+            <span class="stat-label">Kas shift ini</span>
+            <div class="stat-ic ic-purple"><svg class="i"><use href="#i-coins"/></svg></div>
+          </div>
+          <div class="stat-val" style="color: var(--brand);">Rp <?= number_format($kasTotal, 0, ',', '.') ?></div>
+          <div class="stat-bottom">
+            <span class="trend <?= $shiftAktif ? 'trend-green' : 'trend-gray' ?>">
+              <?= $shiftAktif ? 'Shift berjalan' : 'Belum buka shift' ?>
+            </span>
+          </div>
         </article>
       </div>
 

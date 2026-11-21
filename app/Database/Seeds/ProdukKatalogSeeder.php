@@ -38,7 +38,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 10000,
             'harga'       => 15000,
             'jumlah_stok' => 30,
-            'foto'        => 'uploads/menu/ecf3c30eb6e1f68b8518fabea9f16ef4.jpg',
+            'foto'        => 'uploads/menu/katalog/nasi-goreng.svg',
         ],
         [
             'nama_menu'   => 'Mie Goreng',
@@ -47,7 +47,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 8000,
             'harga'       => 12000,
             'jumlah_stok' => 40,
-            'foto'        => 'uploads/menu/katalog/mie-goreng.jpg',
+            'foto'        => 'uploads/menu/katalog/mie-goreng.svg',
         ],
         [
             'nama_menu'   => 'Mie Rebus',
@@ -56,7 +56,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 7500,
             'harga'       => 11000,
             'jumlah_stok' => 35,
-            'foto'        => 'uploads/menu/katalog/mie-rebus.jpg',
+            'foto'        => 'uploads/menu/katalog/mie-rebus.svg',
         ],
         [
             'nama_menu'   => 'Nasi Ayam Geprek',
@@ -65,7 +65,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 12000,
             'harga'       => 16000,
             'jumlah_stok' => 30,
-            'foto'        => 'uploads/menu/katalog/nasi-ayam-geprek.jpg',
+            'foto'        => 'uploads/menu/katalog/nasi-ayam-geprek.svg',
         ],
         [
             'nama_menu'   => 'Nasi Telur',
@@ -74,7 +74,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 7000,
             'harga'       => 10000,
             'jumlah_stok' => 35,
-            'foto'        => 'uploads/menu/katalog/nasi-telur.jpg',
+            'foto'        => 'uploads/menu/katalog/nasi-telur.svg',
         ],
         [
             'nama_menu'   => 'Nasi Pecel',
@@ -83,7 +83,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 8000,
             'harga'       => 12000,
             'jumlah_stok' => 25,
-            'foto'        => 'uploads/menu/katalog/nasi-pecel.jpg',
+            'foto'        => 'uploads/menu/katalog/nasi-pecel.svg',
         ],
         [
             'nama_menu'   => 'Nasi Rames',
@@ -92,7 +92,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 9000,
             'harga'       => 13000,
             'jumlah_stok' => 25,
-            'foto'        => 'uploads/menu/katalog/nasi-rames.jpg',
+            'foto'        => 'uploads/menu/katalog/nasi-rames.svg',
         ],
         [
             'nama_menu'   => 'Bakso',
@@ -101,7 +101,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 9000,
             'harga'       => 13000,
             'jumlah_stok' => 30,
-            'foto'        => 'uploads/menu/katalog/bakso.jpg',
+            'foto'        => 'uploads/menu/katalog/bakso.svg',
         ],
         [
             'nama_menu'   => 'Soto Ayam',
@@ -110,7 +110,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 8500,
             'harga'       => 12000,
             'jumlah_stok' => 30,
-            'foto'        => 'uploads/menu/katalog/soto-ayam.jpg',
+            'foto'        => 'uploads/menu/katalog/soto-ayam.svg',
         ],
         [
             'nama_menu'   => 'Nasi Kuning',
@@ -119,7 +119,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 8000,
             'harga'       => 12000,
             'jumlah_stok' => 25,
-            'foto'        => 'uploads/menu/katalog/nasi-kuning.jpg',
+            'foto'        => 'uploads/menu/katalog/nasi-kuning.svg',
         ],
 
         // ================= MINUMAN =================
@@ -130,7 +130,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 1800,
             'harga'       => 4000,
             'jumlah_stok' => 60,
-            'foto'        => 'uploads/menu/katalog/es-teh.jpg',
+            'foto'        => 'uploads/menu/katalog/es-teh.svg',
         ],
         [
             'nama_menu'   => 'Teh Hangat',
@@ -139,7 +139,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 1500,
             'harga'       => 3000,
             'jumlah_stok' => 50,
-            'foto'        => 'uploads/menu/katalog/teh-hangat.jpg',
+            'foto'        => 'uploads/menu/katalog/teh-hangat.svg',
         ],
         [
             'nama_menu'   => 'Es Jeruk',
@@ -148,7 +148,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 3000,
             'harga'       => 6000,
             'jumlah_stok' => 45,
-            'foto'        => 'uploads/menu/katalog/es-jeruk.jpg',
+            'foto'        => 'uploads/menu/katalog/es-jeruk.svg',
         ],
         [
             'nama_menu'   => 'Jeruk Hangat',
@@ -157,7 +157,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 2800,
             'harga'       => 5500,
             'jumlah_stok' => 40,
-            'foto'        => 'uploads/menu/katalog/jeruk-hangat.jpg',
+            'foto'        => 'uploads/menu/katalog/jeruk-hangat.svg',
         ],
         [
             'nama_menu'   => 'Es Milo',
@@ -166,7 +166,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 3500,
             'harga'       => 7000,
             'jumlah_stok' => 40,
-            'foto'        => 'uploads/menu/katalog/es-milo.jpg',
+            'foto'        => 'uploads/menu/katalog/es-milo.svg',
         ],
         [
             'nama_menu'   => 'Es Good Day',
@@ -175,7 +175,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 3000,
             'harga'       => 6000,
             'jumlah_stok' => 40,
-            'foto'        => 'uploads/menu/katalog/es-good-day.jpg',
+            'foto'        => 'uploads/menu/katalog/es-good-day.svg',
         ],
         [
             'nama_menu'   => 'Kopi Hitam',
@@ -184,7 +184,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 2000,
             'harga'       => 5000,
             'jumlah_stok' => 40,
-            'foto'        => 'uploads/menu/katalog/kopi-hitam.jpg',
+            'foto'        => 'uploads/menu/katalog/kopi-hitam.svg',
         ],
         [
             'nama_menu'   => 'Kopi Susu',
@@ -193,7 +193,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 3500,
             'harga'       => 8000,
             'jumlah_stok' => 35,
-            'foto'        => 'uploads/menu/katalog/kopi-susu.jpg',
+            'foto'        => 'uploads/menu/katalog/kopi-susu.svg',
         ],
         [
             'nama_menu'   => 'Air Mineral',
@@ -202,7 +202,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 2000,
             'harga'       => 3000,
             'jumlah_stok' => 100,
-            'foto'        => 'uploads/menu/katalog/air-mineral.jpg',
+            'foto'        => 'uploads/menu/katalog/air-mineral.svg',
         ],
         [
             'nama_menu'   => 'Susu Cokelat',
@@ -211,7 +211,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 4000,
             'harga'       => 7000,
             'jumlah_stok' => 40,
-            'foto'        => 'uploads/menu/katalog/susu-cokelat.jpg',
+            'foto'        => 'uploads/menu/katalog/susu-cokelat.svg',
         ],
 
         // ================= SNACK =================
@@ -222,7 +222,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 6000,
             'harga'       => 10000,
             'jumlah_stok' => 30,
-            'foto'        => 'uploads/menu/katalog/kentang-goreng.jpg',
+            'foto'        => 'uploads/menu/katalog/kentang-goreng.svg',
         ],
         [
             'nama_menu'   => 'Sosis Goreng',
@@ -231,7 +231,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 5000,
             'harga'       => 8000,
             'jumlah_stok' => 35,
-            'foto'        => 'uploads/menu/katalog/sosis-goreng.jpg',
+            'foto'        => 'uploads/menu/katalog/sosis-goreng.svg',
         ],
         [
             'nama_menu'   => 'Nugget',
@@ -240,7 +240,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 6000,
             'harga'       => 10000,
             'jumlah_stok' => 30,
-            'foto'        => 'uploads/menu/katalog/nugget.jpg',
+            'foto'        => 'uploads/menu/katalog/nugget.svg',
         ],
         [
             'nama_menu'   => 'Cireng',
@@ -249,7 +249,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 3500,
             'harga'       => 6000,
             'jumlah_stok' => 40,
-            'foto'        => 'uploads/menu/katalog/cireng.jpg',
+            'foto'        => 'uploads/menu/katalog/cireng.svg',
         ],
         [
             'nama_menu'   => 'Risoles',
@@ -258,7 +258,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 3000,
             'harga'       => 5000,
             'jumlah_stok' => 40,
-            'foto'        => 'uploads/menu/katalog/risoles.jpg',
+            'foto'        => 'uploads/menu/katalog/risoles.svg',
         ],
         [
             'nama_menu'   => 'Tahu Isi',
@@ -267,7 +267,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 2500,
             'harga'       => 5000,
             'jumlah_stok' => 40,
-            'foto'        => 'uploads/menu/katalog/tahu-isi.jpg',
+            'foto'        => 'uploads/menu/katalog/tahu-isi.svg',
         ],
         [
             'nama_menu'   => 'Bakwan',
@@ -276,7 +276,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 2000,
             'harga'       => 4000,
             'jumlah_stok' => 45,
-            'foto'        => 'uploads/menu/katalog/bakwan.jpg',
+            'foto'        => 'uploads/menu/katalog/bakwan.svg',
         ],
         [
             'nama_menu'   => 'Tempe Goreng',
@@ -285,7 +285,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 1500,
             'harga'       => 3000,
             'jumlah_stok' => 50,
-            'foto'        => 'uploads/menu/katalog/tempe-goreng.jpg',
+            'foto'        => 'uploads/menu/katalog/tempe-goreng.svg',
         ],
         [
             'nama_menu'   => 'Roti Bakar',
@@ -294,7 +294,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 5000,
             'harga'       => 8000,
             'jumlah_stok' => 30,
-            'foto'        => 'uploads/menu/katalog/roti-bakar.jpg',
+            'foto'        => 'uploads/menu/katalog/roti-bakar.svg',
         ],
         [
             'nama_menu'   => 'Pisang Goreng',
@@ -303,7 +303,7 @@ class ProdukKatalogSeeder extends Seeder
             'harga_modal' => 3000,
             'harga'       => 6000,
             'jumlah_stok' => 35,
-            'foto'        => 'uploads/menu/katalog/pisang-goreng.jpg',
+            'foto'        => 'uploads/menu/katalog/pisang-goreng.svg',
         ],
     ];
 
@@ -366,8 +366,14 @@ class ProdukKatalogSeeder extends Seeder
                     $perubahan['harga_modal'] = $produk['harga_modal'];
                 }
 
-                if (empty($menuLama['foto'])) {
-                    $perubahan['foto'] = $produk['foto'];
+                $fotoLama = (string) ($menuLama['foto'] ?? '');
+                $fotoKatalogBaru = $produk['foto'];
+                $perluPerbaruiFoto = $fotoLama === ''
+                    || $fotoLama === 'uploads/menu/ecf3c30eb6e1f68b8518fabea9f16ef4.jpg'
+                    || preg_match('#^uploads/menu/katalog/.+\.jpg$#i', $fotoLama) === 1;
+
+                if ($perluPerbaruiFoto && $fotoLama !== $fotoKatalogBaru) {
+                    $perubahan['foto'] = $fotoKatalogBaru;
                 }
 
                 if ($perubahan !== []) {

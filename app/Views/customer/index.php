@@ -328,7 +328,7 @@
             position: relative;
             width: 100%;
             aspect-ratio: 4 / 3;
-            background: #efeae6;
+            background: linear-gradient(180deg, #ffffff 0%, #f8f4f2 100%);
             border-bottom: 1px solid var(--line);
             overflow: hidden;
             display: flex;
@@ -341,12 +341,14 @@
             height: 100%;
             aspect-ratio: 4 / 3;
             object-fit: cover;
+            object-position: center;
             display: block;
-            transition: transform 0.3s ease;
+            transition: transform 0.35s ease;
+            background: #fff7f7;
         }
 
         .menu-card:hover .menu-image {
-            transform: scale(1.05);
+            transform: scale(1.04);
         }
 
         .menu-image-placeholder {
@@ -964,8 +966,8 @@
             border: 0;
             border-radius: 14px;
             background:
-                linear-gradient(90deg, rgba(137, 10, 48, .98) 0%, rgba(159, 18, 57, .92) 37%, rgba(159, 18, 57, .12) 72%),
-                url("<?= base_url('uploads/menu/ecf3c30eb6e1f68b8518fabea9f16ef4.jpg') ?>") center 48% / cover,
+                linear-gradient(90deg, rgba(137, 10, 48, .98) 0%, rgba(159, 18, 57, .92) 37%, rgba(159, 18, 57, .2) 75%),
+                url("<?= base_url('uploads/menu/ecf3c30eb6e1f68b8518fabea9f16ef4.jpg') ?>") right center / cover no-repeat,
                 #9f1239;
             box-shadow: 0 8px 22px rgba(31, 41, 55, .1);
         }
@@ -1066,8 +1068,13 @@
         }
 
         .menu-image-wrap {
-            aspect-ratio: 1.75 / 1;
+            aspect-ratio: 4 / 3;
             border-bottom: 0;
+            background: linear-gradient(180deg, #fffafb 0%, #f6f7fb 100%);
+        }
+
+        .menu-image {
+            aspect-ratio: 4 / 3;
         }
 
         .menu-content {
@@ -1165,7 +1172,7 @@
             .hero {
                 min-height: 145px;
                 padding: 20px 18px;
-                background-position: center, 62% center, center;
+                background-position: center, right center, center;
             }
 
             .hero h1 {
